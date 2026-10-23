@@ -15,19 +15,19 @@ The problem it solves: a generic CV hides the experience that matters for a give
 
 ## Core Business Rules
 
-The pipeline has three stages:
+The pipeline has three stages. Each stage is an independent system with its own epic, and stages talk to each other only through defined contracts.
 
-1. **Vacancy reader**
+1. **Vacancy reader** (#3)
    - Input: a URL of a job description on the internet.
-   - Reads and parses the vacancy page.
+   - Reads the vacancy page and extracts its text with a parsing rule for the site. Rules are learned from examples (URL + expected text).
    - Output: the vacancy description, the list of requirements, and `source_url` (the original URL).
-2. **Writer**
+2. **Writer** (#4)
    - Input: the output of the vacancy reader, plus three fixed sources:
      - **Candidate data**: `llms-full.txt` (~150 KB), the candidate's full CV for AI agents, published by the `index-cv` project at `https://cv.tony-m.dev/llms-full.txt`. It holds the summary, every project with role, period and results, and skills with evidence per project.
      - **Rules** for writing the CV and the cover letter.
      - **CV design sample**: the reference layout the PDF must follow.
    - Output: the tailored CV and the cover letter content. Relevant experience and the skills the vacancy asks for come first.
-3. **PDF creator**
+3. **PDF creator** (#5)
    - Input: the writer's output and the design sample.
    - Output: two PDF files, the CV and the cover letter.
 
@@ -40,7 +40,9 @@ Rules for the content:
 ## Key Decisions
 
 - Candidate data source: `llms-full.txt` from `index-cv` (`https://cv.tony-m.dev/llms-full.txt`). Reason: it already holds the full CV, structured for AI agents, and is maintained in a separate repository.
-- Pipeline split into reader → writer → PDF creator. Reason: each stage has its own input and output and can be built and tested on its own.
+- Pipeline split into three independent systems: reader → writer → PDF creator — one epic each (#3, #4, #5). Reason: each stage has its own input and output and can be built and tested on its own.
+- Local agent, web access through Playwright with the user's browser session — see `decisions/3-local-agent-playwright-user-session.md`.
+- Per-site parsing rules learned from examples — see `decisions/3-site-parsing-rules-from-examples.md`.
 - Language: English for all content and documentation.
 
 ## Scope
@@ -59,15 +61,7 @@ Out of scope:
 
 ## Open Questions
 
-Not decided yet. Each one becomes a GitHub issue or an ADR in `specs/decisions/` when it is settled.
-
-- Runtime and form of the agent: standalone app (which language and SDK), Claude Code skill, or hosted service.
-- How the agent fetches vacancy pages, which sites must be supported, and what happens when a page cannot be read (for example, pages behind a login).
-- Where the CV and cover letter rules and the CV design sample live, and their format.
-- PDF rendering technology.
-- Level of autonomy: fully automatic, or a human approval step before the PDF.
-- Whether the candidate data is fetched from the URL on each run or read from a local copy.
-- Where the output PDFs are stored and how they are named.
+Open questions are tracked in the epics, not here: #3 (vacancy reader), #4 (writer), #5 (PDF creator). A settled question that changes the approach for other tasks becomes an ADR in `specs/decisions/`.
 
 ## Constraints
 
