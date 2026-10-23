@@ -15,6 +15,7 @@ Not chosen yet. No hosting, CI/CD or environments exist.
 - **Candidate data**: `https://cv.tony-m.dev/llms-full.txt`, built and deployed by the `index-cv` repository (`Beefeater84/index-cv`, S3 + CloudFront). Plain text in the llmstxt.org style: summary, projects, skills with evidence. A short index is at `https://cv.tony-m.dev/llms.txt`.
 - **LLM**: needed for parsing the vacancy and writing the CV and cover letter. Provider and model not chosen yet.
 - **Vacancy pages**: arbitrary job description pages on the internet. Fetching method not chosen yet.
+- **Test data (vacancy examples)**: `examples/vacancies/index.yaml` and `examples/vacancies/<site>/<company>-<role>/{expected.md,page.html}`. Layout in `decisions/7-vacancy-examples-layout.md`.
 - **PDF rendering**: not chosen yet.
 
 ## Database Schema

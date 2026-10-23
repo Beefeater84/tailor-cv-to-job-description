@@ -22,6 +22,7 @@ The project has no modules yet. Add a row for each module or doc area when it ap
 | When the task touches | Read |
 |---|---|
 | The format or content of the candidate data (`llms-full.txt`) | `docs/spec.md` in the `Beefeater84/index-cv` repository |
+| `examples/vacancies/`, vacancy examples or vacancy rule tests | `decisions/7-vacancy-examples-layout.md` |
 
 ## Feature folders
 
