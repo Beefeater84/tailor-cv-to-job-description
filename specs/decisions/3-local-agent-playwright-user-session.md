@@ -2,8 +2,8 @@
 
 Status: accepted
 Date: 2026-10-23
-Issue: #3
-Affects: #3, #4, #5, #6; all systems
+Issue: Epic: Vacancy reader (#3)
+Affects: vacancy reader (#3), CV and cover letter writer (#4), PDF creator (#5), fetching vacancy pages with Playwright and the user's browser session (#6); all systems
 
 ## Context
 
@@ -20,4 +20,4 @@ The agent reads job pages on arbitrary sites. Many job sites need a login, show 
 - No server, deployment or multi-user support in scope.
 - Login walls and captchas are handled by the user's session, not by the agent.
 - Plain HTTP fetching is not the main path, even for static sites, so that every site goes through the same fetcher.
-- How the session is reused (existing profile, dedicated profile, exported cookies) is decided in #6.
+- How the session is reused (existing profile, dedicated profile, exported cookies) is decided in the Playwright fetcher task (#6).
