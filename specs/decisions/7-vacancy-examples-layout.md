@@ -50,4 +50,5 @@ Affects: site parsing rules: format and tests (#10), matching a vacancy URL to a
 - Tests of site parsing rules (#10) and of URL-to-rule matching (#11) read `index.yaml`, then `page.html` and `expected.md` of each example, with no network access.
 - Adding an example means adding a folder and updating `index.yaml` (entry and `count`).
 - Examples are public. A removal request from a page owner means deleting the example folder and its `index.yaml` entry (and updating `count`).
+- Examples are added by a tool (script + skill) that follows this layout. Until it exists, examples are added by hand by the same rules.
 - A change to the layout needs a new ADR.
