@@ -1,0 +1,75 @@
+# Mission
+
+## Vision
+
+An almost autonomous AI agent that tailors a CV to a specific job opening.
+The user gives it a link to a job description. The agent reads the vacancy, matches it against the candidate's full experience, and produces two PDFs: a CV and a cover letter written for that vacancy.
+
+The problem it solves: a generic CV hides the experience that matters for a given role. Rewriting the CV and the cover letter by hand for every application is slow. The agent does this in one run: it brings the relevant experience and skills forward and leaves out what does not matter for the role.
+
+## Target Audience
+
+- Primary user: the candidate (the repository owner), applying for jobs.
+- Interaction: the user passes a vacancy URL and receives the PDFs. The interface (CLI, chat, bot, other) is not decided yet.
+- Indirect readers of the output: recruiters, hiring managers and ATS systems that read the produced CV and cover letter.
+
+## Core Business Rules
+
+The pipeline has three stages:
+
+1. **Vacancy reader**
+   - Input: a URL of a job description on the internet.
+   - Reads and parses the vacancy page.
+   - Output: the vacancy description, the list of requirements, and `source_url` (the original URL).
+2. **Writer**
+   - Input: the output of the vacancy reader, plus three fixed sources:
+     - **Candidate data**: `llms-full.txt` (~150 KB), the candidate's full CV for AI agents, published by the `index-cv` project at `https://cv.tony-m.dev/llms-full.txt`. It holds the summary, every project with role, period and results, and skills with evidence per project.
+     - **Rules** for writing the CV and the cover letter.
+     - **CV design sample**: the reference layout the PDF must follow.
+   - Output: the tailored CV and the cover letter content. Relevant experience and the skills the vacancy asks for come first.
+3. **PDF creator**
+   - Input: the writer's output and the design sample.
+   - Output: two PDF files, the CV and the cover letter.
+
+Rules for the content:
+
+- All output (CV, cover letter) and all project files are in English.
+- Candidate data is the only source of facts about the candidate. The agent selects, reorders and rephrases. It never invents experience, skills, employers, dates or results that are not in the candidate data.
+- Every produced CV keeps `source_url`, so each pair of PDFs can be traced back to its vacancy.
+
+## Key Decisions
+
+- Candidate data source: `llms-full.txt` from `index-cv` (`https://cv.tony-m.dev/llms-full.txt`). Reason: it already holds the full CV, structured for AI agents, and is maintained in a separate repository.
+- Pipeline split into reader → writer → PDF creator. Reason: each stage has its own input and output and can be built and tested on its own.
+- Language: English for all content and documentation.
+
+## Scope
+
+In scope:
+
+- Reading a vacancy from a URL and extracting its description and requirements.
+- Writing a tailored CV and a cover letter from the candidate data, the rules and the vacancy.
+- Rendering both into PDF using the CV design sample.
+
+Out of scope:
+
+- Editing the candidate data. It is maintained in `index-cv`.
+- Submitting applications or contacting employers.
+- Searching for vacancies. The agent starts from a URL the user gives it.
+
+## Open Questions
+
+Not decided yet. Each one becomes a GitHub issue or an ADR in `specs/decisions/` when it is settled.
+
+- Runtime and form of the agent: standalone app (which language and SDK), Claude Code skill, or hosted service.
+- How the agent fetches vacancy pages, which sites must be supported, and what happens when a page cannot be read (for example, pages behind a login).
+- Where the CV and cover letter rules and the CV design sample live, and their format.
+- PDF rendering technology.
+- Level of autonomy: fully automatic, or a human approval step before the PDF.
+- Whether the candidate data is fetched from the URL on each run or read from a local copy.
+- Where the output PDFs are stored and how they are named.
+
+## Constraints
+
+- Candidate data is ~150 KB of text. The writer must fit it, the rules and the vacancy into the model's context, or select the relevant parts first.
+- The candidate data is personal data, © Tony Miasoedov. It must not be committed to this repository as test fixtures without the owner's consent.
