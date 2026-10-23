@@ -6,7 +6,7 @@
 
 ## Checklist
 
-- [ ] The ADR exists with `Issue: #7` and `Affects: #10, #11, #12` — auto: `grep -E '^(Issue: #7|Affects: #10, #11, #12)' specs/decisions/7-vacancy-examples-layout.md`
+- [ ] The ADR exists, its `Issue` names this task (#7) and `Affects` names the rule format (#10), URL matching (#11) and sites without a rule (#12), each by meaning with the number in parentheses — auto: `grep -E '^Issue: .+\(#7\)$' specs/decisions/7-vacancy-examples-layout.md && grep -E '^Affects: .+\(#10\).+\(#11\).+\(#12\)' specs/decisions/7-vacancy-examples-layout.md`
 - [ ] `specs/AGENT.md` and `specs/mission.md` link the ADR — auto: `grep -l '7-vacancy-examples-layout' specs/AGENT.md specs/mission.md`
 - [ ] `index.yaml` parses and has `schema: 1` — auto: `python -c "import yaml,sys; d=yaml.safe_load(open('examples/vacancies/index.yaml')); assert d['schema']==1"`
 - [ ] Every site's `count` equals the length of its `examples`, every `path` exists and holds `expected.md` and `page.html`, `path` starts with its site — auto: a short Python or shell check over `index.yaml`

@@ -9,7 +9,7 @@ Later: -
 - Task: #7
 - Goal: Record the examples layout (`examples/vacancies/`, `index.yaml`, `<site>/<company>-<role>/` with `expected.md` and `page.html`) as an ADR and link it from the specs.
 - Files: `specs/decisions/7-vacancy-examples-layout.md` (create), `examples/vacancies/index.yaml` (create, empty `sites`), `specs/AGENT.md` (change), `specs/mission.md` (change), `specs/tech-stack.md` (change)
-- Reuse: `.claude/templates/sdd/adr.md` — ADR template; `specs/decisions/3-site-parsing-rules-from-examples.md` (in PR #9) — the decision this one details
+- Reuse: `.claude/templates/sdd/adr.md` — ADR template; `specs/decisions/3-site-parsing-rules-from-examples.md` (in the vacancy reader ADRs PR, #9) — the decision this one details
 - Done when: the ADR describes the folder layout, folder naming, `index.yaml` schema with `count`, snapshot rules (personal data, size), and `specs/AGENT.md` points to it.
 - Complexity: normal
 

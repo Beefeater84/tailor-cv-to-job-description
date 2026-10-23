@@ -2,8 +2,8 @@
 
 Status: accepted
 Date: 2026-10-23
-Issue: #7
-Affects: #10, #11, #12; vacancy reader
+Issue: Vacancy examples: folder and data structure (#7)
+Affects: site parsing rules: format and tests (#10), matching a vacancy URL to a site rule (#11), vacancies from a site without a rule (#12); vacancy reader
 
 ## Context
 
@@ -35,7 +35,7 @@ Affects: #10, #11, #12; vacancy reader
   - `expected.md` — the expected text, Markdown;
   - `page.html` — the HTML snapshot of the page.
 - Snapshot rules:
-  - The snapshot is stored so rule tests run offline and stay stable when the live page changes or disappears. Until the Playwright fetcher (#6) exists, it is saved by hand.
+  - The snapshot is stored so rule tests run offline and stay stable when the live page changes or disappears. Until the Playwright fetcher with the user's browser session (#6) exists, it is saved by hand.
   - It is saved without login, or with personal data (name, email, avatar) and tokens stripped before commit. This is checked in review.
   - `<script>` and `<style>` may be stripped if the rule does not depend on them, to keep the size down.
   - No Git LFS for now.
@@ -47,7 +47,7 @@ Affects: #10, #11, #12; vacancy reader
 
 ## Consequences
 
-- Rule tests (#10, #11) read `index.yaml`, then `page.html` and `expected.md` of each example, with no network access.
+- Tests of site parsing rules (#10) and of URL-to-rule matching (#11) read `index.yaml`, then `page.html` and `expected.md` of each example, with no network access.
 - Adding an example means adding a folder and updating `index.yaml` (entry and `count`).
 - Examples are public. A removal request from a page owner means deleting the example folder and its `index.yaml` entry (and updating `count`).
 - A change to the layout needs a new ADR.
