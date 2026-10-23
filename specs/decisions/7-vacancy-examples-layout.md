@@ -39,12 +39,15 @@ Affects: #10, #11, #12; vacancy reader
   - It is saved without login, or with personal data (name, email, avatar) and tokens stripped before commit. This is checked in review.
   - `<script>` and `<style>` may be stripped if the rule does not depend on them, to keep the size down.
   - No Git LFS for now.
-- Vacancy text is a copy of a third-party page. This is acceptable as a private test fixture.
+- Vacancy text is a copy of a third-party page. Examples are committed to a public repository, so:
+  - only vacancies that are publicly available without login are stored;
+  - snapshots hold no personal data or tokens;
+  - an example is removed on the page owner's request.
 - Never commit candidate data, cookies or a browser profile.
 
 ## Consequences
 
 - Rule tests (#10, #11) read `index.yaml`, then `page.html` and `expected.md` of each example, with no network access.
 - Adding an example means adding a folder and updating `index.yaml` (entry and `count`).
-- The repository must stay private, or the examples must be reviewed again, because they copy third-party content.
+- Examples are public. A removal request from a page owner means deleting the example folder and its `index.yaml` entry (and updating `count`).
 - A change to the layout needs a new ADR.
