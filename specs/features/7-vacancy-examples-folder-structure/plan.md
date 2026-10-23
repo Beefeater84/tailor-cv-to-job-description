@@ -17,7 +17,8 @@ Later: -
 
 - Task: #7
 - Goal: Store one real vacancy given by the user in the layout and register it in `index.yaml`.
-- Files: `examples/vacancies/<site>/<company>-<role>/expected.md` (create), `examples/vacancies/<site>/<company>-<role>/page.html` (create), `examples/vacancies/index.yaml` (change)
+- Files: `examples/vacancies/<site>/<company>-<role>/expected.md` (create), `examples/vacancies/<site>/<company>-<role>/page.html` (create), `examples/vacancies/index.yaml` (change), `.gitattributes` (create: `examples/** -text`, keeps snapshot and expected text bytes stable on Windows)
+- Also: the ADR wording changed to "examples are public" (the repository is public; the human decided to commit examples)
 - Reuse: the layout from Group 1
 - Done when: the example folder exists, `index.yaml` lists its URL and path with `count: 1`, and the snapshot holds no personal data or tokens.
 - Complexity: normal
