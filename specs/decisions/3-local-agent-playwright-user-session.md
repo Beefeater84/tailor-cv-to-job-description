@@ -3,7 +3,7 @@
 Status: accepted
 Date: 2026-10-23
 Issue: #3
-Affects: #3, #4, #5, #6, #7; all systems
+Affects: #3, #4, #5, #6; all systems
 
 ## Context
 
