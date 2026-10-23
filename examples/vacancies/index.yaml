@@ -1,0 +1,9 @@
+schema: 1
+sites:
+  careers-page.com:
+    count: 1
+    examples:
+      - url: https://www.careers-page.com/idelsoft/job/3W3V95WV
+        path: careers-page.com/idelsoft-senior-frontend-performance-engineer
+        saved_at: 2026-10-23
+        notes: Public page, server-rendered, snapshot fetched without login

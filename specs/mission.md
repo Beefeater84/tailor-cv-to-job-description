@@ -42,6 +42,7 @@ Rules for the content:
 - Candidate data source: `llms-full.txt` from `index-cv` (`https://cv.tony-m.dev/llms-full.txt`). Reason: it already holds the full CV, structured for AI agents, and is maintained in a separate repository.
 - Pipeline split into reader → writer → PDF creator. Reason: each stage has its own input and output and can be built and tested on its own.
 - Language: English for all content and documentation.
+- Vacancy examples (URL, expected text, HTML snapshot) are stored in `examples/vacancies/` with one `index.yaml` — see `decisions/7-vacancy-examples-layout.md`.
 
 ## Scope
 
