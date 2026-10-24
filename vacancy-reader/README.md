@@ -3,10 +3,30 @@
 The vacancy reader stage of the pipeline: it takes a vacancy URL and turns it into structured vacancy data for the next stages. The module holds the whole vacancy reader epic:
 
 - **Fetching** (available now): open a vacancy page in headless Chromium and save the rendered HTML.
-- **Parsing** (planned): site rules that extract the vacancy text from the saved page.
+- **Parsing** (available now): site rules that extract the vacancy from a saved page into the extracted vacancy document. See [`rules/README.md`](rules/README.md).
 - **Output contract** (planned): the data format the next stages read.
 
 The stack is TypeScript on Node 24 with npm and Playwright (`specs/decisions/6-typescript-node-stack.md`). The module layout is described in `specs/decisions/6-vacancy-reader-module.md`.
+
+## How the module works
+
+A vacancy URL becomes an extracted vacancy document in these steps:
+
+1. **URL → fetch job.** `npm run fetch -- <url>` creates a job folder `runs/<job-id>/` and starts a background worker. Reads: the URL. Writes: `runs/<job-id>/status.json`.
+2. **Fetch job → `page.html`.** The worker opens the URL in headless Chromium, waits until the page has rendered and saves the rendered HTML. Writes: `runs/<job-id>/page.html`, the final `status.json` and `worker.log`. `npm run status -- <job-id>` shows when the job has reached a final status.
+3. **`page.html` → site rule.** The site key is the URL host without `www.` (`careers-page.com`). The rule of the site is the file `rules/<site>.ts`: CSS selectors for the vacancy fields. A site without a rule file has no rule.
+4. **Site rule → extracted vacancy document.** The rule runs on the saved HTML with a static HTML parser, with no browser and no network. Short fields (title, company) become plain text, and long fields (description, company description) become Markdown. The result is Markdown with YAML front matter (`source_url`, `site`, `title`, …) and the sections `## Company` (only when the page has a company description) and `## Job description`. Reads: `page.html`, `rules/<site>.ts`. Format: [`rules/README.md`](rules/README.md) and `specs/decisions/10-site-parsing-rule-format.md`.
+5. **(Planned) extracted document → output contract.** The vacancy output contract (#8) turns the extracted document into the format the writer reads.
+
+Examples and tests: `examples/` holds saved pages (`page.html`) with their reference documents (`expected.md`). `npm test` runs step 4 on every example and compares the result with `expected.md`, and `npm run rules:check -- <site>` does the same for one site, with a diff. This is how rules are written and kept working, offline.
+
+Available now: steps 1–2 (fetching) and step 4 on stored examples (rules, tests, `rules:check`). Planned:
+
+- Matching a vacancy URL to a site rule (#11): running steps 3–4 on a fetched job from `runs/`, choosing the rule by its URL.
+- Vacancies from a site without a rule (#12): what happens when step 3 finds no rule.
+- Tool for adding vacancy examples (#14): saving a page as a new example with a draft `expected.md`.
+- Vacancy output contract (#8): step 5.
+- Fetcher: use the user's browser session (#16): fetching pages that need a login.
 
 ## Setup
 
@@ -22,6 +42,7 @@ Checks:
 ```bash
 npm run typecheck
 npm run lint
+npm test        # run the site rules on all examples
 ```
 
 ## Commands
@@ -57,6 +78,26 @@ Prints the job's `status.json`. If the stored status is `queued` or `running` bu
 ### `npm run jobs`
 
 Lists all jobs, newest first, one line each: `<id>  <status>  <url>`.
+
+### `npm run rules:check -- <site>`
+
+Runs the rule `rules/<site>.ts` on every example of the site from `examples/index.yaml`. For each example it prints the extracted document, then either `--- matches expected.md` or a line diff against `expected.md` (`-` expected, `+` actual, with line numbers of `expected.md`). The last line is `<n> of <m> examples pass`.
+
+```bash
+npm run rules:check -- careers-page.com
+```
+
+| Exit code | Meaning |
+| --- | --- |
+| `0` | All examples of the site match `expected.md`. |
+| `1` | A mismatch or an extraction error, no rule for the site ("no rule for `<site>`"), or no examples of the site in `examples/index.yaml`. |
+| `2` | No site given. |
+
+This is the command an agent uses to write and fix a rule. See [`rules/README.md`](rules/README.md).
+
+### `npm test`
+
+Runs the rule tests with `node:test`: one test per example in `examples/index.yaml`. The test runs the site's rule on `page.html` and compares the result with `expected.md` after normalising line endings, trailing whitespace and the final newline. An example whose site has no rule is reported as `todo`, not as a failure.
 
 ## Job statuses
 
@@ -99,4 +140,4 @@ The job id is local time + site + a random suffix, for example `20261024-153012-
 
 ## Examples (evals)
 
-`examples/` holds saved vacancy pages with the expected text. These are the evals for the parsing rules. `examples/index.yaml` is the only metadata source. Layout and snapshot rules: `specs/decisions/6-vacancy-reader-module.md`. Files under `examples/` are kept byte for byte and are ignored by lint and typecheck.
+`examples/` holds saved vacancy pages (`page.html`) with their reference extracted vacancy documents (`expected.md`, reviewed by a human; see [`rules/README.md`](rules/README.md)). These are the evals for the site parsing rules, run by `npm test` and `npm run rules:check`. `examples/index.yaml` is the only metadata source. Layout and snapshot rules: `specs/decisions/6-vacancy-reader-module.md`. Files under `examples/` are kept byte for byte and are ignored by lint and typecheck.

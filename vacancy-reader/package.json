@@ -12,15 +12,21 @@
     "fetch": "tsx src/cli.ts fetch",
     "status": "tsx src/cli.ts status",
     "jobs": "tsx src/cli.ts jobs",
+    "rules:check": "tsx src/cli.ts rules:check",
+    "test": "tsx --test \"src/**/*.test.ts\"",
     "typecheck": "tsc --noEmit",
     "lint": "eslint ."
   },
   "dependencies": {
-    "playwright": "1.64.1"
+    "linkedom": "0.18.14",
+    "playwright": "1.64.1",
+    "turndown": "7.2.4",
+    "yaml": "2.9.1"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
     "@types/node": "24.19.2",
+    "@types/turndown": "5.0.6",
     "eslint": "10.13.0",
     "tsx": "4.23.15",
     "typescript": "6.0.3",

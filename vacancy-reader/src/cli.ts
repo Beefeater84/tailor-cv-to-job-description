@@ -2,11 +2,50 @@
 import { parseArgs } from "node:util";
 import { getJob, jobDir, listJobs } from "./fetch/jobs.ts";
 import { startFetchJob } from "./fetch/start.ts";
+import { formatDiff, listExamples, loadRule, noRuleMessage, runExample } from "./rules/index.ts";
 
 const USAGE = `Usage:
   cli.ts fetch <url> [--wait-for <selector>] [--headed] [--timeout <seconds>]
   cli.ts status <job-id>
-  cli.ts jobs`;
+  cli.ts jobs
+  cli.ts rules:check <site>`;
+
+/** Prints each example's output and its diff against expected.md; 0 when all examples of the site pass. */
+async function checkRules(site: string): Promise<number> {
+  const examples = await listExamples(site);
+  if (examples.length === 0) {
+    console.error(`No examples for ${site} in examples/index.yaml`);
+    return 1;
+  }
+  if (!(await loadRule(site))) {
+    console.error(noRuleMessage(site));
+    return 1;
+  }
+  let passed = 0;
+  for (const example of examples) {
+    const result = await runExample(example);
+    console.log(`=== ${example.path} ===`);
+    switch (result.status) {
+      case "pass":
+        console.log(result.actual);
+        console.log("--- matches expected.md");
+        passed++;
+        break;
+      case "fail":
+        console.log(result.actual);
+        console.log("--- differs from expected.md (- expected, + actual):");
+        console.log(formatDiff(result.diff));
+        break;
+      case "error":
+      case "todo":
+        console.log(`--- error: ${result.message}`);
+        break;
+    }
+    console.log();
+  }
+  console.log(`${passed} of ${examples.length} examples pass`);
+  return passed === examples.length ? 0 : 1;
+}
 
 async function main(argv: string[]): Promise<number> {
   const { values, positionals } = parseArgs({
@@ -64,6 +103,13 @@ async function main(argv: string[]): Promise<number> {
         console.log(`${job.id}  ${job.status}  ${job.url}`);
       }
       return 0;
+    }
+    case "rules:check": {
+      if (!arg) {
+        console.error(USAGE);
+        return 2;
+      }
+      return checkRules(arg);
     }
     default:
       console.error(`Unknown command: ${command}\n${USAGE}`);

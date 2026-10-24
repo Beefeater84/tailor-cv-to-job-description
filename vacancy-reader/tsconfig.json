@@ -18,6 +18,6 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true
   },
-  "include": ["src/**/*.ts", "eslint.config.js"],
+  "include": ["src/**/*.ts", "rules/**/*.ts", "eslint.config.js"],
   "exclude": ["node_modules", "runs", "examples", "dist"]
 }
