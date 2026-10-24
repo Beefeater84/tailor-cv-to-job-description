@@ -9,6 +9,9 @@
   },
   "scripts": {
     "setup": "playwright install chromium",
+    "fetch": "tsx src/cli.ts fetch",
+    "status": "tsx src/cli.ts status",
+    "jobs": "tsx src/cli.ts jobs",
     "typecheck": "tsc --noEmit",
     "lint": "eslint ."
   },

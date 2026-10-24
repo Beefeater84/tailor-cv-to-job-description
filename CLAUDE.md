@@ -16,3 +16,7 @@ Use the `gh` CLI to read and update tasks, for example `gh issue view <n>` and `
 - Permanent branch `staging`. Feature branches are created from `staging` in `origin` and merged back into it.
 - Never branch from or target `main` or `master`. They hold released code only.
 - Branch name: `<type>/<issue-number>-<short-description>`, where type is one of `feat`, `fix`, `docs`, `refactor`, `chore`.
+
+## Vacancy URLs
+
+When the user gives a vacancy URL in chat, fetch it with the vacancy-reader module: `cd vacancy-reader && npm run fetch -- <url>`, then check the job with `npm run status -- <job-id>` until it reaches a final status, and read `runs/<job-id>/page.html`. See `vacancy-reader/README.md`.
