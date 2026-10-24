@@ -17,12 +17,13 @@ Do not read the whole folder. Read the base set, then only what the task needs.
 
 ## Read by topic
 
-The project has no modules yet. Add a row for each module or doc area when it appears (vacancy reader, writer, PDF creator, rules, design sample).
+Add a row for each module or doc area when it appears (writer, PDF creator, CV rules, design sample).
 
 | When the task touches | Read |
 |---|---|
 | The format or content of the candidate data (`llms-full.txt`) | `docs/spec.md` in the `Beefeater84/index-cv` repository |
-| `vacancy-reader/`, vacancy examples in `vacancy-reader/examples/` or vacancy rule tests | `vacancy-reader/README.md` (created in a later group of the task Fetch vacancy pages with Playwright (#6)), `decisions/6-vacancy-reader-module.md` |
+| `vacancy-reader/`, vacancy examples in `vacancy-reader/examples/` or vacancy rule tests | `vacancy-reader/README.md`, `decisions/6-vacancy-reader-module.md` |
+| Site parsing rules in `vacancy-reader/rules/`, the extracted vacancy document or `expected.md` of an example | `vacancy-reader/rules/README.md`, `decisions/10-site-parsing-rule-format.md` |
 | The stack, language, runtime or module layout | `decisions/6-typescript-node-stack.md` |
 
 ## Feature folders
