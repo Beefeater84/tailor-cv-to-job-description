@@ -14,15 +14,15 @@ A vacancy URL becomes an extracted vacancy document in these steps:
 
 1. **URL → fetch job.** `npm run fetch -- <url>` creates a job folder `runs/<job-id>/` and starts a background worker. Reads: the URL. Writes: `runs/<job-id>/status.json`.
 2. **Fetch job → `page.html`.** The worker opens the URL in headless Chromium, waits until the page has rendered and saves the rendered HTML. Writes: `runs/<job-id>/page.html`, the final `status.json` and `worker.log`. `npm run status -- <job-id>` shows when the job has reached a final status.
-3. **`page.html` → site rule.** The site key is the URL host without `www.` (`careers-page.com`). The rule of the site is the file `rules/<site>.ts`: CSS selectors for the vacancy fields. A site without a rule file has no rule.
+3. **`page.html` → site rule.** The site key is the URL host without `www.` (`careers-page.com`). The rule of the site is the file `rules/<site>.ts`: CSS selectors for the vacancy fields. A site without a rule file has no rule. `npm run match -- <url>` does this lookup for a URL (host only, see [`rules/README.md`](rules/README.md)).
 4. **Site rule → extracted vacancy document.** The rule runs on the saved HTML with a static HTML parser, with no browser and no network. Short fields (title, company) become plain text, and long fields (description, company description) become Markdown. The result is Markdown with YAML front matter (`source_url`, `site`, `title`, …) and the sections `## Company` (only when the page has a company description) and `## Job description`. Reads: `page.html`, `rules/<site>.ts`. Format: [`rules/README.md`](rules/README.md) and `specs/decisions/10-site-parsing-rule-format.md`.
 5. **(Planned) extracted document → output contract.** The vacancy output contract (#8) turns the extracted document into the format the writer reads.
 
 Examples and tests: `examples/` holds saved pages (`page.html`) with their reference documents (`expected.md`). `npm test` runs step 4 on every example and compares the result with `expected.md`, and `npm run rules:check -- <site>` does the same for one site, with a diff. This is how rules are written and kept working, offline.
 
-Available now: steps 1–2 (fetching) and step 4 on stored examples (rules, tests, `rules:check`). Planned:
+Available now: steps 1–2 (fetching), step 3 for a URL (`match`) and step 4 on stored examples (rules, tests, `rules:check`). Planned:
 
-- Matching a vacancy URL to a site rule (#11): running steps 3–4 on a fetched job from `runs/`, choosing the rule by its URL.
+- Running steps 3–4 on a fetched job from `runs/` (no task yet).
 - Vacancies from a site without a rule (#12): what happens when step 3 finds no rule.
 - Tool for adding vacancy examples (#14): saving a page as a new example with a draft `expected.md`.
 - Vacancy output contract (#8): step 5.
@@ -78,6 +78,25 @@ Prints the job's `status.json`. If the stored status is `queued` or `running` bu
 ### `npm run jobs`
 
 Lists all jobs, newest first, one line each: `<id>  <status>  <url>`.
+
+### `npm run match -- <url>`
+
+Tells which site a vacancy URL belongs to and which rule file applies. It looks at the host only (lower case, `www.` stripped), does not open the page and does not run the rule.
+
+```bash
+npm run match -- https://www.careers-page.com/idelsoft/job/63674V5R
+# site: careers-page.com
+# rule: C:\...\vacancy-reader\rules\careers-page.com.ts
+
+npm run match -- https://example.com/job/1
+# no rule for example.com
+```
+
+| Exit code | Meaning |
+| --- | --- |
+| `0` | The site has a rule. It prints `site: <site>` and `rule: <absolute path>`. |
+| `1` | No rule for the site ("no rule for `<site>`"), or the URL is invalid (not `http` or `https`). |
+| `2` | No URL given. |
 
 ### `npm run rules:check -- <site>`
 

@@ -63,6 +63,19 @@ Extract only what the site's markup clearly states. If the markup does not mark 
 
 A field may come from `postprocess` when the site's platform template states it and a second source on the same page confirms it. This is decided per site, and it is not a general rule. Example: on careers-page.com (Manatal) no element states the employer. The page `<title>` follows the template "`<role>` - `<Company>` - Get Hired …", and the vacancy URL has the company slug as its first path segment (`/idelsoft/job/3W3V95WV`). The rule's `postprocess` takes the company from the `<title>` only when it equals the slug, case-insensitively, and keeps the spelling from the `<title>` (`iDelsoft`). If the template is not found or the slug differs, the rule outputs no `company`. `og:site_name` is "Manatal", the hiring platform, not the employer, so it is never used.
 
+## Matching a URL to a rule
+
+`npm run match -- <url>` tells which site a vacancy URL belongs to and which rule file applies.
+
+- **By host, one rule per site.** The site key is the host of the URL. The rule is `rules/<site>.ts`, and a missing file means "no rule for `<site>`".
+- **Only the host is normalised**: lower case, and a leading `www.` is stripped. Other subdomains are other sites (`jobs.careers-page.com` is not `careers-page.com`). Path, query and fragment are ignored, so a trailing `/`, `?utm=...` and `#apply` do not change the match.
+- **No conflicts between rules.** A host gives exactly one file name, so two rules cannot match the same URL.
+- **Matching happens before the page is opened.** It looks at the URL only and does not need a fetched page.
+- **Platform signatures are not used.** A hiring platform on a company's own domain (for example Manatal on a custom domain) is a site without a rule. What happens then belongs to "vacancies from a site without a rule (#12)".
+- **URLs already stored as examples are not recognised here.** That is left to "tool for adding vacancy examples (#14)".
+
+The command only finds the rule file. It does not load or run the rule.
+
 ## The extracted vacancy document
 
 Markdown with YAML front matter:
@@ -133,7 +146,7 @@ A tool for adding vacancy examples (#14) is planned to automate the draft. Its o
 
 ## Planned
 
-- Matching a vacancy URL to a site rule (#11): parsing a fetched job from `runs/` and choosing the rule by its URL.
+- Running a rule on a fetched job from `runs/` (no task yet).
 - Vacancies from a site without a rule (#12): what happens when there is no rule.
 - Tool for adding vacancy examples (#14).
 - Vacancy output contract (#8): turning the extracted document into the writer's format.
