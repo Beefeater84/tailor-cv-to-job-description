@@ -13,6 +13,7 @@
     "status": "tsx src/cli.ts status",
     "jobs": "tsx src/cli.ts jobs",
     "match": "tsx src/cli.ts match",
+    "extract": "tsx src/cli.ts extract",
     "rules:check": "tsx src/cli.ts rules:check",
     "test": "tsx --test \"src/**/*.test.ts\"",
     "typecheck": "tsc --noEmit",

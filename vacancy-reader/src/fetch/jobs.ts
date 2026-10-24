@@ -28,6 +28,18 @@ export interface FetchOptions {
   timeoutMs: number;
 }
 
+/** Result of extracting the vacancy document from a succeeded job's page.html. */
+export interface ExtractionResult {
+  status: "succeeded" | "no_rule" | "failed";
+  site: string | null;
+  /** Absolute path of the rule file used, or null. */
+  rule: string | null;
+  /** File name written in the job folder (vacancy.md), or null. */
+  file: string | null;
+  error: string | null;
+  finishedAt: string;
+}
+
 export interface JobStatus {
   id: string;
   url: string;
@@ -40,17 +52,19 @@ export interface JobStatus {
   finishedAt: string | null;
   pid: number | null;
   options: FetchOptions;
+  /** Result of the last extraction; absent until the step has run. */
+  extraction?: ExtractionResult;
 }
 
 /** A queued job whose worker has not reported in within this time is reported as crashed. */
 const QUEUED_GRACE_MS = 60_000;
 
-export function jobDir(id: string): string {
-  return join(RUNS_DIR, id);
+export function jobDir(id: string, runsDir: string = RUNS_DIR): string {
+  return join(runsDir, id);
 }
 
-function statusPath(id: string): string {
-  return join(jobDir(id), "status.json");
+function statusPath(id: string, runsDir: string): string {
+  return join(jobDir(id, runsDir), "status.json");
 }
 
 /** Throws if the value is not an absolute http or https URL. */
@@ -109,8 +123,8 @@ export async function createJob(url: URL, options: FetchOptions): Promise<JobSta
 }
 
 /** Writes status.json atomically: a temp file in the same folder, then rename over the target. */
-export async function writeStatus(status: JobStatus): Promise<void> {
-  const target = statusPath(status.id);
+export async function writeStatus(status: JobStatus, runsDir: string = RUNS_DIR): Promise<void> {
+  const target = statusPath(status.id, runsDir);
   const temp = `${target}.${process.pid}.${randomBytes(4).toString("hex")}.tmp`;
   await writeFile(temp, JSON.stringify(status, null, 2) + "\n", "utf8");
   for (let attempt = 0; ; attempt++) {
@@ -131,10 +145,10 @@ export async function writeStatus(status: JobStatus): Promise<void> {
 }
 
 /** Reads the stored status of a job as written by the worker, or null if the job does not exist. */
-export async function readStatus(id: string): Promise<JobStatus | null> {
+export async function readStatus(id: string, runsDir: string = RUNS_DIR): Promise<JobStatus | null> {
   let text: string;
   try {
-    text = await readFile(statusPath(id), "utf8");
+    text = await readFile(statusPath(id, runsDir), "utf8");
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === "ENOENT") return null;
     throw error;
@@ -162,9 +176,9 @@ function withCrashCheck(status: JobStatus, now = Date.now()): JobStatus {
 }
 
 /** Current status of a job (with the crash check), or null if the job does not exist. */
-export async function getJob(id: string): Promise<JobStatus | null> {
+export async function getJob(id: string, runsDir: string = RUNS_DIR): Promise<JobStatus | null> {
   if (!/^[\w.-]+$/.test(id)) return null;
-  const status = await readStatus(id);
+  const status = await readStatus(id, runsDir);
   return status && withCrashCheck(status);
 }
 

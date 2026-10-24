@@ -19,4 +19,4 @@ Use the `gh` CLI to read and update tasks, for example `gh issue view <n>` and `
 
 ## Vacancy URLs
 
-When the user gives a vacancy URL in chat, fetch it with the vacancy-reader module: `cd vacancy-reader && npm run fetch -- <url>`, then check the job with `npm run status -- <job-id>` until it reaches a final status, and read `runs/<job-id>/page.html`. See `vacancy-reader/README.md`.
+When the user gives a vacancy URL in chat, fetch it with the vacancy-reader module: `cd vacancy-reader && npm run fetch -- <url>`, then check the job with `npm run status -- <job-id>` until it reaches a final status. For a `succeeded` job the extracted vacancy is in `runs/<job-id>/vacancy.md` (the worker writes it right after the fetch, so check `extraction.status` in the status output and wait for it if it is not there yet): read that file. Read `runs/<job-id>/page.html` only when `extraction.status` is not `succeeded` (`no_rule` or `failed`) or the job is not `succeeded`. See `vacancy-reader/README.md`.

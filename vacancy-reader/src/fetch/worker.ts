@@ -3,6 +3,7 @@
 import { writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { stripVTControlCharacters } from "node:util";
+import { extractJob } from "../extract.ts";
 import { jobDir, readStatus, writeStatus, type JobStatus } from "./jobs.ts";
 import { fetchPage, PageTimeoutError } from "./page.ts";
 
@@ -56,6 +57,18 @@ async function run(id: string): Promise<void> {
   status = { ...status, finishedAt: new Date().toISOString() };
   await writeStatus(status);
   console.log(`[${status.finishedAt}] ${status.status}${status.error ? `: ${status.error}` : ""}`);
+
+  if (status.status === "succeeded") {
+    // Extraction never changes the fetch status; its outcome is recorded in `extraction`.
+    try {
+      const extraction = await extractJob(id);
+      console.log(
+        `[${extraction.finishedAt}] extraction ${extraction.status}${extraction.error ? `: ${extraction.error}` : ""}`,
+      );
+    } catch (error) {
+      console.log(`[${new Date().toISOString()}] extraction error: ${errorMessage(error)}`);
+    }
+  }
 }
 
 const id = process.argv[2];
