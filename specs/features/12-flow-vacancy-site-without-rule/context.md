@@ -45,3 +45,5 @@ All paths under `vacancy-reader/` unless noted. Decision: `specs/decisions/12-ll
 - Everything in English. Commits `feat(#12): ...` / `docs(#12): ...` with the `Co-Authored-By` trailer.
 
 ## Gaps found during implementation
+- Implementers have no Skill tool: the `claude-api` skill is not available to them. SDK usage was taken from the installed `@anthropic-ai/sdk` 1.3.0 type definitions (`resources/messages/messages.d.ts`).
+- The ADR is at the repo root: `specs/decisions/12-llm-fallback-extraction.md`, not under `vacancy-reader/`.
