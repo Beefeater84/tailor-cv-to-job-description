@@ -10,7 +10,7 @@ The format is decided in `specs/decisions/10-site-parsing-rule-format.md`. This 
 - The file default-exports a rule built with `defineRule`. There is no registry: the reader loads `rules/<site>.ts` by the site key. A site without the file has no rule ("no rule for `<site>`").
 - Adding a site means adding a rule file and an example. The reader code does not change.
 
-The careers-page.com rule, a minimal rule:
+A minimal rule (the careers-page.com rule without its `postprocess`, see "Do not guess" below):
 
 ```ts
 // careers-page.com: career pages hosted by Manatal.
@@ -61,7 +61,7 @@ It gets the extracted values (`title`, `company`, `hiring_manager`, `tags`, `com
 
 Extract only what the site's markup clearly states. If the markup does not mark a field, leave the field out of the rule, and it is left out of the output too. The LLM is not used here, and the reader never guesses.
 
-Example: on careers-page.com the employer name ("iDelsoft") appears only inside the page `<title>` ("… - iDelsoft - Get Hired …") and in the URL slug. No element on the page states the company, so the rule has no `company`. `og:site_name` is "Manatal", the hiring platform, not the employer.
+A field may come from `postprocess` when the site's platform template states it and a second source on the same page confirms it. This is decided per site, and it is not a general rule. Example: on careers-page.com (Manatal) no element states the employer. The page `<title>` follows the template "`<role>` - `<Company>` - Get Hired …", and the vacancy URL has the company slug as its first path segment (`/idelsoft/job/3W3V95WV`). The rule's `postprocess` takes the company from the `<title>` only when it equals the slug, case-insensitively, and keeps the spelling from the `<title>` (`iDelsoft`). If the template is not found or the slug differs, the rule outputs no `company`. `og:site_name` is "Manatal", the hiring platform, not the employer, so it is never used.
 
 ## The extracted vacancy document
 

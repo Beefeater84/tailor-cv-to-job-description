@@ -2,6 +2,7 @@
 source_url: https://www.careers-page.com/idelsoft/job/3W3V95WV
 site: careers-page.com
 title: Senior Frontend Performance Engineer - React (Europe, Remote)
+company: iDelsoft
 ---
 
 ## Job description
