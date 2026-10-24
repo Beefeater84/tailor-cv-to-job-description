@@ -1,6 +1,8 @@
 // vacancy-reader CLI. Run with tsx, e.g. `npm run fetch -- <url>`.
+import { join } from "node:path";
 import { parseArgs } from "node:util";
 import { getJob, jobDir, listJobs } from "./fetch/jobs.ts";
+import { extractJob } from "./extract.ts";
 import { matchUrl } from "./match.ts";
 import { startFetchJob } from "./fetch/start.ts";
 import { formatDiff, listExamples, loadRule, noRuleMessage, runExample } from "./rules/index.ts";
@@ -10,6 +12,7 @@ const USAGE = `Usage:
   cli.ts status <job-id>
   cli.ts jobs
   cli.ts match <url>
+  cli.ts extract <job-id>
   cli.ts rules:check <site>`;
 
 /** Prints each example's output and its diff against expected.md; 0 when all examples of the site pass. */
@@ -118,6 +121,25 @@ async function main(argv: string[]): Promise<number> {
       }
       console.log(`site: ${match.site}`);
       console.log(`rule: ${match.rulePath}`);
+      return 0;
+    }
+    case "extract": {
+      if (!arg) {
+        console.error(USAGE);
+        return 2;
+      }
+      const result = await extractJob(arg);
+      if (result.status === "no_rule") {
+        console.error(result.error);
+        return 1;
+      }
+      if (result.status === "failed") {
+        console.error(`Extraction failed: ${result.error}`);
+        return 1;
+      }
+      console.log(`site: ${result.site}`);
+      console.log(`rule: ${result.rule}`);
+      console.log(`file: ${join(jobDir(arg), result.file ?? "vacancy.md")}`);
       return 0;
     }
     case "rules:check": {
