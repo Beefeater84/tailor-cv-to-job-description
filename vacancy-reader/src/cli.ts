@@ -1,6 +1,7 @@
 // vacancy-reader CLI. Run with tsx, e.g. `npm run fetch -- <url>`.
 import { parseArgs } from "node:util";
 import { getJob, jobDir, listJobs } from "./fetch/jobs.ts";
+import { matchUrl } from "./match.ts";
 import { startFetchJob } from "./fetch/start.ts";
 import { formatDiff, listExamples, loadRule, noRuleMessage, runExample } from "./rules/index.ts";
 
@@ -8,6 +9,7 @@ const USAGE = `Usage:
   cli.ts fetch <url> [--wait-for <selector>] [--headed] [--timeout <seconds>]
   cli.ts status <job-id>
   cli.ts jobs
+  cli.ts match <url>
   cli.ts rules:check <site>`;
 
 /** Prints each example's output and its diff against expected.md; 0 when all examples of the site pass. */
@@ -102,6 +104,20 @@ async function main(argv: string[]): Promise<number> {
       for (const job of await listJobs()) {
         console.log(`${job.id}  ${job.status}  ${job.url}`);
       }
+      return 0;
+    }
+    case "match": {
+      if (!arg) {
+        console.error(USAGE);
+        return 2;
+      }
+      const match = await matchUrl(arg);
+      if (!match.rulePath) {
+        console.error(noRuleMessage(match.site));
+        return 1;
+      }
+      console.log(`site: ${match.site}`);
+      console.log(`rule: ${match.rulePath}`);
       return 0;
     }
     case "rules:check": {

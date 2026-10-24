@@ -8,7 +8,7 @@ import type { SiteRule } from "./types.ts";
 export const RULES_DIR = join(MODULE_ROOT, "rules");
 
 /** A site key that is safe to use as a file name, e.g. `careers-page.com`. */
-const SITE_KEY_PATTERN = /^[a-z0-9][a-z0-9.-]*$/;
+export const SITE_KEY_PATTERN = /^[a-z0-9][a-z0-9.-]*$/;
 
 /** Path of the rule file of a site (the file may not exist). */
 export function rulePath(site: string): string {
