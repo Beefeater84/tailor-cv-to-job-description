@@ -37,9 +37,9 @@ Decision: `specs/decisions/10-site-parsing-rule-format.md` (accepted). Scope is 
 - Goal: An agent can write, test and update a site rule from the docs alone.
 - Files:
   - `vacancy-reader/rules/README.md` (create): rule format and fields, output document format, how an agent writes a rule (read `page.html` and `expected.md`, pick selectors, run `rules:check`, stop after 5 failed iterations and show the diff to the user), how a rule is updated when a site changes its layout, how `expected.md` is made and reviewed.
-  - `vacancy-reader/README.md` (change: Parsing is available; commands `test` and `rules:check`; link to the rules README).
+  - `vacancy-reader/README.md` (change: a "How the module works" section near the top — the whole flow step by step: URL → fetch job → `runs/<id>/page.html` → site rule → extracted vacancy document → (later) output contract; what each step reads and writes, where examples and tests fit, what is planned and in which task; Parsing is available; commands `test` and `rules:check`; link to the rules README).
   - `specs/tech-stack.md` (change: Checks gets `npm test`; the test data line mentions the `expected.md` format and the ADR).
   - `specs/AGENT.md` (change: a "Read by topic" row for `vacancy-reader/rules/` → rules README and ADR `10-site-parsing-rule-format`; fix the outdated note that the module README is created later).
 - Reuse: style of `vacancy-reader/README.md` (one `###` per command, flags table).
-- Done when: the docs match the ADR and the code (field names, command names, iteration limit); no doc says `expected.md` is copied browser text.
+- Done when: the docs match the ADR and the code (field names, command names, iteration limit); no doc says `expected.md` is copied browser text; a reader new to the module understands from `vacancy-reader/README.md` alone how a URL becomes an extracted vacancy document.
 - Complexity: normal
