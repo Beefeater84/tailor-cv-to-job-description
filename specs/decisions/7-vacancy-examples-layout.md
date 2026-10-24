@@ -1,6 +1,6 @@
 # Vacancy examples layout: `examples/vacancies/` with one `index.yaml`
 
-Status: accepted
+Status: superseded by 6-vacancy-reader-module.md
 Date: 2026-10-23
 Issue: Vacancy examples: folder and data structure (#7)
 Affects: site parsing rules: format and tests (#10), matching a vacancy URL to a site rule (#11), vacancies from a site without a rule (#12); vacancy reader

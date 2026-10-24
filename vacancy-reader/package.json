@@ -1,0 +1,29 @@
+{
+  "name": "vacancy-reader",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Reads vacancy pages and turns them into structured vacancy data.",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "setup": "playwright install chromium",
+    "fetch": "tsx src/cli.ts fetch",
+    "status": "tsx src/cli.ts status",
+    "jobs": "tsx src/cli.ts jobs",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "playwright": "1.64.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "24.19.2",
+    "eslint": "10.13.0",
+    "tsx": "4.23.15",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.0"
+  }
+}

@@ -1,0 +1,82 @@
+// vacancy-reader CLI. Run with tsx, e.g. `npm run fetch -- <url>`.
+import { parseArgs } from "node:util";
+import { getJob, jobDir, listJobs } from "./fetch/jobs.ts";
+import { startFetchJob } from "./fetch/start.ts";
+
+const USAGE = `Usage:
+  cli.ts fetch <url> [--wait-for <selector>] [--headed] [--timeout <seconds>]
+  cli.ts status <job-id>
+  cli.ts jobs`;
+
+async function main(argv: string[]): Promise<number> {
+  const { values, positionals } = parseArgs({
+    args: argv,
+    allowPositionals: true,
+    options: {
+      "wait-for": { type: "string" },
+      headed: { type: "boolean", default: false },
+      timeout: { type: "string", default: "60" },
+      help: { type: "boolean", short: "h", default: false },
+    },
+  });
+  const [command, arg] = positionals;
+
+  if (values.help || !command) {
+    console.log(USAGE);
+    return values.help ? 0 : 2;
+  }
+
+  switch (command) {
+    case "fetch": {
+      if (!arg) {
+        console.error(USAGE);
+        return 2;
+      }
+      const seconds = Number(values.timeout);
+      if (!Number.isFinite(seconds) || seconds <= 0) {
+        console.error(`Invalid --timeout: ${values.timeout}`);
+        return 2;
+      }
+      const job = await startFetchJob(arg, {
+        waitFor: values["wait-for"] ?? null,
+        headed: values.headed,
+        timeoutMs: Math.round(seconds * 1000),
+      });
+      console.log(job.id);
+      console.log(jobDir(job.id));
+      return 0;
+    }
+    case "status": {
+      if (!arg) {
+        console.error(USAGE);
+        return 2;
+      }
+      const job = await getJob(arg);
+      if (!job) {
+        console.error(`Job not found: ${arg}`);
+        return 1;
+      }
+      console.log(JSON.stringify(job, null, 2));
+      return 0;
+    }
+    case "jobs": {
+      for (const job of await listJobs()) {
+        console.log(`${job.id}  ${job.status}  ${job.url}`);
+      }
+      return 0;
+    }
+    default:
+      console.error(`Unknown command: ${command}\n${USAGE}`);
+      return 2;
+  }
+}
+
+main(process.argv.slice(2)).then(
+  (code) => {
+    process.exitCode = code;
+  },
+  (error: unknown) => {
+    console.error(error instanceof Error ? error.message : String(error));
+    process.exitCode = 1;
+  },
+);

@@ -44,7 +44,8 @@ Rules for the content:
 - Local agent, web access through Playwright with the user's browser session — see `decisions/3-local-agent-playwright-user-session.md`.
 - Per-site parsing rules learned from examples — see `decisions/3-site-parsing-rules-from-examples.md`.
 - Language: English for all content and documentation.
-- Vacancy examples (URL, expected text, HTML snapshot) are stored in `examples/vacancies/` with one `index.yaml` — see `decisions/7-vacancy-examples-layout.md`.
+- Stack: TypeScript on Node 24, npm, Playwright; one module per pipeline stage — see `decisions/6-typescript-node-stack.md`.
+- Vacancy reader is one module, `vacancy-reader/`. Its examples (URL, expected text, HTML snapshot) are stored in `vacancy-reader/examples/` with one `index.yaml` — see `decisions/6-vacancy-reader-module.md`.
 
 ## Scope
 

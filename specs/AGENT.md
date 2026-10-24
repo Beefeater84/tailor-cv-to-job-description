@@ -22,7 +22,8 @@ The project has no modules yet. Add a row for each module or doc area when it ap
 | When the task touches | Read |
 |---|---|
 | The format or content of the candidate data (`llms-full.txt`) | `docs/spec.md` in the `Beefeater84/index-cv` repository |
-| `examples/vacancies/`, vacancy examples or vacancy rule tests | `decisions/7-vacancy-examples-layout.md` |
+| `vacancy-reader/`, vacancy examples in `vacancy-reader/examples/` or vacancy rule tests | `vacancy-reader/README.md` (created in a later group of the task Fetch vacancy pages with Playwright (#6)), `decisions/6-vacancy-reader-module.md` |
+| The stack, language, runtime or module layout | `decisions/6-typescript-node-stack.md` |
 
 ## Feature folders
 
