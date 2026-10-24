@@ -1,6 +1,6 @@
 # Site parsing rules
 
-A site rule tells the vacancy reader where the vacancy is on a page of one site. The reader runs the rule on a saved, already rendered `page.html` (no browser, no network) and produces the extracted vacancy document.
+A site rule tells the vacancy reader where the vacancy is on a page of one site. The reader runs the rule on a saved, already rendered `page.html` (no browser, no network) and produces the extracted vacancy document. For a fetched job the worker does this automatically after the fetch, and `npm run extract -- <job-id>` runs it again (see [`../README.md`](../README.md)).
 
 The format is decided in `specs/decisions/10-site-parsing-rule-format.md`. This file is the how-to.
 
@@ -48,6 +48,7 @@ Every field except `postprocess` and `remove` is one CSS selector (a string). Se
 - A field whose selector matches nothing, or only empty text, is left out of the output.
 - **No description is an error**: if `description` matches no text, or `postprocess` returns no description, the example fails with an error instead of producing a document.
 - An invalid selector is an error too.
+- **For a fetched job** such an error does not stop anything else: `extraction.status` in the job's `status.json` becomes `failed` with the message in `extraction.error` (an error thrown in `postprocess` too), no `vacancy.md` is written, and a `vacancy.md` from an earlier run is removed. The fetch `status` stays `succeeded`. A site without a rule gives `extraction.status` `no_rule`.
 
 ### `postprocess`
 
@@ -146,7 +147,6 @@ A tool for adding vacancy examples (#14) is planned to automate the draft. Its o
 
 ## Planned
 
-- Running a rule on a fetched job from `runs/` (no task yet).
 - Vacancies from a site without a rule (#12): what happens when there is no rule.
 - Tool for adding vacancy examples (#14).
 - Vacancy output contract (#8): turning the extracted document into the writer's format.
