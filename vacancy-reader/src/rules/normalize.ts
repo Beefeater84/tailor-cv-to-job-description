@@ -51,3 +51,31 @@ export function lineDiff(expected: string, actual: string): string[] {
   while (j < b.length) out.push(`+ ${b[j++]}`);
   return out;
 }
+
+/**
+ * Readable form of a lineDiff result: changed lines with `context` unchanged lines around them,
+ * each line prefixed with its line number in `expected`, skipped runs shown as `...`.
+ */
+export function formatDiff(diff: string[], context = 2): string {
+  const changed = diff.map((line) => !line.startsWith("  "));
+  const shown = diff.map((_, index) => {
+    for (let k = Math.max(0, index - context); k <= Math.min(diff.length - 1, index + context); k++) {
+      if (changed[k]) return true;
+    }
+    return false;
+  });
+  const out: string[] = [];
+  let expectedLine = 0;
+  let skipped = false;
+  diff.forEach((line, index) => {
+    if (!line.startsWith("+ ")) expectedLine++;
+    if (!shown[index]) {
+      skipped = true;
+      return;
+    }
+    if (skipped && out.length > 0) out.push("...");
+    skipped = false;
+    out.push(`${String(expectedLine).padStart(4)} ${line}`);
+  });
+  return out.join("\n");
+}

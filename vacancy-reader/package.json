@@ -12,6 +12,8 @@
     "fetch": "tsx src/cli.ts fetch",
     "status": "tsx src/cli.ts status",
     "jobs": "tsx src/cli.ts jobs",
+    "rules:check": "tsx src/cli.ts rules:check",
+    "test": "tsx --test \"src/**/*.test.ts\"",
     "typecheck": "tsc --noEmit",
     "lint": "eslint ."
   },
