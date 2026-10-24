@@ -131,7 +131,9 @@ async function main(argv: string[]): Promise<number> {
       }
       const result = await extractJob(arg);
       if (result.status === "no_rule") {
-        console.error(result.error);
+        console.error(
+          `${result.error}. To extract it with the LLM fallback, set ANTHROPIC_API_KEY in the environment or in vacancy-reader/.env`,
+        );
         return 1;
       }
       if (result.status === "failed") {
@@ -139,7 +141,9 @@ async function main(argv: string[]): Promise<number> {
         return 1;
       }
       console.log(`site: ${result.site}`);
-      console.log(`rule: ${result.rule}`);
+      console.log(`has rule: ${result.has_rule ? "yes" : "no"}`);
+      console.log(`method: ${result.method}`);
+      console.log(`rule: ${result.rule ?? "-"}`);
       console.log(`file: ${join(jobDir(arg), result.file ?? "vacancy.md")}`);
       return 0;
     }
