@@ -2,6 +2,7 @@ import { randomBytes } from "node:crypto";
 import { mkdir, readFile, readdir, rename, unlink, writeFile } from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { siteKey } from "../site.ts";
 
 /** Root of the vacancy-reader module, independent of the current working directory. */
 export const MODULE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
@@ -74,10 +75,7 @@ function pad(n: number): string {
 function makeJobId(url: URL, now = new Date()): string {
   const date = `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}`;
   const time = `${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
-  const site = url.hostname
-    .replace(/^www\./, "")
-    .replace(/[^a-z0-9.-]/gi, "-")
-    .toLowerCase();
+  const site = siteKey(url).replace(/[^a-z0-9.-]/g, "-");
   return `${date}-${time}-${site}-${randomBytes(2).toString("hex")}`;
 }
 
