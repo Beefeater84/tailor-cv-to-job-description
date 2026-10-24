@@ -2,7 +2,7 @@
 export { defineRule } from "./types.ts";
 export type { ExtractedFields, PostprocessContext, SiteRule } from "./types.ts";
 export { RULES_DIR, loadRule, noRuleMessage, rulePath } from "./load.ts";
-export { ExtractionError, extractFields } from "./extract.ts";
+export { ALWAYS_REMOVED, ExtractionError, extractFields, resolveLinks } from "./extract.ts";
 export { elementsToMarkdown } from "./markdown.ts";
 export { renderDocument } from "./render.ts";
 export type { DocumentSource } from "./render.ts";

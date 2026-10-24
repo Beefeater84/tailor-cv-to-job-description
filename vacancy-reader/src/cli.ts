@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { parseArgs } from "node:util";
 import { getJob, jobDir, listJobs } from "./fetch/jobs.ts";
 import { extractJob } from "./extract.ts";
+import { loadEnv } from "./fallback/index.ts";
 import { matchUrl } from "./match.ts";
 import { startFetchJob } from "./fetch/start.ts";
 import { formatDiff, listExamples, loadRule, noRuleMessage, runExample } from "./rules/index.ts";
@@ -155,6 +156,8 @@ async function main(argv: string[]): Promise<number> {
   }
 }
 
+// The API key of the LLM fallback may come from vacancy-reader/.env; the environment wins.
+loadEnv();
 main(process.argv.slice(2)).then(
   (code) => {
     process.exitCode = code;
