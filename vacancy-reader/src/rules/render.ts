@@ -1,6 +1,6 @@
 import { Document as YamlDocument, isSeq } from "yaml";
 import { normalizeDocument } from "./normalize.ts";
-import type { ExtractedFields } from "./types.ts";
+import type { ExtractedFields, ExtractionMethod } from "./types.ts";
 
 /** Metadata of the extracted vacancy document that does not come from the page. */
 export interface DocumentSource {
@@ -8,11 +8,17 @@ export interface DocumentSource {
   sourceUrl: string;
   /** Site key, e.g. `careers-page.com`. */
   site: string;
+  /** How the fields were extracted; written as `extracted_by`. */
+  method: ExtractionMethod;
 }
 
 function frontMatter(fields: ExtractedFields, source: DocumentSource): string {
   // Insertion order is the output order.
-  const data: Record<string, string | string[]> = { source_url: source.sourceUrl, site: source.site };
+  const data: Record<string, string | string[]> = {
+    source_url: source.sourceUrl,
+    site: source.site,
+    extracted_by: source.method,
+  };
   if (fields.title) data.title = fields.title;
   if (fields.company) data.company = fields.company;
   if (fields.hiring_manager) data.hiring_manager = fields.hiring_manager;

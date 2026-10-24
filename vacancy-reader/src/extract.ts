@@ -33,22 +33,48 @@ export async function extractJob(id: string, runsDir: string = RUNS_DIR): Promis
 
   let result: ExtractionResult;
   let site: string | null = null;
+  let hasRule = false;
   try {
     site = siteKey(new URL(job.url));
     const rule = await loadRule(site);
+    hasRule = rule !== null;
     if (!rule) {
       await removeStale();
-      result = finish({ status: "no_rule", site, rule: null, file: null, error: noRuleMessage(site) });
+      result = finish({
+        status: "no_rule",
+        site,
+        rule: null,
+        file: null,
+        error: noRuleMessage(site),
+        method: null,
+        has_rule: false,
+      });
     } else {
       const html = await readFile(join(jobDir(id, runsDir), "page.html"), "utf8");
       const document = extractDocument(rule, html, job.url);
       await writeFile(target, document, "utf8");
-      result = finish({ status: "succeeded", site, rule: rulePath(site), file: VACANCY_FILE, error: null });
+      result = finish({
+        status: "succeeded",
+        site,
+        rule: rulePath(site),
+        file: VACANCY_FILE,
+        error: null,
+        method: "rule",
+        has_rule: true,
+      });
     }
   } catch (error) {
     await removeStale();
     const message = error instanceof Error ? error.message : String(error);
-    result = finish({ status: "failed", site, rule: site ? rulePath(site) : null, file: null, error: message });
+    result = finish({
+      status: "failed",
+      site,
+      rule: site ? rulePath(site) : null,
+      file: null,
+      error: message,
+      method: hasRule ? "rule" : null,
+      has_rule: hasRule,
+    });
   }
 
   await writeStatus({ ...job, extraction: result }, runsDir);

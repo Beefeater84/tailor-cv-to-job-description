@@ -55,6 +55,8 @@ test("succeeded job with a rule: vacancy.md equals expected.md", async () => {
   const job = await getJob("ok", runsDir);
   assert.equal(job?.status, "succeeded");
   assert.equal(job?.extraction?.status, "succeeded");
+  assert.equal(job?.extraction?.method, "rule");
+  assert.equal(job?.extraction?.has_rule, true);
 });
 
 test("site without a rule: no_rule and no vacancy.md", async () => {
@@ -63,6 +65,8 @@ test("site without a rule: no_rule and no vacancy.md", async () => {
   assert.equal(result.status, "no_rule");
   assert.equal(result.site, "no-rule.example");
   assert.equal(result.error, "no rule for no-rule.example");
+  assert.equal(result.method, null);
+  assert.equal(result.has_rule, false);
   assert.equal(existsSync(vacancyPath("norule")), false);
   assert.equal((await getJob("norule", runsDir))?.status, "succeeded");
 });
@@ -77,6 +81,8 @@ test("page without the description: failed, stale vacancy.md removed", async () 
   const job = await getJob("bad", runsDir);
   assert.equal(job?.status, "succeeded");
   assert.equal(job?.extraction?.status, "failed");
+  assert.equal(job?.extraction?.method, "rule");
+  assert.equal(job?.extraction?.has_rule, true);
 });
 
 test("job that is not succeeded is refused and left unchanged", async () => {

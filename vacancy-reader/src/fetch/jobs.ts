@@ -10,6 +10,8 @@ export const MODULE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), ".."
 /** Folder that holds one subfolder per fetch job. */
 export const RUNS_DIR = join(MODULE_ROOT, "runs");
 
+import type { ExtractionMethod } from "../rules/types.ts";
+
 export type JobState =
   | "queued"
   | "running"
@@ -37,6 +39,10 @@ export interface ExtractionResult {
   /** File name written in the job folder (vacancy.md), or null. */
   file: string | null;
   error: string | null;
+  /** How the document was made, or null when nothing was extracted. */
+  method: ExtractionMethod | null;
+  /** Whether the site has a rule. */
+  has_rule: boolean;
   finishedAt: string;
 }
 

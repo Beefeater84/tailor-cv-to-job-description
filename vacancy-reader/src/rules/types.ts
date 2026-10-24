@@ -1,3 +1,6 @@
+/** How an extracted vacancy document was made: by a site rule or by an LLM. */
+export type ExtractionMethod = "rule" | "llm";
+
 /** Values extracted from a page by a site rule. Optional fields are absent when the site does not show them. */
 export interface ExtractedFields {
   title?: string;
