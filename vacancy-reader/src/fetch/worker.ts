@@ -4,6 +4,7 @@ import { writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { stripVTControlCharacters } from "node:util";
 import { extractJob } from "../extract.ts";
+import { loadEnv } from "../fallback/index.ts";
 import { jobDir, readStatus, writeStatus, type JobStatus } from "./jobs.ts";
 import { fetchPage, PageTimeoutError } from "./page.ts";
 
@@ -77,6 +78,13 @@ if (!id) {
   process.exit(2);
 }
 
+// The API key of the LLM fallback may come from vacancy-reader/.env; the environment wins.
+// An unreadable .env only turns the fallback off: the fetch itself must still run.
+try {
+  loadEnv();
+} catch (error) {
+  console.error(`Cannot read .env: ${errorMessage(error)}`);
+}
 run(id).catch(async (error: unknown) => {
   console.error(error);
   // Last resort: record the failure so the job never stays "running".

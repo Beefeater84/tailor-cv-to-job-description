@@ -3,7 +3,7 @@ import { elementsToMarkdown } from "./markdown.ts";
 import type { ExtractedFields, SiteRule } from "./types.ts";
 
 /** Elements that never carry vacancy text; dropped from every page before the rule's own `remove`. */
-const ALWAYS_REMOVED = "script, style, noscript, template";
+export const ALWAYS_REMOVED = "script, style, noscript, template";
 
 /** The page does not fit the rule: an invalid selector, or no description text. */
 export class ExtractionError extends Error {
@@ -29,7 +29,7 @@ function shortField(document: Document, selector: string | undefined): string | 
 }
 
 /** Makes link targets absolute, so that the Markdown links work outside the site. */
-function resolveLinks(elements: Element[], sourceUrl: string): void {
+export function resolveLinks(elements: Element[], sourceUrl: string): void {
   for (const element of elements) {
     for (const link of element.querySelectorAll("a[href]")) {
       const href = link.getAttribute("href") ?? "";

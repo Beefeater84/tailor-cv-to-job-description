@@ -95,7 +95,7 @@ export async function listExamples(site: string): Promise<Example[]> {
  */
 export function extractDocument(rule: SiteRule, html: string, sourceUrl: string): string {
   const fields = extractFields(rule, html, sourceUrl);
-  return renderDocument(fields, { sourceUrl, site: siteKey(new URL(sourceUrl)) });
+  return renderDocument(fields, { sourceUrl, site: siteKey(new URL(sourceUrl)), method: "rule" });
 }
 
 /**

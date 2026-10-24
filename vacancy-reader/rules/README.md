@@ -2,7 +2,7 @@
 
 A site rule tells the vacancy reader where the vacancy is on a page of one site. The reader runs the rule on a saved, already rendered `page.html` (no browser, no network) and produces the extracted vacancy document. For a fetched job the worker does this automatically after the fetch, and `npm run extract -- <job-id>` runs it again (see [`../README.md`](../README.md)).
 
-The format is decided in `specs/decisions/10-site-parsing-rule-format.md`. This file is the how-to.
+The format is decided in `specs/decisions/10-site-parsing-rule-format.md`. This file is the how-to. What to extract (the fields and their meaning, for any site) is specified in [`fields.md`](fields.md); a rule says how to find those fields on one site.
 
 ## Rule file
 
@@ -60,7 +60,7 @@ It gets the extracted values (`title`, `company`, `hiring_manager`, `tags`, `com
 
 ### Do not guess
 
-Extract only what the site's markup clearly states. If the markup does not mark a field, leave the field out of the rule, and it is left out of the output too. The LLM is not used here, and the reader never guesses.
+Extract only what the site's markup clearly states. If the markup does not mark a field, leave the field out of the rule, and it is left out of the output too. Rules never use an LLM and never guess. The LLM fallback (`extracted_by: llm`) runs only for a site without a rule, and its result is unverified.
 
 A field may come from `postprocess` when the site's platform template states it and a second source on the same page confirms it. This is decided per site, and it is not a general rule. Example: on careers-page.com (Manatal) no element states the employer. The page `<title>` follows the template "`<role>` - `<Company>` - Get Hired …", and the vacancy URL has the company slug as its first path segment (`/idelsoft/job/3W3V95WV`). The rule's `postprocess` takes the company from the `<title>` only when it equals the slug, case-insensitively, and keeps the spelling from the `<title>` (`iDelsoft`). If the template is not found or the slug differs, the rule outputs no `company`. `og:site_name` is "Manatal", the hiring platform, not the employer, so it is never used.
 
@@ -72,7 +72,7 @@ A field may come from `postprocess` when the site's platform template states it 
 - **Only the host is normalised**: lower case, and a leading `www.` is stripped. Other subdomains are other sites (`jobs.careers-page.com` is not `careers-page.com`). Path, query and fragment are ignored, so a trailing `/`, `?utm=...` and `#apply` do not change the match.
 - **No conflicts between rules.** A host gives exactly one file name, so two rules cannot match the same URL.
 - **Matching happens before the page is opened.** It looks at the URL only and does not need a fetched page.
-- **Platform signatures are not used.** A hiring platform on a company's own domain (for example Manatal on a custom domain) is a site without a rule. What happens then belongs to "vacancies from a site without a rule (#12)".
+- **Platform signatures are not used.** A hiring platform on a company's own domain (for example Manatal on a custom domain) is a site without a rule. A site without a rule goes to the LLM fallback (see "The extracted vacancy document"). Turning an LLM-extracted vacancy into an example and a site rule is a separate task (#25).
 - **URLs already stored as examples are not recognised here.** That is left to "tool for adding vacancy examples (#14)".
 
 The command only finds the rule file. It does not load or run the rule.
@@ -85,6 +85,7 @@ Markdown with YAML front matter:
 ---
 source_url: <vacancy URL>
 site: <site>
+extracted_by: <rule|llm>
 title: <title>
 company: <company>
 hiring_manager: <name>
@@ -100,7 +101,8 @@ tags: [<tag>, <tag>]
 <description as Markdown>
 ```
 
-- Front matter keys come in this order. `source_url` and `site` are always present, and a missing optional field is left out. Values that need quoting are quoted (`title: "Dev: Senior"`), and `tags` is a one-line flow list.
+- Front matter keys come in this order. `source_url`, `site` and `extracted_by` are always present, and a missing optional field is left out. Values that need quoting are quoted (`title: "Dev: Senior"`), and `tags` is a one-line flow list.
+- `extracted_by` tells how the document was made: `rule` (a site rule) or `llm` (the fallback for a site without a rule, using `fields.md` as its instruction). A document with `extracted_by: llm` is unverified.
 - The `## Company` section appears only when there is a `company_description`.
 - Line endings are LF. Lines have no trailing whitespace. The file ends with one newline.
 - The document is not a contract for other modules. The format the writer reads is the vacancy output contract (#8), which is planned.
@@ -147,6 +149,6 @@ A tool for adding vacancy examples (#14) is planned to automate the draft. Its o
 
 ## Planned
 
-- Vacancies from a site without a rule (#12): what happens when there is no rule.
+- Turning an LLM-extracted vacancy into an example and a site rule (#25).
 - Tool for adding vacancy examples (#14).
 - Vacancy output contract (#8): turning the extracted document into the writer's format.
