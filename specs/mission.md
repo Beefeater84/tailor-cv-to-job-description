@@ -13,6 +13,11 @@ The problem it solves: a generic CV hides the experience that matters for a give
 - Interaction: the user passes a vacancy URL and receives the PDFs. The interface (CLI, chat, bot, other) is not decided yet.
 - Indirect readers of the output: recruiters, hiring managers and ATS systems that read the produced CV and cover letter.
 
+## Terms
+
+- **Vacancy reader**: the module `vacancy-reader/`, epic "Vacancy reader" (#3). It reads a vacancy from a URL.
+- **CV reader**: reads the candidate's CV (an index CV from `index-cv`, or an uploaded file) into the candidate profile.
+
 ## Core Business Rules
 
 The pipeline has three stages. Each stage is an independent system with its own epic, and stages talk to each other only through defined contracts.
@@ -20,7 +25,7 @@ The pipeline has three stages. Each stage is an independent system with its own 
 1. **Vacancy reader** (#3)
    - Input: a URL of a job description on the internet.
    - Reads the vacancy page and extracts its text with a parsing rule for the site. Rules are learned from examples (URL + expected text).
-   - Output: the vacancy description, the list of requirements, and `source_url` (the original URL).
+   - Output: the vacancy contract `vacancy.json`, with `source_url` (the original URL) — see `vacancy-reader/contract/README.md`.
 2. **Writer** (#4)
    - Input: the output of the vacancy reader, plus three fixed sources:
      - **Candidate data**: `llms-full.txt` (~150 KB), the candidate's full CV for AI agents, published by the `index-cv` project at `https://cv.tony-m.dev/llms-full.txt`. It holds the summary, every project with role, period and results, and skills with evidence per project.
@@ -45,6 +50,7 @@ Rules for the content:
 - Per-site parsing rules learned from examples — see `decisions/3-site-parsing-rules-from-examples.md`.
 - Language: English for all content and documentation.
 - Stack: TypeScript on Node 24, npm, Playwright; one module per pipeline stage — see `decisions/6-typescript-node-stack.md`.
+- The vacancy reader gives the writer a versioned JSON contract, `vacancy.json`, with common rules for all writer input contracts — see `decisions/8-vacancy-output-contract.md`.
 - Vacancy reader is one module, `vacancy-reader/`. Its examples (URL, expected text, HTML snapshot) are stored in `vacancy-reader/examples/` with one `index.yaml` — see `decisions/6-vacancy-reader-module.md`.
 
 ## Scope

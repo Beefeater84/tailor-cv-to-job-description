@@ -105,7 +105,7 @@ tags: [<tag>, <tag>]
 - `extracted_by` tells how the document was made: `rule` (a site rule) or `llm` (the fallback for a site without a rule, using `fields.md` as its instruction). A document with `extracted_by: llm` is unverified.
 - The `## Company` section appears only when there is a `company_description`.
 - Line endings are LF. Lines have no trailing whitespace. The file ends with one newline.
-- The document is not a contract for other modules. The format the writer reads is the vacancy output contract (#8), which is planned.
+- The document is not a contract for other modules. The format the writer reads is the vacancy contract `vacancy.json`, see [`../contract/README.md`](../contract/README.md).
 
 ## Examples and tests
 
@@ -151,4 +151,3 @@ A tool for adding vacancy examples (#14) is planned to automate the draft. Its o
 
 - Turning an LLM-extracted vacancy into an example and a site rule (#25).
 - Tool for adding vacancy examples (#14).
-- Vacancy output contract (#8): turning the extracted document into the writer's format.
