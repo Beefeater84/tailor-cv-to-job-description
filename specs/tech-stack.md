@@ -20,6 +20,7 @@ The agent runs locally on the user's machine (ADR `3-local-agent-playwright-user
 - **LLM, writer**: needed for writing the CV and cover letter. Provider and model not chosen yet.
 - **Vacancy pages**: job description pages on the internet, opened with **Playwright** using the user's browser session (ADR `3-local-agent-playwright-user-session`). Text is extracted with per-site parsing rules (ADR `3-site-parsing-rules-from-examples`): one declarative TypeScript rule per site in `vacancy-reader/rules/<site>.ts`, run on the saved HTML with a static parser (ADR `10-site-parsing-rule-format`). A site without a rule goes to an LLM fallback (ADR `12-llm-fallback-extraction`).
 - **Test data (vacancy examples)**: `vacancy-reader/examples/index.yaml` and `vacancy-reader/examples/<site>/<company>-<role>/{expected.md,page.html}`. Layout in `decisions/6-vacancy-reader-module.md`. `expected.md` is the human-reviewed reference extracted vacancy document (Markdown with YAML front matter) that the site rule must reproduce from `page.html` (ADR `10-site-parsing-rule-format`).
+- **Contract validation, vacancy reader**: `ajv` and `ajv-formats` check `vacancy.json` against `vacancy-reader/contract/vacancy.schema.json` (ADR `8-vacancy-output-contract`).
 - **PDF rendering**: not chosen yet.
 
 ## Database Schema
@@ -33,7 +34,7 @@ Main flow, from the project diagram:
 ```
 vacancy URL
   → Vacancy reader: fetch the page, parse it
-  → { description, requirements, source_url }
+  → vacancy.json (vacancy contract v1, see vacancy-reader/contract/README.md)
   → Writer: + candidate data (llms-full.txt, ~150 KB)
             + CV and cover letter rules
             + CV design sample
