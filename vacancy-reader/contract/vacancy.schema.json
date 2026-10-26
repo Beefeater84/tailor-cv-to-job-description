@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/Beefeater84/tailor-cv-to-job-description/vacancy-reader/contract/vacancy.schema.json",
+  "title": "Vacancy contract",
+  "description": "Structured vacancy written by the vacancy reader to runs/<job-id>/vacancy.json. Every key of the version is present; null means the page has no value.",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "description": "Contract version, \"<major>.<minor>\"."
+    },
+    "source_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "The requested vacancy URL."
+    },
+    "site": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Site key: the host without www., lowercased."
+    },
+    "extracted_by": {
+      "enum": ["rule", "llm"],
+      "description": "How the fields were extracted: by a site rule or by the LLM fallback."
+    },
+    "fetched_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the page was fetched, ISO 8601 date-time."
+    },
+    "title": {
+      "type": ["string", "null"],
+      "minLength": 1,
+      "description": "Job title, plain text, one line."
+    },
+    "company": {
+      "type": ["string", "null"],
+      "minLength": 1,
+      "description": "Hiring company name, plain text, one line."
+    },
+    "hiring_manager": {
+      "type": ["string", "null"],
+      "minLength": 1,
+      "description": "Hiring manager or recruiter, plain text."
+    },
+    "company_description": {
+      "type": ["string", "null"],
+      "minLength": 1,
+      "description": "Text about the employer, Markdown."
+    },
+    "tags": {
+      "type": ["array", "null"],
+      "minItems": 1,
+      "items": { "type": "string" },
+      "description": "Short labels shown for the vacancy; null when the page shows none, never an empty list."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The vacancy text, Markdown."
+    }
+  },
+  "required": [
+    "schema_version",
+    "source_url",
+    "site",
+    "extracted_by",
+    "fetched_at",
+    "title",
+    "company",
+    "hiring_manager",
+    "company_description",
+    "tags",
+    "description"
+  ],
+  "additionalProperties": false
+}
