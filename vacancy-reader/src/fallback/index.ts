@@ -1,5 +1,6 @@
 // LLM fallback for a site without a rule: page -> model input -> structured fields -> extracted vacancy document.
 import { renderDocument } from "../rules/index.ts";
+import type { ExtractedFields } from "../rules/index.ts";
 import { apiKey } from "./env.ts";
 import { FallbackError, parseModelFields } from "./fields.ts";
 import { pageToModelInput } from "./input.ts";
@@ -26,11 +27,22 @@ export interface FallbackSource {
   site: string;
 }
 
+/** What the model extracted: the checked fields and the document rendered from them. */
+export interface ModelExtraction {
+  fields: ExtractedFields;
+  /** The vacancy document with `extracted_by: llm`. */
+  document: string;
+}
+
 /**
- * Extracts the vacancy document from page HTML with the model and renders it with `extracted_by: llm`.
+ * Extracts the vacancy fields from page HTML with the model and renders the document with `extracted_by: llm`.
  * Throws FallbackError for a page without text or an answer that does not match the schema; API errors pass through.
  */
-export async function extractWithModel(model: VacancyModel, html: string, source: FallbackSource): Promise<string> {
+export async function extractWithModel(
+  model: VacancyModel,
+  html: string,
+  source: FallbackSource,
+): Promise<ModelExtraction> {
   const input = pageToModelInput(html, source.sourceUrl);
   if (!input) throw new FallbackError("The page has no text to extract from");
   const output = await model.extract({
@@ -38,5 +50,5 @@ export async function extractWithModel(model: VacancyModel, html: string, source
     message: buildUserMessage(source.sourceUrl, input),
   });
   const fields = parseModelFields(output);
-  return renderDocument(fields, { ...source, method: "llm" });
+  return { fields, document: renderDocument(fields, { ...source, method: "llm" }) };
 }

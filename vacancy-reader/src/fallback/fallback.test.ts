@@ -5,7 +5,7 @@
 // - the wrapper escapes <untrusted_page> tags placed in the page
 // - instructions contain fields.md and the untrusted content rules
 // - model output checked against the schema: extra keys dropped, invalid output rejected
-// - extractWithModel renders the document with extracted_by: llm and sends the wrapped page
+// - extractWithModel returns the fields, renders the document with extracted_by: llm and sends the wrapped page
 // - loadEnv: .env fills unset variables, the environment wins, a missing file is ignored
 import assert from "node:assert/strict";
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
@@ -158,7 +158,8 @@ test("invalid model output is rejected", () => {
 test("extractWithModel sends the wrapped page and renders the document with extracted_by: llm", async () => {
   const { html, url } = await examplePage();
   const model = fakeModel({ title: "Senior Frontend Performance Engineer", description: "Own frontend performance." });
-  const document = await extractWithModel(model, html, { sourceUrl: url, site: "careers-page.com" });
+  const { fields, document } = await extractWithModel(model, html, { sourceUrl: url, site: "careers-page.com" });
+  assert.deepEqual(fields, { title: "Senior Frontend Performance Engineer", description: "Own frontend performance." });
   assert.equal(
     document,
     [
