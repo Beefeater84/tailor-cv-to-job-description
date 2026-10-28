@@ -10,8 +10,8 @@ Rules for the whole CV and the whole cover letter.
 - Agreement: 1 of 5 sources, no conflicts
 - Weight: 0.6
 - Needs: nothing
-- Check: no phrase from the cliché stop list (to be collected as sources are read)
-- Limits: matters most in the summary (SUM-01)
+- Check: no phrase from `lists/cliches.md`
+- Limits: matters most in the summary (SUM-01). Clichés are about content (the phrase says nothing about the candidate); the signs of AI writing are a matter of style, see `../style/`.
 
 ### GEN-02 — Two modes: one vacancy or a job family; the cover letter is always for one vacancy
 - Applies to: CV, cover letter

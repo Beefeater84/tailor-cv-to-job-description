@@ -6,6 +6,16 @@ These rules describe how the agent writes. They are not project decisions: ADRs,
 
 The format below is a draft. It is tried on the first sources and changed as the rules grow.
 
+## Who uses the rules
+
+`tailor-cv` has three roles; each reads the rules in its own way.
+
+| Role | Does | Uses |
+|---|---|---|
+| writer | builds the CV and the cover letter from the vacancy's requirements | the **Rule** field of the cards here |
+| validator | checks the finished text and scores it | the **Check** and **Weight** fields of the cards here |
+| humanizer | checks the style and removes the signs of AI writing | [`../style/`](../style/README.md), a separate folder that knows nothing about CVs, to be reused in other projects |
+
 ## Groups
 
 Rules are grouped by the place they apply to, so a change to one block of the CV touches only that block's file.
@@ -15,6 +25,7 @@ Rules are grouped by the place they apply to, so a change to one block of the CV
 | `general.md` | Rules for the whole CV or the whole cover letter: honesty, order, length, wording, ATS readability. |
 | `cv/<block>.md` | Rules for one block of the CV, for example `cv/header.md`, `cv/summary.md`, `cv/experience.md`. |
 | `cover-letter/<block>.md` | Rules for one part of the cover letter. |
+| `lists/<name>.md` | Word and phrase lists the rules use, for example `lists/cliches.md`. A list is extended without changing the rules. |
 
 Rules about layout (columns, fonts, spacing, page size) are not kept here: they belong to the PDF creator and are written as comments in the epic "PDF creator" (#5).
 

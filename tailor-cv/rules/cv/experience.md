@@ -21,12 +21,8 @@ The jobs of the candidate: company, title, dates, and what the candidate did and
 - Agreement: 1 of 5 sources, no conflicts
 - Weight: 0.9
 - Needs: duties and achievements with numbers from the profile; requirements of the vacancy or the job family
-- Check: no phrase from the duty stop list below; the "name-off" test (LLM check): with the name removed, does the bullet read like a job description or like this person's impact?
+- Check: no phrase from `../lists/duty-phrases.md`; the "name-off" test (LLM check): with the name removed, does the bullet read like a job description or like this person's impact?
 - Limits: numbers and results only from the profile, never invented. A duty with no result in the profile stays a duty, worded concretely. When a result is missing, the agent asks the candidate (GEN-03).
-
-Duty stop list (a signal to rewrite the bullet, not a cliché):
-- "responsible for"
-- "assisted with"
 
 ### EXP-03 — A short role paragraph, then bullets
 - Applies to: CV / experience
