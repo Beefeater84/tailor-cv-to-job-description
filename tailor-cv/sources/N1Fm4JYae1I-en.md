@@ -4,6 +4,7 @@ title: "Write a Killer Résumé in the AI Era: 5 New Rules!"
 channel: "Jeff Su"
 duration: 789
 language: "en"
+rules_status: "new"
 sections:
   - title: "The Importance of Resumes in the Age of AI"
     timestamp: 0

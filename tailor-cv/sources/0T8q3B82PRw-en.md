@@ -4,6 +4,8 @@ title: "Why Recruiters Reject Your CV in 6 Seconds (and How to Fix It)"
 channel: "Lee Harding"
 duration: 1031
 language: "en"
+rules_status: "processed"
+rules_date: "2026-10-28"
 sections:
   - title: "Understanding CV Importance"
     timestamp: 0

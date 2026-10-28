@@ -4,6 +4,8 @@ title: "Hiring Managers Can Tell When You Use AI On Your Resume. Here’s How."
 channel: "A Life After Layoff"
 duration: 794
 language: "en"
+rules_status: "processed"
+rules_date: "2026-10-28"
 sections:
   - title: "Identical Resumes and AI Concerns"
     timestamp: 0
