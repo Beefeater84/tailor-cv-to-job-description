@@ -28,8 +28,8 @@ Rules for the whole CV and the whole cover letter.
 - Applies to: the agent's dialogue with the candidate, before the CV is written
 - Rule: when the vacancy asks for something the CV does not show well, or a bullet has no result, the agent tells the candidate what matters for this vacancy and asks about similar experience: "For this vacancy X and Y matter. You have similar experience in Z; let's bring up these achievements. Is there a result in numbers?" What the candidate answers is added to the profile and only then used in the CV.
 - Why: a candidate often gives a CV that does not show the experience the vacancy needs, though the candidate has it. Asking finds real facts instead of inventing them.
-- Sources: owner
-- Agreement: no sources yet
+- Sources: owner; 4Qh7C5AA34o-en.md (section "Customizing the Resume", 10:41): find what the vacancy requires and ask the candidate to confirm the experience
+- Agreement: 1 of 5 sources, no conflicts
 - Weight: none, this is agent behaviour, not a property of the CV
 - Needs: requirements of the vacancy or the job family; the profile, to find what is missing or weak
 - Check: every gap the agent found was either asked about or reported to the candidate
@@ -59,9 +59,9 @@ Rules for the whole CV and the whole cover letter.
 
 ### GEN-06 — Section order
 - Applies to: CV
-- Rule: the sections go in this order: header (name, job title, location, contacts), summary, skills, experience (with career gaps in their place), education.
+- Rule: the sections go in this order: header (name, job title, location, contacts), summary, competencies, skills, experience (with career gaps in their place), education.
 - Why: the recruiter reads top down and stops early. The order puts who the candidate is and what they can do first, and the proof right after.
-- Sources: 0T8q3B82PRw-en.md (sections "Structuring Your CV Effectively", 04:26, "Highlighting Skills and Experience", 05:55, "Final Tips for a Strong CV", 08:15); skills before experience: also owner
+- Sources: 0T8q3B82PRw-en.md (sections "Structuring Your CV Effectively", 04:26, "Highlighting Skills and Experience", 05:55, "Final Tips for a Strong CV", 08:15); 4Qh7C5AA34o-en.md (competencies under the profile); skills before experience: also owner
 - Agreement: 1 of 5 sources, no conflicts
 - Weight: 0.7
 - Needs: nothing
@@ -78,6 +78,17 @@ Rules for the whole CV and the whole cover letter.
 - Needs: hobbies from the profile, to judge their relevance
 - Check: no photo; no references line; hobbies only with a stated relevance
 - Limits: see the open question "Photo by country"
+
+### GEN-08 — The vacancy's requirements come first
+- Applies to: CV, the agent's work before writing
+- Rule: the agent starts from the requirements of the vacancy (or of the group of vacancies), not from the CV. From them it decides what to take from the profile, how to reword it, and what to ask the candidate (GEN-03). What the vacancy does not need stays in the profile and out of the CV.
+- Why: the recruiter, the hiring manager and the ATS all check the CV against the vacancy. A CV built from the vacancy's requirements answers that check; a CV built from the profile tells the whole career and buries the fit.
+- Sources: 4Qh7C5AA34o-en.md (section "Customizing the Resume", 10:41): "look at what the job posting asks for and only provide what they need"; owner
+- Agreement: 1 of 5 sources, no conflicts
+- Weight: 0.9
+- Needs: the requirements of the vacancy, or of each vacancy in the group; the whole profile
+- Check: every block of the CV can be traced to a requirement of the vacancy (or group) or to a rule that requires it (header, dates)
+- Limits: selecting and rewording only; never inventing (the epic rule). A requirement with nothing in the profile is asked about or reported as a gap.
 
 ## Open questions
 
