@@ -90,6 +90,17 @@ Rules for the whole CV and the whole cover letter.
 - Check: every block of the CV can be traced to a requirement of the vacancy (or group) or to a rule that requires it (header, dates)
 - Limits: selecting and rewording only; never inventing (the epic rule). A requirement with nothing in the profile is asked about or reported as a gap.
 
+### GEN-09 — Two readers: the ATS and the human
+- Applies to: CV
+- Rule: the CV is written for two readers at once. For the ATS, the keywords of the vacancy (skills, tools, competencies, job titles, in the vacancy's wording) may go anywhere in the CV: summary, competencies, skills, experience bullets. For the human, every place they go stays readable: a keyword is part of a sentence or a list item that makes sense, never a pile of keywords.
+- Why: the ATS matches the CV against the vacancy by keywords and does not care where they are; the recruiter and the hiring manager skim and drop a CV that reads like a keyword list. Advice written for one reader conflicts with advice written for the other (for example, the number of skills, SKILL-01).
+- Sources: owner; the conflict between 0T8q3B82PRw-en.md (section "Highlighting Skills and Experience", 05:55) and 4Qh7C5AA34o-en.md (section "Adding Skills and Projects", 09:19)
+- Agreement: no source states it; it explains a conflict between two sources
+- Weight: 0.8
+- Needs: keywords from the requirements of the vacancy or the group
+- Check: every keyword of the vacancy that the profile backs appears in the CV; no line is a bare list of keywords outside the competencies and skills sections
+- Limits: a keyword goes in only when the profile backs it (GEN-08, GEN-03)
+
 ## Open questions
 
 - **Photo by country** (GEN-07): the source is from the UK market. In some countries (for example Germany) a photo on a CV is still common. To decide: whether the rule depends on the vacancy's country.
