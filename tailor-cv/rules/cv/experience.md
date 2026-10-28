@@ -35,6 +35,19 @@ The jobs of the candidate: company, title, dates, and what the candidate did and
 - Check: each job has a paragraph of at most two lines and bullets
 - Limits: the paragraph describes the role from the profile; it is not a second summary
 
+### EXP-04 — A number has context
+- Applies to: CV / experience, and any achievement in the summary
+- Rule: a number in an achievement says what it is measured against and at what scale: the baseline or the period ("from 12 to 4 minutes", "in 6 months"), the size (team, budget, users), and what the candidate did to get it. A number that cannot be given context is left out; the result is then described in words. Not every bullet needs a number.
+- Why: a bare number ("increased revenue by 40%", "improved team efficiency by 35%") could describe any role at any company. Readers take it as made up and as a sign of AI writing. A number with context can be checked and asked about in the interview.
+- Sources: MxBZjnayQUM-en.md (section "Telltale Signs of AI in Resumes", 02:00); refines EXP-02 from 0T8q3B82PRw-en.md
+- Agreement: 2 of 5 sources (EXP-02 asks for numbers, this source asks for their context), no conflicts
+- Weight: 0.7
+- Needs: achievements with numbers and their context from the profile
+- Check: each percentage or figure has a baseline, period or scale next to it; every number is in the profile or confirmed by the candidate
+- Limits: the agent never adds a number to a bullet to make it look measurable; when the context is missing, it asks the candidate (GEN-03)
+
 ## Open questions
+
+- **A library of good examples.** Rules say how to write a number or an achievement; a set of good and bad examples by role would show it. To build as the work goes; none yet.
 
 - **Older jobs**: how much space they get and how they are written. They matter, but no rule yet.

@@ -99,9 +99,33 @@ Rules for the whole CV and the whole cover letter.
 - Weight: 0.8
 - Needs: keywords from the requirements of the vacancy or the group
 - Check: every keyword of the vacancy that the profile backs appears in the CV; no line is a bare list of keywords outside the competencies and skills sections
-- Limits: a keyword goes in only when the profile backs it (GEN-08, GEN-03)
+- Limits: a keyword goes in only when the profile backs it (GEN-08, GEN-03). How close to the vacancy's wording is too close is an open question ("Mirroring the vacancy").
+
+### GEN-10 — The candidate decides; the agent informs
+- Applies to: the agent's work with the candidate
+- Rule: the facts in the CV come from the profile and from the candidate's answers; the candidate is responsible for them. The agent helps: it selects, rewords, asks and warns about risks, but it does not decide for the candidate what goes in. When the candidate wants something the rules advise against, the agent says why and what the risk is; if the candidate confirms, it stays.
+- Why: the agent works on the candidate's side. A fact the candidate confirmed is theirs to stand behind in the interview, and only the candidate knows their career.
+- Sources: owner. Covers the sign of AI writing "the CV does not fit the candidate's career" (jargon of an industry the candidate never worked in) from MxBZjnayQUM-en.md (section "Contextual Inconsistencies and Authenticity", 07:00): the agent takes facts only from the candidate, so it does not filter them.
+- Agreement: no source states it; it is a product principle
+- Weight: none, this is agent behaviour, not a property of the CV
+- Needs: nothing
+- Check: every rule the candidate overrode has a recorded warning and the candidate's confirmation
+- Limits: the agent itself still never invents (the epic rule); the candidate's choice covers what the candidate gives, not what the agent would make up
+
+### GEN-11 — No hidden text
+- Applies to: CV
+- Rule: the writer never adds hidden text (white or tiny font, keywords the candidate does not have, instructions to an AI screener). The validator looks for it. When the candidate asks to add it, the agent warns that modern ATS strip formatting and show the hidden text, recruiters mark such a CV, and a note in the ATS can block the candidate at that company in the future. If the candidate still confirms, it stays (GEN-10).
+- Why: the ATS parses the hidden text like any other; it does not get the CV through, and when the recruiter sees it, the candidate loses trust, often for good.
+- Sources: MxBZjnayQUM-en.md (section "Matching Job Descriptions and Hidden Text", 04:00); keeping it on the candidate's confirmation: owner
+- Agreement: 1 of 5 sources, no conflicts
+- Weight: 1.0
+- Needs: nothing
+- Check: no text with the background colour or a font far smaller than the rest; no instructions to an AI in the text; if present, the candidate's confirmation is recorded
+- Limits: rendering is the PDF creator's part (#5); the validator checks the rendered file too
 
 ## Open questions
+
+- **Mirroring the vacancy.** A CV that repeats the vacancy too closely (its sentences, all its skills in the same order) is a sign of AI writing (MxBZjnayQUM-en.md, section "Matching Job Descriptions and Hidden Text", 04:00). It pulls against SKILL-01 and GEN-09, which use the vacancy's wording. Not known: where the line is and how to check it. An experiment to try (owner): the CV says openly that it was assembled for this vacancy from the candidate's index CV and links to the index CV. It will not suit every candidate.
 
 - **Photo by country** (GEN-07): the source is from the UK market. In some countries (for example Germany) a photo on a CV is still common. To decide: whether the rule depends on the vacancy's country.
 
