@@ -4,7 +4,9 @@ title: "15 000 резюме на одну роль. Как теперь комп
 channel: "Либо🔺Либо"
 duration: 2564
 language: "ru"
-rules_status: "new"
+rules_status: "partial"
+rules_date: "2026-10-29"
+rules_note: "read up to the section on AI in recruiting (14:15); rules cite the -ru file"
 sections:
   - title: "Введение в пятый сезон подкаста"
     timestamp: 0

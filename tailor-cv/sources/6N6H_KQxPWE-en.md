@@ -4,7 +4,9 @@ title: "15,000 Resumes for One Role. How Companies Now Select Candidates | Kira 
 channel: "Either🔺Either"
 duration: 2564
 language: "en"
-rules_status: "new"
+rules_status: "partial"
+rules_date: "2026-10-29"
+rules_note: "read up to the section on AI in recruiting (14:15); rules cite the -ru file"
 sections:
   - title: "Introduction to the Fifth Season of the Podcast"
     timestamp: 0

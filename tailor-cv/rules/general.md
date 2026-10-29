@@ -52,8 +52,8 @@ Rules for the whole CV and the whole cover letter.
 - Applies to: CV
 - Rule: the top third of the first page shows who the candidate is, what they do, where they are, their most recent job, and that they match the vacancy. The header, the summary and the start of the most recent job are short enough to fit there.
 - Why: the recruiter spends 6–10 seconds on a CV and looks at the top third. If the answer is not there, the CV is dropped, even when the candidate is qualified.
-- Sources: 0T8q3B82PRw-en.md (sections "Understanding CV Importance" and "Key Elements Recruiters Look For", 00:00–02:05); R3abknwWX7k-en.md (section "Introduction to Resume Writing Tips", 00:00): a five-second glance
-- Agreement: 2 of 5 sources, no conflicts
+- Sources: 0T8q3B82PRw-en.md (sections "Understanding CV Importance" and "Key Elements Recruiters Look For", 00:00–02:05); R3abknwWX7k-en.md (section "Introduction to Resume Writing Tips", 00:00): a five-second glance; 6N6H_KQxPWE-ru.md (section "Масснайм и автоматизация рекрутинга", 10:25): about 15,000 CVs a month for 20–30 hires, so a person can only skim each
+- Agreement: 3 of 5 sources, no conflicts
 - Weight: 1.0
 - Needs: everything HEADER-01..03, SUM-01 and EXP-01 need
 - Check: HEADER-01..03, SUM-01 and EXP-01 pass; the rendered top third holds them (checked after the PDF is made)
@@ -95,11 +95,12 @@ Rules for the whole CV and the whole cover letter.
 ### GEN-09 — Two readers: the ATS and the human
 - Applies to: CV
 - Rule: the CV is written for two readers at once. The machine reader is the ATS or an AI screener that reads, ranks and sorts the applications. For it, the keywords of the vacancy (skills, tools, competencies, job titles, in the vacancy's wording) may go anywhere in the CV: summary, competencies, skills, experience bullets. For the human, every place they go stays readable: a keyword is part of a sentence or a list item that makes sense, never a pile of keywords.
-- Why: the machine reader matches the CV against the vacancy and does not care where the keywords are; the recruiter and the hiring manager skim and drop a CV that reads like a keyword list. The human still decides: only a few hiring managers let AI pass or reject a candidate. Advice written for one reader conflicts with advice written for the other (for example, the number of skills, SKILL-01).
-- Sources: N1Fm4JYae1I-en.md (sections "Two Stages of Resume Evaluation", 01:31, and "Recap and Conclusion", 12:30): "pass the AI, pass the human"; owner; the conflict between 0T8q3B82PRw-en.md (section "Highlighting Skills and Experience", 05:55) and 4Qh7C5AA34o-en.md (section "Adding Skills and Projects", 09:19)
-- Agreement: 1 of 5 sources states it; it explains a conflict between two others
+  The balance between the two readers depends on the region of the vacancy. For a vacancy in the EU the human reader comes first: the blocks of the CV are clearly separated, the keywords stand where a skimming eye finds them (the top third, the skills, the start of the bullets), and any sign of over-optimization (GEN-12) or of AI writing (`../style/`) costs more.
+- Why: the machine reader matches the CV against the vacancy and does not care where the keywords are; the recruiter and the hiring manager skim and drop a CV that reads like a keyword list. The human still decides: only a few hiring managers let AI pass or reject a candidate. In the EU a human must make the decision on every candidate, and some companies turn the AI scoring of their ATS off, leaving the recruiter an assistant that looks for keywords the recruiter sets. There every CV is read by a person, who does not read it through: the person picks out the keywords, checks them against the vacancy, and notices AI text and over-optimization at once. Advice written for one reader conflicts with advice written for the other (for example, the number of skills, SKILL-01).
+- Sources: N1Fm4JYae1I-en.md (sections "Two Stages of Resume Evaluation", 01:31, and "Recap and Conclusion", 12:30): "pass the AI, pass the human"; 6N6H_KQxPWE-ru.md (section "Использование ИИ в рекрутинге", 14:15): AI scoring turned off for EU candidates because of the AI Act; the human reader first for the EU, structure, and sensitivity to AI text: owner; the conflict between 0T8q3B82PRw-en.md (section "Highlighting Skills and Experience", 05:55) and 4Qh7C5AA34o-en.md (section "Adding Skills and Projects", 09:19)
+- Agreement: 2 sources state it; it explains a conflict between two others
 - Weight: 0.8
-- Needs: keywords from the requirements of the vacancy or the group
+- Needs: keywords from the requirements of the vacancy or the group; vacancy field `location`, for the region (#39)
 - Check: every keyword of the vacancy that the profile backs appears in the CV; no line is a bare list of keywords outside the competencies and skills sections
 - Limits: a keyword goes in only when the profile backs it (GEN-08, GEN-03). How close to the vacancy's wording is too close is an open question ("Mirroring the vacancy").
 
@@ -154,6 +155,8 @@ Rules for the whole CV and the whole cover letter.
 ## Open questions
 
 - **Mirroring the vacancy.** A CV that repeats the vacancy too closely (its sentences, all its skills in the same order) is a sign of AI writing (MxBZjnayQUM-en.md, section "Matching Job Descriptions and Hidden Text", 04:00). GEN-12 sets the line: the vacancy's terms are taken, its sentences and order are not. Still open: how long a run of words copied from the vacancy counts as copying, and how the validator checks it. An experiment to try (owner): the CV says openly that it was assembled for this vacancy from the candidate's index CV and links to the index CV. It will not suit every candidate.
+
+- **Region and the balance of the readers** (GEN-09): for an EU vacancy the human reader comes first. To decide: how much the weights of GEN-04, GEN-05, GEN-12 and the style score rise for such a vacancy, and which regions besides the EU count. The source is one company (6N6H_KQxPWE-ru.md); other companies in the EU may keep AI scoring with a human making the final decision.
 
 - **Photo by country** (GEN-07): the source is from the UK market. In some countries (for example Germany) a photo on a CV is still common. To decide: whether the rule depends on the vacancy's country.
 
