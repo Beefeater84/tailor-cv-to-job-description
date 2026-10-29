@@ -4,6 +4,8 @@ title: "Tips For How To Write A Better Resume (From A Recruiter's Perspective)"
 channel: "A Life After Layoff"
 duration: 514
 language: "en"
+rules_status: "processed"
+rules_date: "2026-10-29"
 sections:
   - title: "Introduction to Resume Writing Tips"
     timestamp: 0

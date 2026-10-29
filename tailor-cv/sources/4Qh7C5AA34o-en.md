@@ -4,6 +4,8 @@ title: "How To Write A Resume Recruiters Actually Want To Read"
 channel: "A Life After Layoff"
 duration: 818
 language: "en"
+rules_status: "processed"
+rules_date: "2026-10-29"
 sections:
   - title: "The Importance of a Resume and How to Write It"
     timestamp: 0
