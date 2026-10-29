@@ -6,8 +6,8 @@ Rules for the whole CV and the whole cover letter.
 - Applies to: CV, cover letter
 - Rule: never use phrases that say nothing, such as "proven track record" or "results-driven individual". Replace each with a fact from the profile.
 - Why: the recruiter reads clichés as noise; they take the place of facts that would catch the recruiter's eye.
-- Sources: 0T8q3B82PRw-en.md (section "Crafting a Professional Summary", 02:05)
-- Agreement: 1 of 5 sources, no conflicts
+- Sources: 0T8q3B82PRw-en.md (section "Crafting a Professional Summary", 02:05); N1Fm4JYae1I-en.md (section "Rule 3: Use AI Thoughtfully", 06:11): hiring managers reject generic CVs that show little effort
+- Agreement: 2 of 5 sources, no conflicts
 - Weight: 0.6
 - Needs: nothing
 - Check: no phrase from `lists/cliches.md`
@@ -27,20 +27,21 @@ Rules for the whole CV and the whole cover letter.
 ### GEN-03 — Ask the candidate to bring up matching experience
 - Applies to: the agent's dialogue with the candidate, before the CV is written
 - Rule: when the vacancy asks for something the CV does not show well, or a bullet has no result, the agent tells the candidate what matters for this vacancy and asks about similar experience: "For this vacancy X and Y matter. You have similar experience in Z; let's bring up these achievements. Is there a result in numbers?" What the candidate answers is added to the profile and only then used in the CV.
-- Why: a candidate often gives a CV that does not show the experience the vacancy needs, though the candidate has it. Asking finds real facts instead of inventing them.
-- Sources: owner; 4Qh7C5AA34o-en.md (section "Customizing the Resume", 10:41): find what the vacancy requires and ask the candidate to confirm the experience
-- Agreement: 1 of 5 sources, no conflicts
+  For each achievement the agent asks three things: the final result, the candidate's own contribution, and how it was achieved. When the result is a team's, the agent asks for the candidate's role in it, and the bullet names both: the team's result and the candidate's part. When a result has no number, the agent suggests which kind of metric it could have (time, money, volume, errors, users) and asks the candidate for the value.
+- Why: a candidate often gives a CV that does not show the experience the vacancy needs, though the candidate has it. Asking finds real facts instead of inventing them. In the interview the recruiter or the hiring manager asks "and what did you do?"; a team result without the candidate's role reads as someone else's achievement.
+- Sources: owner; 4Qh7C5AA34o-en.md (section "Customizing the Resume", 10:41): find what the vacancy requires and ask the candidate to confirm the experience; N1Fm4JYae1I-en.md (section "Rule 3: Use AI Thoughtfully", 06:11): result, contribution, how; section "Rule 4: Quantify Your Impact", 08:38: identify the metrics of each experience; the team result and the candidate's role: our addition
+- Agreement: 2 of 5 sources, no conflicts
 - Weight: none, this is agent behaviour, not a property of the CV
 - Needs: requirements of the vacancy or the job family; the profile, to find what is missing or weak
 - Check: every gap the agent found was either asked about or reported to the candidate
-- Limits: the agent asks, it never fills a gap itself. A requirement the candidate has no experience for is reported as a gap, not hidden.
+- Limits: the agent asks, it never fills a gap itself. A requirement the candidate has no experience for is reported as a gap, not hidden. The agent suggests the kind of metric, never its value.
 
 ### GEN-04 — Content that can be skimmed
 - Applies to: CV
 - Rule: bullets instead of paragraphs; one thought per bullet, one or two lines long; standard section names (Summary, Experience, Skills, Education).
 - Why: the recruiter skims, not reads. What takes effort to find is skipped.
-- Sources: 0T8q3B82PRw-en.md (section "Making Your CV Readable", 03:50)
-- Agreement: 1 of 5 sources, no conflicts
+- Sources: 0T8q3B82PRw-en.md (section "Making Your CV Readable", 03:50); N1Fm4JYae1I-en.md (section "Rule 1: Make Your Resume AI-Friendly", 02:18): conventional headings, so the AI screener reads the CV correctly
+- Agreement: 2 of 5 sources, no conflicts
 - Weight: 0.7
 - Needs: nothing
 - Check: no bullet longer than two lines; no paragraph outside the summary and the short role description; section names from the standard list
@@ -83,8 +84,8 @@ Rules for the whole CV and the whole cover letter.
 - Applies to: CV, the agent's work before writing
 - Rule: the agent starts from the requirements of the vacancy (or of the group of vacancies), not from the CV. From them it decides what to take from the profile, how to reword it, and what to ask the candidate (GEN-03). What the vacancy does not need stays in the profile and out of the CV.
 - Why: the recruiter, the hiring manager and the ATS all check the CV against the vacancy. A CV built from the vacancy's requirements answers that check; a CV built from the profile tells the whole career and buries the fit.
-- Sources: 4Qh7C5AA34o-en.md (section "Customizing the Resume", 10:41): "look at what the job posting asks for and only provide what they need"; owner
-- Agreement: 1 of 5 sources, no conflicts
+- Sources: 4Qh7C5AA34o-en.md (section "Customizing the Resume", 10:41): "look at what the job posting asks for and only provide what they need"; N1Fm4JYae1I-en.md (section "Rule 2: Tailor Your Resume Effectively", 03:47): tailored CVs got 5.71% interviews against 3.09% for untailored; owner
+- Agreement: 2 of 5 sources, no conflicts
 - Weight: 0.9
 - Needs: the requirements of the vacancy, or of each vacancy in the group; the whole profile
 - Check: every block of the CV can be traced to a requirement of the vacancy (or group) or to a rule that requires it (header, dates)
@@ -92,10 +93,10 @@ Rules for the whole CV and the whole cover letter.
 
 ### GEN-09 — Two readers: the ATS and the human
 - Applies to: CV
-- Rule: the CV is written for two readers at once. For the ATS, the keywords of the vacancy (skills, tools, competencies, job titles, in the vacancy's wording) may go anywhere in the CV: summary, competencies, skills, experience bullets. For the human, every place they go stays readable: a keyword is part of a sentence or a list item that makes sense, never a pile of keywords.
-- Why: the ATS matches the CV against the vacancy by keywords and does not care where they are; the recruiter and the hiring manager skim and drop a CV that reads like a keyword list. Advice written for one reader conflicts with advice written for the other (for example, the number of skills, SKILL-01).
-- Sources: owner; the conflict between 0T8q3B82PRw-en.md (section "Highlighting Skills and Experience", 05:55) and 4Qh7C5AA34o-en.md (section "Adding Skills and Projects", 09:19)
-- Agreement: no source states it; it explains a conflict between two sources
+- Rule: the CV is written for two readers at once. The machine reader is the ATS or an AI screener that reads, ranks and sorts the applications. For it, the keywords of the vacancy (skills, tools, competencies, job titles, in the vacancy's wording) may go anywhere in the CV: summary, competencies, skills, experience bullets. For the human, every place they go stays readable: a keyword is part of a sentence or a list item that makes sense, never a pile of keywords.
+- Why: the machine reader matches the CV against the vacancy and does not care where the keywords are; the recruiter and the hiring manager skim and drop a CV that reads like a keyword list. The human still decides: only a few hiring managers let AI pass or reject a candidate. Advice written for one reader conflicts with advice written for the other (for example, the number of skills, SKILL-01).
+- Sources: N1Fm4JYae1I-en.md (sections "Two Stages of Resume Evaluation", 01:31, and "Recap and Conclusion", 12:30): "pass the AI, pass the human"; owner; the conflict between 0T8q3B82PRw-en.md (section "Highlighting Skills and Experience", 05:55) and 4Qh7C5AA34o-en.md (section "Adding Skills and Projects", 09:19)
+- Agreement: 1 of 5 sources states it; it explains a conflict between two others
 - Weight: 0.8
 - Needs: keywords from the requirements of the vacancy or the group
 - Check: every keyword of the vacancy that the profile backs appears in the CV; no line is a bare list of keywords outside the competencies and skills sections

@@ -9,7 +9,7 @@ Materials the writing rules of the CV writer are based on. New sources are added
 | [`0T8q3B82PRw-en.md`](0T8q3B82PRw-en.md) | Why Recruiters Reject Your CV in 6 Seconds (and How to Fix It) | Lee Harding | Video transcript | processed 2026-10-28 |
 | [`4Qh7C5AA34o-en.md`](4Qh7C5AA34o-en.md) | How To Write A Resume Recruiters Actually Want To Read | A Life After Layoff | Video transcript | partial 2026-10-28: "Work Experience and Education" is cut short in the transcript |
 | [`MxBZjnayQUM-en.md`](MxBZjnayQUM-en.md) | Hiring Managers Can Tell When You Use AI On Your Resume. Here's How. | A Life After Layoff | Video transcript | processed 2026-10-28 |
-| [`N1Fm4JYae1I-en.md`](N1Fm4JYae1I-en.md) | Write a Killer Résumé in the AI Era: 5 New Rules! | Jeff Su | Video transcript | new |
+| [`N1Fm4JYae1I-en.md`](N1Fm4JYae1I-en.md) | Write a Killer Résumé in the AI Era: 5 New Rules! | Jeff Su | Video transcript | partial 2026-10-29: keyword boundary, pain points, XYZ, Projects still to write |
 | [`R3abknwWX7k-en.md`](R3abknwWX7k-en.md) | Tips For How To Write A Better Resume (From A Recruiter's Perspective) | A Life After Layoff | Video transcript | new |
 | [`3cizyWQbfQc-en.md`](3cizyWQbfQc-en.md) | 7 Career Rules You Should Stop Following in Today's Job Market | A Life After Layoff | Video transcript | new |
 | [`6N6H_KQxPWE-ru.md`](6N6H_KQxPWE-ru.md) | 15 000 резюме на одну роль. Как теперь компании выбирают кандидатов (Кира Кузьменко, подкаст Собес) | Либо🔺Либо | Video transcript, Russian original | new |
