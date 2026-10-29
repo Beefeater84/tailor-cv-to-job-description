@@ -6,7 +6,7 @@ duration: 2564
 language: "ru"
 rules_status: "partial"
 rules_date: "2026-10-29"
-rules_note: "read up to "Проблемы с ИИ в рекрутинге" (29:54); rules cite the -ru file"
+rules_note: "read up to "Сопроводительные письма и личные сообщения" (35:06); rules cite the -ru file"
 sections:
   - title: "Введение в пятый сезон подкаста"
     timestamp: 0
