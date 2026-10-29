@@ -15,7 +15,7 @@ Two lists under the summary: competencies (areas of work, such as "technical sou
 - Weight: 0.8
 - Needs: CV block with skills; skills used in the experience; requirements of the vacancy or of each vacancy in the group
 - Check: every skill in the CV is in the vacancy's (or group's) requirements and in the profile, or was confirmed by the candidate; every asked skill is either in the CV, asked about, or reported as a gap; the section comes after the competencies and before the experience
-- Limits: only real skills that the candidate would talk about in an interview. No buzzwords.
+- Limits: only real skills that the candidate would talk about in an interview. No buzzwords. Every skill passes the tests of GEN-12: a must-have skill also has a bullet or a project that uses it, and the list does not follow the vacancy's order.
 
 ### SKILL-02 — Competencies: areas of work the vacancy needs
 - Applies to: CV / competencies
@@ -30,4 +30,4 @@ Two lists under the summary: competencies (areas of work, such as "technical sou
 
 ## Open questions
 
-- **Number of skills.** The right answer is not known: ten at most suits the human reader, as many as possible suits the ATS (GEN-09). Tried for now: no cap on skills the vacancy asks for, no skills it does not ask for, so the vacancy itself limits the list. To check on real results; the fallback is a cap of ten in the section, with the other keywords placed in the experience bullets.
+- **Number of skills.** The right answer is not known: ten at most suits the human reader, as many as possible suits the ATS (GEN-09). Tried for now: no cap on skills the vacancy asks for, no skills it does not ask for, so the vacancy itself limits the list. To check on real results; the fallback is a cap of ten in the section, with the other keywords placed in the experience bullets. N1Fm4JYae1I-en.md (section "Rule 2: Tailor Your Resume Effectively", 03:47) found that CVs with the most keywords got fewer interviews, but it puts the cause in keywords without backing, not in their count; this supports the current choice (only skills the vacancy asks for and the profile backs, GEN-12). What to measure on real results: the share of skills with no bullet behind them, not only their number.

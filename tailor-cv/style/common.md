@@ -22,6 +22,16 @@ Rules that apply in every style: the signs that a text was written by AI.
 - Check: no "—" in the text
 - Limits: none
 
+### STYLE-03 — List items not in one template
+- Applies to: lists in the text
+- Rule: the items of a list differ in structure and in how they start. At most two items in a row have the same construction (for example, "Verb + noun, resulting in X% Y").
+- Why: items cut to one template read as generated; the reader notices the pattern before the content.
+- Sources: our addition
+- Agreement: no source states it
+- Weight: 0.4
+- Check: no three items in a row with the same opening word or the same sentence pattern
+- Limits: the threshold of two is a first guess, to be checked on real texts
+
 ## Open questions
 
 - **Which styles there are.** No style in `styles/` yet. To decide: the first style for a CV, and how the project picks one.

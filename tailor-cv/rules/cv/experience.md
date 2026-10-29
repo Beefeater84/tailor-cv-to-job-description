@@ -55,7 +55,18 @@ The jobs of the candidate: company, title, dates, and what the candidate did and
 - Weight: 0.5, the rule is narrow and depends on the role
 - Needs: AI work and achievements from the profile; requirements and responsibilities of the vacancy or the group, to tell whether it is about AI or automation
 - Check: for a vacancy about AI or automation, the first bullet of each job with AI work in the profile is an AI achievement; every AI tool in the skills has a bullet behind it
-- Limits: only AI work from the profile. When there is none, the agent asks the candidate (GEN-03); with no work example, see the section Projects.
+- Limits: only AI work from the profile. When there is none, the agent asks the candidate (GEN-03); with no work example, a project can show it (PROJ-01).
+
+### EXP-06 — The shape of a result bullet: what, measured by, how
+- Applies to: CV / experience
+- Rule: a bullet with a result is built from three parts: what was achieved, what it is measured by, and how the candidate did it (Google's XYZ formula: "Accomplished X as measured by Y, by doing Z"). The parts may come in any order that reads naturally.
+- Why: in one line the recruiter sees the result, its scale and the way the candidate works, and has something concrete to ask about in the interview.
+- Sources: N1Fm4JYae1I-en.md (section "Rule 4: Quantify Your Impact", 08:38); any order: our addition
+- Agreement: 1 of 5 sources, no conflicts
+- Weight: 0.5, it is a shape, not content: EXP-02 and EXP-04 say what the bullet holds
+- Needs: achievements with their measure and the way they were reached, from the profile
+- Check: a bullet with a result names what was achieved and how; the measure is there when the profile has one
+- Limits: with no measure in the profile, the bullet goes without one (EXP-04), never with an invented number. Not every bullet in one template: the style rule on varied list items applies (`../../style/common.md`, STYLE-03).
 
 ## Open questions
 

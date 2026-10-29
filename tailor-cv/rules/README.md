@@ -8,13 +8,16 @@ The format below is a draft. It is tried on the first sources and changed as the
 
 ## Who uses the rules
 
-`tailor-cv` has three roles; each reads the rules in its own way.
+`tailor-cv` works in four steps, in this order; each reads the rules in its own way.
 
-| Role | Does | Uses |
+| Step | Does | Uses |
 |---|---|---|
-| writer | builds the CV and the cover letter from the vacancy's requirements | the **Rule** field of the cards here |
-| validator | checks the finished text and scores it | the **Check** and **Weight** fields of the cards here |
+| vacancy analysis | takes one vacancy or a group from the vacancy reader and derives the input of the writer: the requirements (must-have and nice-to-have), the tags (role, seniority, industry, whether the role is technical or about AI), the keywords, and the problems the role is hired to solve (GEN-13) | the rules whose **Needs** name a result of the analysis |
+| writer | builds the CV and the cover letter from the analysis and the candidate's profile | the **Rule** field of the cards here |
+| validator | checks the finished text against the analysis and scores it: how well the CV is tailored, and that it is not over-optimized (GEN-12) | the **Check** and **Weight** fields of the cards here |
 | humanizer | checks the style and removes the signs of AI writing | [`../style/`](../style/README.md), a separate folder that knows nothing about CVs, to be reused in other projects |
+
+The writer and the validator read the same analysis, so the validator checks the CV against the same requirements and keywords the writer used.
 
 ## Groups
 

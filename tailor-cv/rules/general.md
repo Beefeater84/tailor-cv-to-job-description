@@ -34,6 +34,7 @@ Rules for the whole CV and the whole cover letter.
 - Weight: none, this is agent behaviour, not a property of the CV
 - Needs: requirements of the vacancy or the job family; the profile, to find what is missing or weak
 - Check: every gap the agent found was either asked about or reported to the candidate
+  When a key requirement has no experience behind it at all, the agent may suggest a small project that shows it (PROJ-01); the candidate decides whether to do it (GEN-10).
 - Limits: the agent asks, it never fills a gap itself. A requirement the candidate has no experience for is reported as a gap, not hidden. The agent suggests the kind of metric, never its value.
 
 ### GEN-04 — Content that can be skimmed
@@ -60,9 +61,9 @@ Rules for the whole CV and the whole cover letter.
 
 ### GEN-06 — Section order
 - Applies to: CV
-- Rule: the sections go in this order: header (name, job title, location, contacts), summary, competencies, skills, experience (with career gaps in their place), education.
+- Rule: the sections go in this order: header (name, job title, location, contacts), summary, competencies, skills, experience (with career gaps in their place), projects (only when PROJ-01 calls for it), education.
 - Why: the recruiter reads top down and stops early. The order puts who the candidate is and what they can do first, and the proof right after.
-- Sources: 0T8q3B82PRw-en.md (sections "Structuring Your CV Effectively", 04:26, "Highlighting Skills and Experience", 05:55, "Final Tips for a Strong CV", 08:15); 4Qh7C5AA34o-en.md (competencies under the profile); skills before experience: also owner
+- Sources: 0T8q3B82PRw-en.md (sections "Structuring Your CV Effectively", 04:26, "Highlighting Skills and Experience", 05:55, "Final Tips for a Strong CV", 08:15); 4Qh7C5AA34o-en.md (competencies under the profile); skills before experience: also owner; projects as a separate section: N1Fm4JYae1I-en.md (section "Rule 5: Demonstrate Your AI Skills", 10:36), its place after experience: owner
 - Agreement: 1 of 5 sources, no conflicts
 - Weight: 0.7
 - Needs: nothing
@@ -124,9 +125,35 @@ Rules for the whole CV and the whole cover letter.
 - Check: no text with the background colour or a font far smaller than the rest; no instructions to an AI in the text; if present, the candidate's confirmation is recorded
 - Limits: rendering is the PDF creator's part (#5); the validator checks the rendered file too
 
+### GEN-12 — The line between tailoring and over-optimizing
+- Applies to: CV
+- Rule: a term of the vacancy (skill, tool, competency, job title) goes into the CV only when it passes three tests:
+  1. Backing: the profile has work behind it, or the candidate confirmed it (GEN-03).
+  2. Context: for a must-have requirement of the vacancy, an experience bullet (or a project, PROJ-01) uses the term to describe that work. In the skills and competencies lists the term may also stand as a list item. A nice-to-have term may stand in a list alone.
+  3. Own words: the sentence is the candidate's, not a sentence of the vacancy, and the skills do not follow the vacancy's order.
+  The vacancy's terms are taken; its sentences are not.
+- Why: the AI screener and the human check what stands behind a keyword. CVs crammed with the vacancy's phrases without backing got fewer interviews than CVs with fewer keywords that described real work. A CV that retells the vacancy is recognised at once by the hiring manager, who wrote it.
+- Sources: N1Fm4JYae1I-en.md (section "Rule 2: Tailor Your Resume Effectively", 03:47): keyword mapping (tests 1 and 2) against keyword stuffing; MxBZjnayQUM-en.md (section "Matching Job Descriptions and Hidden Text", 04:00): mirroring the vacancy (test 3); context only for must-have: owner
+- Agreement: 2 of 5 sources, no conflicts
+- Weight: 0.8
+- Needs: the terms of the vacancy or the group, split into must-have and nice-to-have (from the vacancy analysis); the profile
+- Check: for every term of the vacancy in the CV: backing in the profile or a recorded confirmation; for every must-have term, a bullet or project that uses it; no run of words copied from the vacancy (length: see "Mirroring the vacancy"); the skills are not in the vacancy's order
+- Limits: GEN-09 says who the CV is written for and where keywords may go; this rule says which of them may go in and how. The count of keywords is not a test by itself: too many keywords hurt because they usually come without backing.
+
+### GEN-13 — The problems the role is hired to solve
+- Applies to: CV, the agent's work before writing
+- Rule: from the vacancy text (responsibilities, the team, what the role must change, words like "from scratch", "scale", "migrate", "bring order to") the agent derives one to three problems the role is opened to solve. For each problem it looks in the profile for an achievement where the candidate solved a similar one and puts it forward: in the "achieved" part of the summary (SUM-01) and in the first bullets of the job it belongs to (EXP-02). When the profile has none, the agent asks the candidate (GEN-03).
+- Why: a role is opened because something needs to be solved. The requirements are a checklist; the hiring manager looks for someone who has already solved this problem. A CV that shows it answers the real question, not only the checklist.
+- Sources: N1Fm4JYae1I-en.md (section "Rule 2: Tailor Your Resume Effectively", 03:47): "identify key problems and skills"; a separate rule focused on the problems: owner
+- Agreement: 1 of 5 sources, no conflicts
+- Weight: 0.7, lower than GEN-08: the problems are an interpretation of the text, and the agent can read it wrong
+- Needs: the full text of the vacancy or of each vacancy in the group; achievements from the profile. The problems are derived in the vacancy analysis, they are not a field of the vacancy contract: the contract holds what the vacancy says, the problems are a reading of it, and in the job family mode they are merged across the group.
+- Check: the analysis names the problems; for each one, the CV shows a matching achievement in the summary or the first bullets, or the candidate was asked
+- Limits: problems only from the vacancy text, no guesses beyond it. The CV never names the company's problem ("you struggle with X"); that belongs to the cover letter.
+
 ## Open questions
 
-- **Mirroring the vacancy.** A CV that repeats the vacancy too closely (its sentences, all its skills in the same order) is a sign of AI writing (MxBZjnayQUM-en.md, section "Matching Job Descriptions and Hidden Text", 04:00). It pulls against SKILL-01 and GEN-09, which use the vacancy's wording. Not known: where the line is and how to check it. An experiment to try (owner): the CV says openly that it was assembled for this vacancy from the candidate's index CV and links to the index CV. It will not suit every candidate.
+- **Mirroring the vacancy.** A CV that repeats the vacancy too closely (its sentences, all its skills in the same order) is a sign of AI writing (MxBZjnayQUM-en.md, section "Matching Job Descriptions and Hidden Text", 04:00). GEN-12 sets the line: the vacancy's terms are taken, its sentences and order are not. Still open: how long a run of words copied from the vacancy counts as copying, and how the validator checks it. An experiment to try (owner): the CV says openly that it was assembled for this vacancy from the candidate's index CV and links to the index CV. It will not suit every candidate.
 
 - **Photo by country** (GEN-07): the source is from the UK market. In some countries (for example Germany) a photo on a CV is still common. To decide: whether the rule depends on the vacancy's country.
 
