@@ -5,9 +5,9 @@ Rules for the whole CV and the whole cover letter.
 ### GEN-01 — No empty clichés
 - Applies to: CV, cover letter
 - Rule: never use phrases that say nothing, such as "proven track record" or "results-driven individual". Replace each with a fact from the profile.
-- Why: the recruiter reads clichés as noise; they take the place of facts that would catch the recruiter's eye.
-- Sources: 0T8q3B82PRw-en.md (section "Crafting a Professional Summary", 02:05); N1Fm4JYae1I-en.md (section "Rule 3: Use AI Thoughtfully", 06:11): hiring managers reject generic CVs that show little effort
-- Agreement: 2 of 5 sources, no conflicts
+- Why: the recruiter reads clichés as noise; they take the place of facts that would catch the recruiter's eye. Soft skills such as "team player" are checked in the interview; claiming them in the CV proves nothing.
+- Sources: 0T8q3B82PRw-en.md (section "Crafting a Professional Summary", 02:05); N1Fm4JYae1I-en.md (section "Rule 3: Use AI Thoughtfully", 06:11): hiring managers reject generic CVs that show little effort; R3abknwWX7k-en.md (section "Avoiding Generic Language and Stubbornness", 06:40)
+- Agreement: 3 of 5 sources, no conflicts
 - Weight: 0.6
 - Needs: nothing
 - Check: no phrase from `lists/cliches.md`
@@ -17,8 +17,8 @@ Rules for the whole CV and the whole cover letter.
 - Applies to: CV, cover letter
 - Rule: the writer works in two modes. One to one: the CV is tailored to one vacancy. Job family: one CV is tailored to a group of 3–5 similar vacancies for one role. In both modes the CV names no company; the cover letter is written for one vacancy and is where the company name and the reasons for this company go.
 - Why: vacancies for one role ask for broadly the same things, so a CV that speaks to the whole family is tailored enough, and one strong version beats a CV rewritten for every application. A single vacancy that matters on its own still gets its own CV.
-- Sources: 0T8q3B82PRw-en.md (section "Tailoring Your CV for Job Applications", 08:51); the two modes, 3–5 vacancies and the cover letter as the personal part: owner
-- Agreement: 1 of 5 sources, no conflicts
+- Sources: 0T8q3B82PRw-en.md (section "Tailoring Your CV for Job Applications", 08:51); R3abknwWX7k-en.md (section "The Importance of Customization and Clarity", 04:24): tailoring matters most where the competition is high, such as remote roles, which supports the one-to-one mode; the two modes, 3–5 vacancies and the cover letter as the personal part: owner
+- Agreement: 2 of 5 sources. 0T8q3B82PRw-en.md calls tailoring to every vacancy unrealistic, R3abknwWX7k-en.md asks for it; the two modes hold both.
 - Weight: 0.7
 - Needs: the requirements of the vacancy, or of all vacancies in the group to find what they share
 - Check: the CV names no company; the cover letter is tied to one vacancy
@@ -41,8 +41,8 @@ Rules for the whole CV and the whole cover letter.
 - Applies to: CV
 - Rule: bullets instead of paragraphs; one thought per bullet, one or two lines long; standard section names (Summary, Experience, Skills, Education).
 - Why: the recruiter skims, not reads. What takes effort to find is skipped.
-- Sources: 0T8q3B82PRw-en.md (section "Making Your CV Readable", 03:50); N1Fm4JYae1I-en.md (section "Rule 1: Make Your Resume AI-Friendly", 02:18): conventional headings, so the AI screener reads the CV correctly
-- Agreement: 2 of 5 sources, no conflicts
+- Sources: 0T8q3B82PRw-en.md (section "Making Your CV Readable", 03:50); N1Fm4JYae1I-en.md (section "Rule 1: Make Your Resume AI-Friendly", 02:18): conventional headings, so the AI screener reads the CV correctly; R3abknwWX7k-en.md (section "The Importance of Customization and Clarity", 04:24): long blocks of text get skipped
+- Agreement: 3 of 5 sources, no conflicts
 - Weight: 0.7
 - Needs: nothing
 - Check: no bullet longer than two lines; no paragraph outside the summary and the short role description; section names from the standard list
@@ -52,8 +52,8 @@ Rules for the whole CV and the whole cover letter.
 - Applies to: CV
 - Rule: the top third of the first page shows who the candidate is, what they do, where they are, their most recent job, and that they match the vacancy. The header, the summary and the start of the most recent job are short enough to fit there.
 - Why: the recruiter spends 6–10 seconds on a CV and looks at the top third. If the answer is not there, the CV is dropped, even when the candidate is qualified.
-- Sources: 0T8q3B82PRw-en.md (sections "Understanding CV Importance" and "Key Elements Recruiters Look For", 00:00–02:05)
-- Agreement: 1 of 5 sources, no conflicts
+- Sources: 0T8q3B82PRw-en.md (sections "Understanding CV Importance" and "Key Elements Recruiters Look For", 00:00–02:05); R3abknwWX7k-en.md (section "Introduction to Resume Writing Tips", 00:00): a five-second glance
+- Agreement: 2 of 5 sources, no conflicts
 - Weight: 1.0
 - Needs: everything HEADER-01..03, SUM-01 and EXP-01 need
 - Check: HEADER-01..03, SUM-01 and EXP-01 pass; the rendered top third holds them (checked after the PDF is made)
@@ -85,8 +85,8 @@ Rules for the whole CV and the whole cover letter.
 - Applies to: CV, the agent's work before writing
 - Rule: the agent starts from the requirements of the vacancy (or of the group of vacancies), not from the CV. From them it decides what to take from the profile, how to reword it, and what to ask the candidate (GEN-03). What the vacancy does not need stays in the profile and out of the CV.
 - Why: the recruiter, the hiring manager and the ATS all check the CV against the vacancy. A CV built from the vacancy's requirements answers that check; a CV built from the profile tells the whole career and buries the fit.
-- Sources: 4Qh7C5AA34o-en.md (section "Customizing the Resume", 10:41): "look at what the job posting asks for and only provide what they need"; N1Fm4JYae1I-en.md (section "Rule 2: Tailor Your Resume Effectively", 03:47): tailored CVs got 5.71% interviews against 3.09% for untailored; owner
-- Agreement: 2 of 5 sources, no conflicts
+- Sources: 4Qh7C5AA34o-en.md (section "Customizing the Resume", 10:41): "look at what the job posting asks for and only provide what they need"; N1Fm4JYae1I-en.md (section "Rule 2: Tailor Your Resume Effectively", 03:47): tailored CVs got 5.71% interviews against 3.09% for untailored; R3abknwWX7k-en.md (section "Contact Information and Resume Customization", 03:04): not a summary of everything, only what the employer looks for; owner
+- Agreement: 3 of 5 sources, no conflicts
 - Weight: 0.9
 - Needs: the requirements of the vacancy, or of each vacancy in the group; the whole profile
 - Check: every block of the CV can be traced to a requirement of the vacancy (or group) or to a rule that requires it (header, dates)

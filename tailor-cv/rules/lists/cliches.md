@@ -4,3 +4,5 @@ Phrases that say nothing about the candidate. Used by GEN-01: each is replaced w
 
 - proven track record (0T8q3B82PRw-en.md)
 - results-driven individual (0T8q3B82PRw-en.md)
+- team player (R3abknwWX7k-en.md)
+- great organizational skills (R3abknwWX7k-en.md)

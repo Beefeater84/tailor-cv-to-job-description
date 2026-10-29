@@ -32,6 +32,16 @@ Rules that apply in every style: the signs that a text was written by AI.
 - Check: no three items in a row with the same opening word or the same sentence pattern
 - Limits: the threshold of two is a first guess, to be checked on real texts
 
+### STYLE-04 — No in-house language
+- Applies to: the whole text
+- Rule: no words that only people inside one organisation know: internal names of systems, projects and teams, internal abbreviations and terms. Each is replaced with the common term of the reader's field. A name known outside the organisation (for example, a public product) stays, with a few words on what it is.
+- Why: the reader does not know the internal name, so the sentence says nothing to them and is skipped.
+- Sources: R3abknwWX7k-en.md (section "The Importance of Customization and Clarity", 04:24); a public name with an explanation: our addition
+- Agreement: 1 of 5 sources, no conflicts
+- Weight: 0.6
+- Check: every proper name and abbreviation is either common in the reader's field or explained in the text (LLM check)
+- Limits: when it is not clear whether a term is internal or what it stands for, the humanizer flags it to the author instead of guessing a replacement
+
 ## Open questions
 
 - **Which styles there are.** No style in `styles/` yet. To decide: the first style for a CV, and how the project picks one.
