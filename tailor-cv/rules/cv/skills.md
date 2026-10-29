@@ -28,6 +28,17 @@ Two lists under the summary: competencies (areas of work, such as "technical sou
 - Check: every competency is asked for by the vacancy (or the group) and backed by the profile
 - Limits: only areas the candidate has worked in; a competency is not a skill or a tool
 
+### SKILL-03 — A language only when the vacancy asks for it
+- Applies to: CV / skills
+- Rule: when the vacancy names a language (for example, English for a vacancy written in another language), the skills section gives that language with the candidate's level, worded as the vacancy words it (for example, "English: C1"). A language the vacancy does not name is not added.
+- Why: the level of a required language is checked as yes or no, by the recruiter, the AI screener or a screening question with an automatic rejection. A CV that does not state it reads as "no". A language the vacancy does not need takes space like any other skill it does not ask for (SKILL-01).
+- Sources: 6N6H_KQxPWE-ru.md (section "Проблемы с ИИ в рекрутинге", 29:54): "Do you know English at such a level?" as a screening question with an automatic rejection; only when the vacancy names it, in the skills: owner
+- Agreement: 1 of 5 sources, no conflicts
+- Weight: 0.7
+- Needs: languages with their levels from the profile; the languages the vacancy or the group asks for
+- Check: every language the vacancy names is in the skills with a level, when the profile has it; no language the vacancy does not name
+- Limits: only the level from the profile. A required language the candidate does not have, or has at a lower level, is reported to the candidate as a gap (GEN-03), never raised.
+
 ## Open questions
 
 - **Number of skills.** The right answer is not known: ten at most suits the human reader, as many as possible suits the ATS (GEN-09). Tried for now: no cap on skills the vacancy asks for, no skills it does not ask for, so the vacancy itself limits the list. To check on real results; the fallback is a cap of ten in the section, with the other keywords placed in the experience bullets. N1Fm4JYae1I-en.md (section "Rule 2: Tailor Your Resume Effectively", 03:47) found that CVs with the most keywords got fewer interviews, but it puts the cause in keywords without backing, not in their count; this supports the current choice (only skills the vacancy asks for and the profile backs, GEN-12). What to measure on real results: the share of skills with no bullet behind them, not only their number.

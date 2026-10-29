@@ -13,15 +13,15 @@ The short paragraph under the header that says who the candidate is and what rol
 - Check: at most four lines; the four parts are present; no company name; years, numbers and achievements are in the profile
 - Limits: years, numbers and achievements only from the profile. Years of experience are the total, not the years relevant to the job family: the bigger number is used. The no-cliché rule (GEN-01) applies here first of all.
 
-### SUM-02 — Industries the vacancy needs
+### SUM-02 — Industries and market type the vacancy needs
 - Applies to: CV / summary
-- Rule: when the candidate has worked in the industry or sector of the vacancy (or of the job family), the summary names it.
-- Why: the hiring manager checks the fit by three things at once: the range of experience, the job titles and the industries. Industry experience the vacancy needs, if not named, is missed.
-- Sources: 4Qh7C5AA34o-en.md (section "Professional Profile and Competencies", 03:10)
-- Agreement: 1 of 5 sources, no conflicts
-- Weight: 0.6
-- Needs: industries of the candidate's employers from the profile; vacancy field `industry` (not in the vacancy contract yet, see "Vacancy contract: fields for location, work format, seniority, compensation" (#39))
-- Check: when an industry of the vacancy is in the profile, the summary names it
+- Rule: when the candidate has worked in the industry or sector of the vacancy (or of the job family), or in its type of market (B2B, B2C), the summary names it in the vacancy's words.
+- Why: the hiring manager checks the fit by three things at once: the range of experience, the job titles and the industries. Industry experience the vacancy needs, if not named, is missed. Recruiters set the AI screener to check such points, and screening questions such as "B2C or only B2B?" lead to an automatic rejection: a CV that does not name the industry or the market reads as "no".
+- Sources: 4Qh7C5AA34o-en.md (section "Professional Profile and Competencies", 03:10); 6N6H_KQxPWE-ru.md (section "Проблемы с ИИ в рекрутинге", 29:54): the recruiter gives the AI screener the top critical points, and screening questions on the market type reject automatically
+- Agreement: 2 of 5 sources, no conflicts
+- Weight: 0.8, a missing industry or market can lead to an automatic rejection
+- Needs: industries and market types of the candidate's employers from the profile; vacancy field `industry` (not in the vacancy contract yet, see "Vacancy contract: fields for location, work format, seniority, compensation" (#39))
+- Check: when an industry or market type of the vacancy is in the profile, the summary names it
 - Limits: only industries from the profile. When the candidate has no experience in the vacancy's industry, nothing is added.
 
 ## Open questions
