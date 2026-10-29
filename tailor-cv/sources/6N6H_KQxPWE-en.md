@@ -6,7 +6,7 @@ duration: 2564
 language: "en"
 rules_status: "partial"
 rules_date: "2026-10-29"
-rules_note: "read up to the conclusion (18:24); rules cite the -ru file"
+rules_note: "read up to "Проблемы с ИИ в рекрутинге" (29:54); rules cite the -ru file"
 sections:
   - title: "Introduction to the Fifth Season of the Podcast"
     timestamp: 0

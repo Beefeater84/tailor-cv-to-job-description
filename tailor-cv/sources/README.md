@@ -12,7 +12,7 @@ Materials the writing rules of the CV writer are based on. New sources are added
 | [`N1Fm4JYae1I-en.md`](N1Fm4JYae1I-en.md) | Write a Killer Résumé in the AI Era: 5 New Rules! | Jeff Su | Video transcript | processed 2026-10-29 |
 | [`R3abknwWX7k-en.md`](R3abknwWX7k-en.md) | Tips For How To Write A Better Resume (From A Recruiter's Perspective) | A Life After Layoff | Video transcript | processed 2026-10-29 |
 | [`3cizyWQbfQc-en.md`](3cizyWQbfQc-en.md) | 7 Career Rules You Should Stop Following in Today's Job Market | A Life After Layoff | Video transcript | processed 2026-10-29: no rules, career advice; CV points repeat the same author |
-| [`6N6H_KQxPWE-ru.md`](6N6H_KQxPWE-ru.md) | 15 000 резюме на одну роль. Как теперь компании выбирают кандидатов (Кира Кузьменко, подкаст Собес) | Кира Кузьменко (podcast Собес, channel Либо🔺Либо) | Video transcript, Russian original | partial 2026-10-29: read up to 18:24 |
+| [`6N6H_KQxPWE-ru.md`](6N6H_KQxPWE-ru.md) | 15 000 резюме на одну роль. Как теперь компании выбирают кандидатов (Кира Кузьменко, подкаст Собес) | Кира Кузьменко (podcast Собес, channel Либо🔺Либо) | Video transcript, Russian original | partial 2026-10-29: read up to 29:54 |
 | [`6N6H_KQxPWE-en.md`](6N6H_KQxPWE-en.md) | 15,000 Resumes for One Role. How Companies Now Select Candidates | Kira Kuzmenko (podcast Sobes, channel Either🔺Either) | English translation of `6N6H_KQxPWE-ru.md` | see `-ru` |
 
 ## Rules status
