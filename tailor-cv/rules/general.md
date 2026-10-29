@@ -152,6 +152,17 @@ Rules for the whole CV and the whole cover letter.
 - Check: the analysis names the problems; for each one, the CV shows a matching achievement in the summary or the first bullets, or the candidate was asked
 - Limits: problems only from the vacancy text, no guesses beyond it. The CV never names the company's problem ("you struggle with X"); that belongs to the cover letter.
 
+### GEN-14 — The CV stands alone; the cover letter only adds
+- Applies to: CV, cover letter
+- Rule: everything needed to decide on the candidate is in the CV: the fit with the vacancy, the requirements, the industry and market type, the location and work format, the reasons for gaps. The cover letter adds only the personal part for one vacancy: the company name and why this company (GEN-02). No fact about the candidate lives only in the letter. The cover letter is optional: written when the candidate asks for it, for a vacancy that matters to them.
+- Why: cover letters are almost never read; the field for one is often there only because the ATS asks for it by default. A fact that is only in the letter is not seen, and the CV loses without it.
+- Sources: 6N6H_KQxPWE-ru.md (section "Сопроводительные письма и личные сообщения", 35:06): about 99% of cover letters are not read, write one only for a company you really want; everything that matters goes into the CV: owner
+- Agreement: 1 of 5 sources, no conflicts
+- Weight: 0.8
+- Needs: nothing beyond the other rules
+- Check: every fact in the cover letter that answers a requirement of the vacancy is also in the CV
+- Limits: the CV is tailored to a group of similar vacancies, not rewritten for each company; the company name and the motivation stay in the letter
+
 ## Open questions
 
 - **Mirroring the vacancy.** A CV that repeats the vacancy too closely (its sentences, all its skills in the same order) is a sign of AI writing (MxBZjnayQUM-en.md, section "Matching Job Descriptions and Hidden Text", 04:00). GEN-12 sets the line: the vacancy's terms are taken, its sentences and order are not. Still open: how long a run of words copied from the vacancy counts as copying, and how the validator checks it. An experiment to try (owner): the CV says openly that it was assembled for this vacancy from the candidate's index CV and links to the index CV. It will not suit every candidate.
