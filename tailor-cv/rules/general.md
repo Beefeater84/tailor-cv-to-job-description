@@ -17,8 +17,8 @@ Rules for the whole CV and the whole cover letter.
 - Applies to: CV, cover letter
 - Rule: the writer works in two modes. One to one: the CV is tailored to one vacancy. Job family: one CV is tailored to a group of 3–5 similar vacancies for one role. In both modes the CV names no company; the cover letter is written for one vacancy and is where the company name and the reasons for this company go.
 - Why: vacancies for one role ask for broadly the same things, so a CV that speaks to the whole family is tailored enough, and one strong version beats a CV rewritten for every application. A single vacancy that matters on its own still gets its own CV.
-- Sources: 0T8q3B82PRw-en.md (section "Tailoring Your CV for Job Applications", 08:51); R3abknwWX7k-en.md (section "The Importance of Customization and Clarity", 04:24): tailoring matters most where the competition is high, such as remote roles, which supports the one-to-one mode; the two modes, 3–5 vacancies and the cover letter as the personal part: owner
-- Agreement: 2 of 5 sources. 0T8q3B82PRw-en.md calls tailoring to every vacancy unrealistic, R3abknwWX7k-en.md asks for it; the two modes hold both.
+- Sources: 0T8q3B82PRw-en.md (section "Tailoring Your CV for Job Applications", 08:51); R3abknwWX7k-en.md (section "The Importance of Customization and Clarity", 04:24): tailoring matters most where the competition is high, such as remote roles, which supports the one-to-one mode; 6N6H_KQxPWE-ru.md (section "Заключение и советы для соискателей", 18:24): four or five narrow CVs, each for one specialization within the profession, are usually enough, which supports the job family mode; the two modes, 3–5 vacancies and the cover letter as the personal part: owner
+- Agreement: 3 of 5 sources. 0T8q3B82PRw-en.md calls tailoring to every vacancy unrealistic, R3abknwWX7k-en.md asks for it; the two modes hold both.
 - Weight: 0.7
 - Needs: the requirements of the vacancy, or of all vacancies in the group to find what they share
 - Check: the CV names no company; the cover letter is tied to one vacancy
@@ -119,8 +119,8 @@ Rules for the whole CV and the whole cover letter.
 - Applies to: CV
 - Rule: the writer never adds hidden text (white or tiny font, keywords the candidate does not have, instructions to an AI screener). The validator looks for it. When the candidate asks to add it, the agent warns that modern ATS strip formatting and show the hidden text, recruiters mark such a CV, and a note in the ATS can block the candidate at that company in the future. If the candidate still confirms, it stays (GEN-10).
 - Why: the ATS parses the hidden text like any other; it does not get the CV through, and when the recruiter sees it, the candidate loses trust, often for good.
-- Sources: MxBZjnayQUM-en.md (section "Matching Job Descriptions and Hidden Text", 04:00); keeping it on the candidate's confirmation: owner
-- Agreement: 1 of 5 sources, no conflicts
+- Sources: MxBZjnayQUM-en.md (section "Matching Job Descriptions and Hidden Text", 04:00); 6N6H_KQxPWE-ru.md (section "Заключение и советы для соискателей", 18:24): do not try to trick the system with keywords in white font; keeping it on the candidate's confirmation: owner
+- Agreement: 2 of 5 sources, no conflicts
 - Weight: 1.0
 - Needs: nothing
 - Check: no text with the background colour or a font far smaller than the rest; no instructions to an AI in the text; if present, the candidate's confirmation is recorded
