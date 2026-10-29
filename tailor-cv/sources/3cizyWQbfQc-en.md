@@ -4,7 +4,9 @@ title: "7 Career Rules You Should Stop Following in Today's Job Market"
 channel: "A Life After Layoff"
 duration: 1431
 language: "en"
-rules_status: "new"
+rules_status: "processed"
+rules_date: "2026-10-29"
+rules_note: "no rules taken: career advice, and its CV points repeat the same author (A Life After Layoff)"
 sections:
   - title: "Reevaluating Career Advice in a Changing Job Market"
     timestamp: 0

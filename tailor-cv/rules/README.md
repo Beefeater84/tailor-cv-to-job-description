@@ -52,7 +52,7 @@ A file is created when its first rule appears. It ends with a section "Open ques
 - **Id**: the group prefix and a number, for example `GEN-03`, `HEADER-01`, `EXP-12`. An id is never reused.
 - **Why**: a short, plain statement of what the recruiter or the ATS does and what happens to the CV when the rule is broken. Not a retelling of the source.
 - **Sources**: the file name in `../sources/` and the section or timestamp. `owner` marks a part added by the product owner, `our addition` a part we derived ourselves; both are kept apart from what the source says.
-- **Agreement**: how many sources support the rule and which ones contradict it.
+- **Agreement**: how many sources support the rule and which ones contradict it. Sources are counted by author: several sources by one author are one view, not independent confirmations. A later source by the same author that repeats a rule is not added to it.
 - **Weight**: from 0 to 1, how much the rule counts in the overall score of a CV. 1 means breaking it gets the CV dropped.
 - **Needs**: the vacancy fields and CV blocks the rule uses. Together they give the data lists of the research (#29).
 - A rule that a new source confirms gets that source added, not a second card.
