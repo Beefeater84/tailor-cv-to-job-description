@@ -2,7 +2,7 @@
 
 What the writer needs from the candidate profile, based on the **Needs**, **Rule**, **Check** and **Limits** fields of the rule cards in [`rules/`](rules/README.md). It is the checklist of the CV reader and of the agent's questions to the candidate: for each block, what it holds, which rules use it, whether the tailored CV needs it, and what happens when it is missing. Task: "Candidate profile data the writing rules need" (#41). The decisions behind it are in `specs/decisions/42-vacancy-analysis-input.md`. The vacancy side is in [`vacancy-data.md`](vacancy-data.md).
 
-Terms (source CV, candidate profile, tailored CV) are defined in `specs/mission.md`.
+Terms (source CV, candidate profile, tailored CV) are defined in `specs/mission.md`. The machine-readable form of these blocks (ids, origins, links, validation) is the profile contract in [`contract/README.md`](contract/README.md), decided in "Candidate profile contract" (#30). Where the profile file is stored is decided in "Profile from the chat" (#48).
 
 ## Principles
 
@@ -145,7 +145,6 @@ The agent computes these from the blocks each time; they are not kept in the pro
 
 ## Not decided yet
 
-- **The profile contract**: the format of the profile, the ids of jobs, projects and achievements, how the origin is written and where the profile is stored. Decided in "Candidate profile contract and CV block registry" (#30); this document is its input.
 - **Target city instead of the current one** (HEADER-01): P-02 holds both the current city and where the candidate applies; which one the header shows is the open question in [`rules/cv/header.md`](rules/cv/header.md).
 - **Older jobs** (EXP-01): P-06 holds every job; how much space older jobs get is the open question in [`rules/cv/experience.md`](rules/cv/experience.md).
 - **What counts as a gap**: the length from which a period between jobs is a gap; the open question in [`rules/cv/gaps.md`](rules/cv/gaps.md).

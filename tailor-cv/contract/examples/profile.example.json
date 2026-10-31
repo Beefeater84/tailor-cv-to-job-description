@@ -1,0 +1,349 @@
+{
+  "schema_version": "1.0",
+  "meta": {
+    "sources": [
+      {
+        "id": "src-cv-2026",
+        "kind": "index_cv",
+        "location": "https://example.com/cv/alex-example.pdf",
+        "read_at": "2026-10-20T09:15:00Z"
+      },
+      {
+        "id": "src-portfolio",
+        "kind": "file",
+        "location": "candidate/portfolio.md",
+        "read_at": "2026-10-20T09:20:00Z"
+      }
+    ],
+    "updated_at": "2026-10-22T14:05:00Z"
+  },
+  "person": {
+    "name": "Alex Example",
+    "title": "Frontend Engineer",
+    "level": "Senior",
+    "origin": {
+      "kind": "source_cv",
+      "source": "src-cv-2026",
+      "quote": "Alex Example, Senior Frontend Engineer",
+      "date": null
+    }
+  },
+  "search": {
+    "target_roles": ["Senior Frontend Engineer", "Frontend Tech Lead"],
+    "apply_locations": ["Germany", "Netherlands"],
+    "relocation": "Ready to move to Berlin or Amsterdam in 2027.",
+    "region": "EU",
+    "work_formats": ["hybrid", "remote"],
+    "current_city": "Lisbon, Portugal",
+    "time_zone": "Europe/Lisbon",
+    "origin": {
+      "kind": "candidate",
+      "source": null,
+      "quote": null,
+      "date": "2026-10-21"
+    }
+  },
+  "contacts": {
+    "phone": "+351 000 000 000",
+    "email": "alex@example.com",
+    "linkedin": "https://www.linkedin.com/in/alex-example",
+    "github": null,
+    "origin": {
+      "kind": "source_cv",
+      "source": "src-cv-2026",
+      "quote": "+351 000 000 000 | alex@example.com | linkedin.com/in/alex-example",
+      "date": null
+    }
+  },
+  "skills": [
+    {
+      "id": "skill-typescript",
+      "name": "TypeScript",
+      "kind": "technology",
+      "evidence": ["job-example-corp", "prj-checkout", "prj-pixel-diff"],
+      "origin": {
+        "kind": "source_cv",
+        "source": "src-cv-2026",
+        "quote": "Skills: TypeScript, React, Playwright",
+        "date": null
+      }
+    },
+    {
+      "id": "skill-playwright",
+      "name": "Playwright",
+      "kind": "tool",
+      "evidence": ["prj-pixel-diff"],
+      "origin": {
+        "kind": "source_cv",
+        "source": "src-cv-2026",
+        "quote": "Skills: TypeScript, React, Playwright",
+        "date": null
+      }
+    },
+    {
+      "id": "skill-ab-testing",
+      "name": "A/B testing",
+      "kind": "method",
+      "evidence": ["prj-checkout"],
+      "origin": {
+        "kind": "agent_confirmed",
+        "source": null,
+        "quote": null,
+        "date": "2026-10-22"
+      }
+    },
+    {
+      "id": "skill-graphql",
+      "name": "GraphQL",
+      "kind": "technology",
+      "evidence": null,
+      "origin": {
+        "kind": "candidate",
+        "source": null,
+        "quote": null,
+        "date": "2026-10-22"
+      }
+    }
+  ],
+  "achievements": [
+    {
+      "id": "ach-checkout-conversion",
+      "project": "prj-checkout",
+      "result": "Raised checkout conversion after a redesign of the payment step.",
+      "number": "12%",
+      "number_context": "Over three months after release, about 40,000 orders a month.",
+      "measure": "Checkout conversion rate",
+      "contribution": "team",
+      "own_part": "Led the frontend work of a team of four and ran the A/B tests.",
+      "how": "Split the payment step into two screens and tested each change with A/B tests.",
+      "ai_involved": false,
+      "origin": {
+        "kind": "source_cv",
+        "source": "src-cv-2026",
+        "quote": "Redesigned checkout payment step, +12% conversion",
+        "date": null
+      }
+    },
+    {
+      "id": "ach-design-system-adoption",
+      "project": "prj-design-system",
+      "result": "Moved six product teams to a shared component library.",
+      "number": "6 teams",
+      "number_context": "Within one year, 30 engineers in total.",
+      "measure": "Teams using the shared library",
+      "contribution": "own",
+      "own_part": null,
+      "how": "Wrote the migration guide and paired with each team on its first screens.",
+      "ai_involved": null,
+      "origin": {
+        "kind": "agent_confirmed",
+        "source": null,
+        "quote": null,
+        "date": "2026-10-22"
+      }
+    },
+    {
+      "id": "ach-pixel-diff-release",
+      "project": "prj-pixel-diff",
+      "result": "Released an open source visual regression tool used by other teams.",
+      "number": null,
+      "number_context": null,
+      "measure": null,
+      "contribution": "own",
+      "own_part": null,
+      "how": "Built screenshot comparison on top of Playwright and used an AI assistant to write the test fixtures.",
+      "ai_involved": true,
+      "origin": {
+        "kind": "source_cv",
+        "source": "src-portfolio",
+        "quote": "pixel-diff: visual regression testing for component libraries",
+        "date": null
+      }
+    }
+  ],
+  "jobs": [
+    {
+      "id": "job-example-corp",
+      "company": "Example Corp",
+      "industry": "E-commerce",
+      "market_types": ["B2C"],
+      "roles": [
+        {
+          "title": "Senior Frontend Engineer",
+          "period": { "start": "2023-04", "end": "present" },
+          "description": "Owns the frontend of the **checkout** and the shared component library.",
+          "duties": [
+            "Lead frontend work in the checkout team",
+            "Maintain the shared component library"
+          ]
+        },
+        {
+          "title": "Frontend Engineer",
+          "period": { "start": "2021-02", "end": "2023-03" },
+          "description": "Built product pages and the first version of the component library.",
+          "duties": ["Build product and category pages"]
+        }
+      ],
+      "projects": [
+        {
+          "id": "prj-checkout",
+          "name": "Checkout redesign",
+          "context": "Redesign of the web checkout of an online shop.\n\n- Team: four frontend engineers, a designer, a product manager\n- Stack: React, TypeScript",
+          "role": "Frontend lead",
+          "period": { "start": "2023-06", "end": "2024-02" },
+          "origin": {
+            "kind": "source_cv",
+            "source": "src-cv-2026",
+            "quote": "Checkout redesign (React, TypeScript), frontend lead",
+            "date": null
+          }
+        },
+        {
+          "id": "prj-design-system",
+          "name": "Shared component library",
+          "context": "A component library shared by all product teams of the company.",
+          "role": "Maintainer",
+          "period": null,
+          "origin": {
+            "kind": "candidate",
+            "source": null,
+            "quote": null,
+            "date": "2026-10-21"
+          }
+        }
+      ],
+      "origin": {
+        "kind": "source_cv",
+        "source": "src-cv-2026",
+        "quote": "Example Corp — Senior Frontend Engineer, 04/2023 – present; Frontend Engineer, 02/2021 – 03/2023",
+        "date": null
+      }
+    },
+    {
+      "id": "job-sample-labs",
+      "company": "Sample Labs",
+      "industry": "Business software",
+      "market_types": ["B2B"],
+      "roles": [
+        {
+          "title": "Junior Web Developer",
+          "period": { "start": "2018", "end": "2020-06" },
+          "description": null,
+          "duties": ["Build internal admin pages", "Fix bugs reported by customers"]
+        }
+      ],
+      "projects": [
+        {
+          "id": "prj-sample-labs-work",
+          "name": "Work at Sample Labs",
+          "context": null,
+          "role": null,
+          "period": null,
+          "origin": {
+            "kind": "source_cv",
+            "source": "src-cv-2026",
+            "quote": "Sample Labs — Junior Web Developer, 2018 – 06/2020",
+            "date": null
+          }
+        }
+      ],
+      "origin": {
+        "kind": "source_cv",
+        "source": "src-cv-2026",
+        "quote": "Sample Labs — Junior Web Developer, 2018 – 06/2020",
+        "date": null
+      }
+    }
+  ],
+  "projects": [
+    {
+      "id": "prj-pixel-diff",
+      "name": "pixel-diff",
+      "kind": "open_source",
+      "context": "An open source tool that compares screenshots of UI components and reports **visual changes** in pull requests.",
+      "period": { "start": "2020-07", "end": "2021-01" },
+      "result": "Published on GitHub with documentation and examples.",
+      "link": "https://example.com/pixel-diff",
+      "origin": {
+        "kind": "source_cv",
+        "source": "src-portfolio",
+        "quote": "pixel-diff: visual regression testing for component libraries",
+        "date": null
+      }
+    }
+  ],
+  "period_notes": [
+    {
+      "id": "note-2020-break",
+      "period": { "start": "2020-07", "end": "2020-09" },
+      "note": "Moved to Lisbon.",
+      "origin": {
+        "kind": "candidate",
+        "source": null,
+        "quote": null,
+        "date": "2026-10-21"
+      }
+    }
+  ],
+  "languages": [
+    {
+      "name": "English",
+      "level": "C1",
+      "origin": {
+        "kind": "source_cv",
+        "source": "src-cv-2026",
+        "quote": "English — C1",
+        "date": null
+      }
+    },
+    {
+      "name": "German",
+      "level": "A2",
+      "origin": {
+        "kind": "candidate",
+        "source": null,
+        "quote": null,
+        "date": "2026-10-22"
+      }
+    }
+  ],
+  "education": {
+    "qualifications": [
+      {
+        "title": "BSc in Computer Science",
+        "institution": "Example University",
+        "year": "2018",
+        "origin": {
+          "kind": "source_cv",
+          "source": "src-cv-2026",
+          "quote": "BSc Computer Science, Example University, 2018",
+          "date": null
+        }
+      }
+    ],
+    "certifications": null
+  },
+  "hobbies": [
+    {
+      "name": "Trail running",
+      "relevance": "Finished two mountain ultramarathons.",
+      "origin": {
+        "kind": "candidate",
+        "source": null,
+        "quote": null,
+        "date": "2026-10-21"
+      }
+    }
+  ],
+  "decisions": [
+    {
+      "id": "dec-graphql-unbacked",
+      "date": "2026-10-22",
+      "kind": "confirmation",
+      "rule": "GEN-12",
+      "subject": "GraphQL stays in the skills list without a job or project that backs it.",
+      "warning": null,
+      "refs": ["skill-graphql"]
+    }
+  ]
+}
