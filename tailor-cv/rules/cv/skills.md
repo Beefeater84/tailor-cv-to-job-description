@@ -13,7 +13,7 @@ Two lists under the summary: competencies (areas of work, such as "technical sou
 - Sources: 0T8q3B82PRw-en.md (section "Highlighting Skills and Experience", 05:55); 4Qh7C5AA34o-en.md (sections "Adding Skills and Projects", 09:19, and "Customizing the Resume", 10:41); position before experience: owner; group order and vacancy wording: our addition
 - Agreement: 2 of 4 authors. Conflicts: count — 0T8q3B82PRw-en.md says ten at most (written for the human reader), 4Qh7C5AA34o-en.md says as many relevant skills as possible (written for the ATS); see GEN-09 and the open question "Number of skills". Position — 4Qh7C5AA34o-en.md puts skills last; owner chose before experience, to be tried.
 - Weight: 0.8
-- Needs: CV block with skills; skills used in the experience; requirements of the vacancy or of each vacancy in the group
+- Needs: profile block with skills; skills used in the experience; requirements of the vacancy or of each vacancy in the group
 - Check: every skill in the CV is in the vacancy's (or group's) requirements and in the profile, or was confirmed by the candidate; every asked skill is either in the CV, asked about, or reported as a gap; the section comes after the competencies and before the experience
 - Limits: only real skills that the candidate would talk about in an interview. No buzzwords. Every skill passes the tests of GEN-12: a must-have skill also has a bullet or a project that uses it, and the list does not follow the vacancy's order.
 
