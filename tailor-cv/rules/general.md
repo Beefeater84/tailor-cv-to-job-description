@@ -35,7 +35,7 @@ Rules for the whole CV and the whole cover letter.
 - Sources: owner; 4Qh7C5AA34o-en.md (section "Customizing the Resume", 10:41): find what the vacancy requires and ask the candidate to confirm the experience; N1Fm4JYae1I-en.md (section "Rule 3: Use AI Thoughtfully", 06:11): result, contribution, how; section "Rule 4: Quantify Your Impact", 08:38: identify the metrics of each experience; the team result and the candidate's role: our addition
 - Agreement: 2 of 4 authors, no conflicts
 - Weight: none, this is agent behaviour, not a property of the CV
-- Needs: requirements of the vacancy or the job family; the profile, to find what is missing or weak
+- Needs: requirements of the vacancy or the job family; the profile (`../profile-data.md`), to find what is missing or weak
 - Check: every gap the agent found was either asked about or reported to the candidate
   When a key requirement has no experience behind it at all, the agent may suggest a small project that shows it (PROJ-01); the candidate decides whether to do it (GEN-10).
 - Limits: the agent asks, it never fills a gap itself. A requirement the candidate has no experience for is reported as a gap, not hidden. The agent suggests the kind of metric, never its value.
@@ -64,7 +64,7 @@ Rules for the whole CV and the whole cover letter.
 
 ### GEN-06 — Section order
 - Applies to: CV
-- Rule: the sections go in this order: header (name, job title, location, contacts), summary, competencies, skills, experience (with career gaps in their place), projects (only when PROJ-01 calls for it), education.
+- Rule: the sections go in this order: header (name, job title, location, contacts), summary, competencies, skills, experience (gaps between jobs as GAP-01 sets), projects (only when PROJ-01 calls for it), education.
 - Why: the recruiter reads top down and stops early. The order puts who the candidate is and what they can do first, and the proof right after.
 - Sources: 0T8q3B82PRw-en.md (sections "Structuring Your CV Effectively", 04:26, "Highlighting Skills and Experience", 05:55, "Final Tips for a Strong CV", 08:15); 4Qh7C5AA34o-en.md (competencies under the profile); skills before experience: also owner; projects as a separate section: N1Fm4JYae1I-en.md (section "Rule 5: Demonstrate Your AI Skills", 10:36), its place after experience: owner
 - Agreement: 3 of 4 authors, each for a part of the order, no conflicts
@@ -80,7 +80,7 @@ Rules for the whole CV and the whole cover letter.
 - Sources: 0T8q3B82PRw-en.md (section "Final Tips for a Strong CV", 08:15)
 - Agreement: 1 of 4 authors, no conflicts
 - Weight: 0.4
-- Needs: hobbies from the profile, to judge their relevance
+- Needs: profile: hobbies, to judge their relevance (`../profile-data.md` P-10)
 - Check: no photo; no references line; hobbies only with a stated relevance
 - Limits: see the open question "Photo by country"
 
@@ -91,7 +91,7 @@ Rules for the whole CV and the whole cover letter.
 - Sources: 4Qh7C5AA34o-en.md (section "Customizing the Resume", 10:41): "look at what the job posting asks for and only provide what they need"; N1Fm4JYae1I-en.md (section "Rule 2: Tailor Your Resume Effectively", 03:47): tailored CVs got 5.71% interviews against 3.09% for untailored; R3abknwWX7k-en.md (section "Contact Information and Resume Customization", 03:04): not a summary of everything, only what the employer looks for; owner
 - Agreement: 2 of 4 authors, no conflicts
 - Weight: 0.9
-- Needs: the requirements of the vacancy, or of each vacancy in the group; the whole profile
+- Needs: the requirements of the vacancy, or of each vacancy in the group; the whole profile (`../profile-data.md`)
 - Check: every section of the tailored CV can be traced to a requirement of the vacancy (or group) or to a rule that requires it (header, dates)
 - Limits: selecting and rewording only; never inventing (the epic rule). A requirement with nothing in the profile is asked about or reported as a gap.
 
@@ -103,7 +103,7 @@ Rules for the whole CV and the whole cover letter.
 - Sources: N1Fm4JYae1I-en.md (sections "Two Stages of Resume Evaluation", 01:31, and "Recap and Conclusion", 12:30): "pass the AI, pass the human"; 6N6H_KQxPWE-ru.md (section "Использование ИИ в рекрутинге", 14:15): AI scoring turned off for EU candidates because of the AI Act; the human reader first for the EU, structure, and sensitivity to AI text: owner; the conflict between 0T8q3B82PRw-en.md (section "Highlighting Skills and Experience", 05:55) and 4Qh7C5AA34o-en.md (section "Adding Skills and Projects", 09:19)
 - Agreement: 2 of 4 authors state it (Jeff Su, Kira Kuzmenko); it explains a conflict between the other two
 - Weight: 0.8
-- Needs: keywords from the requirements of the vacancy or the group; the region where the candidate applies, from the profile (#41)
+- Needs: keywords from the requirements of the vacancy or the group; profile: the region where the candidate applies (`../profile-data.md` P-02); skills with their evidence (`../profile-data.md` P-04)
 - Check: every keyword of the vacancy that the profile backs appears in the CV; no line is a bare list of keywords outside the competencies and skills sections
 - Limits: a keyword goes in only when the profile backs it (GEN-08, GEN-03). How close to the vacancy's wording is too close is an open question ("Mirroring the vacancy").
 
@@ -140,7 +140,7 @@ Rules for the whole CV and the whole cover letter.
 - Sources: N1Fm4JYae1I-en.md (section "Rule 2: Tailor Your Resume Effectively", 03:47): keyword mapping (tests 1 and 2) against keyword stuffing; MxBZjnayQUM-en.md (section "Matching Job Descriptions and Hidden Text", 04:00): mirroring the vacancy (test 3); context only for must-have: owner
 - Agreement: 2 of 4 authors, no conflicts
 - Weight: 0.8
-- Needs: the terms of the vacancy or the group, split into must-have and nice-to-have (from the vacancy analysis); the profile
+- Needs: the terms of the vacancy or the group, split into must-have and nice-to-have (from the vacancy analysis); the profile, first of all skills with their evidence and the recorded confirmations (`../profile-data.md` P-04, P-11)
 - Check: for every term of the vacancy in the CV: backing in the profile or a recorded confirmation; for every must-have term, a bullet or project that uses it; no run of words copied from the vacancy (length: see "Mirroring the vacancy"); the skills are not in the vacancy's order
 - Limits: GEN-09 says who the CV is written for and where keywords may go; this rule says which of them may go in and how. The count of keywords is not a test by itself: too many keywords hurt because they usually come without backing.
 
@@ -151,13 +151,13 @@ Rules for the whole CV and the whole cover letter.
 - Sources: N1Fm4JYae1I-en.md (section "Rule 2: Tailor Your Resume Effectively", 03:47): "identify key problems and skills"; a separate rule focused on the problems, and the agent's own knowledge confirmed by the candidate: owner
 - Agreement: 1 of 4 authors, no conflicts
 - Weight: 0.7, lower than GEN-08: the problems are an interpretation of the text, and the agent can read it wrong
-- Needs: the full text of the vacancy or of each vacancy in the group; the company context (`../vacancy-data.md` V-04); achievements from the profile. The problems are derived in the vacancy analysis, they are not a field of the vacancy contract: the contract holds what the vacancy says, the problems are a reading of it, and in the job family mode they are merged across the group.
+- Needs: the full text of the vacancy or of each vacancy in the group; the company context (`../vacancy-data.md` V-04); profile: achievements (`../profile-data.md` P-05). The problems are derived in the vacancy analysis, they are not a field of the vacancy contract: the contract holds what the vacancy says, the problems are a reading of it, and in the job family mode they are merged across the group.
 - Check: the analysis names the problems and the candidate confirmed them; for each one, the CV shows a matching achievement in the summary or the first bullets, or the candidate was asked
 - Limits: a problem the agent proposes from its own knowledge is used only after the candidate confirms it. The CV never names the company's problem ("you struggle with X"); that belongs to the cover letter.
 
 ### GEN-14 — The CV stands alone; the cover letter only adds
 - Applies to: CV, cover letter
-- Rule: everything needed to decide on the candidate is in the CV: the fit with the vacancy, the requirements, the industry and market type, the location and work format, the reasons for gaps. The cover letter adds only the personal part for one vacancy: the company name and why this company (GEN-02). No fact about the candidate lives only in the letter. The cover letter is optional: written when the candidate asks for it, for a vacancy that matters to them.
+- Rule: everything needed to decide on the candidate is in the CV: the fit with the vacancy, the requirements, the industry and market type, the location and work format, and what the candidate chose to show about gaps (GAP-01). The cover letter adds only the personal part for one vacancy: the company name and why this company (GEN-02). No fact about the candidate lives only in the letter. The cover letter is optional: written when the candidate asks for it, for a vacancy that matters to them.
 - Why: cover letters are almost never read; the field for one is often there only because the ATS asks for it by default. A fact that is only in the letter is not seen, and the CV loses without it.
 - Sources: 6N6H_KQxPWE-ru.md (section "Сопроводительные письма и личные сообщения", 35:06): about 99% of cover letters are not read, write one only for a company you really want; everything that matters goes into the CV: owner
 - Agreement: 1 of 4 authors, no conflicts

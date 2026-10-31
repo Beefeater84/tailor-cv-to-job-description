@@ -9,7 +9,7 @@ Terms (source CV, candidate profile, tailored CV) are defined in `specs/mission.
 - **The contract holds what the page says; the analysis holds the reading of it.** The vacancy reader fills `vacancy.json` (see `../vacancy-reader/contract/README.md`). Everything that interprets the text (requirements split into must-have and nice-to-have, keywords, the industry, the problems of the role) is a result of the vacancy analysis step of `tailor-cv`, not a contract field.
 - **The agent's own knowledge is a proposal.** The agent may use what it knows about companies, industries and roles: for example, a battery company hiring an AI engineer most likely needs a lot of time-series data logged. Such a proposal is shown to the candidate and used only after the candidate confirms or corrects it. When the agent lacks the context for a proposal (the company, the product, the team), it asks the candidate for that context.
 - **One confirmation step.** Before writing, the agent shows the candidate the result of the analysis once, with its proposals marked as proposals, and asks the questions for the missing items. The candidate confirms or corrects it. Facts about the candidate from the answers go into the candidate profile.
-- **The candidate's plans are the candidate's.** Where the candidate is looking for work, the region and the work format are facts of the candidate profile (#41), not of the vacancy: the candidate knows what they apply for, and may plan to move.
+- **The candidate's plans are the candidate's.** Where the candidate is looking for work, the region and the work format are facts of the candidate profile ([`profile-data.md`](profile-data.md) P-02), not of the vacancy: the candidate knows what they apply for, and may plan to move.
 
 ## Items
 
@@ -97,7 +97,7 @@ Each item: what it is, the rules that use it, where it comes from, whether the t
 
 - `company`, `hiring_manager`: the tailored CV names no company (GEN-02). They are for the cover letter, which has no rules yet.
 - Compensation: no rule uses it.
-- Location and work format of the vacancy: HEADER-01 and GEN-09 take where the candidate applies, the region and the work format from the candidate profile (#41).
+- Location and work format of the vacancy: HEADER-01 and GEN-09 take where the candidate applies, the region and the work format from the candidate profile ([`profile-data.md`](profile-data.md) P-02).
 - `tags`: input to the analysis, not used by a rule directly.
 
 ## Vacancy contract fields

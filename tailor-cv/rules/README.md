@@ -13,7 +13,7 @@ The format below is a draft. It is tried on the first sources and changed as the
 | Step | Does | Uses |
 |---|---|---|
 | vacancy analysis | takes one vacancy or a group from the vacancy reader and derives the input of the writer: the requirements (must-have and nice-to-have), the tags (role, seniority, industry, whether the role is technical or about AI), the keywords, and the problems the role is hired to solve (GEN-13). The keywords include the industry, the market type (B2B, B2C) and the required languages. The analysis works on the requirements and responsibilities and leaves out the company's general text and the disclaimers, which make an AI lose the point. Its proposals from the agent's own knowledge are used only after the candidate confirms them. What it needs and derives: [`../vacancy-data.md`](../vacancy-data.md) | the rules whose **Needs** name a result of the analysis |
-| writer | builds the CV and the cover letter from the analysis and the candidate's profile | the **Rule** field of the cards here |
+| writer | builds the CV and the cover letter from the analysis and the candidate's profile. What it needs from the profile: [`../profile-data.md`](../profile-data.md) | the **Rule** field of the cards here |
 | validator | checks the finished text against the analysis and scores it: how well the CV is tailored, and that it is not over-optimized (GEN-12) | the **Check** and **Weight** fields of the cards here |
 | humanizer | checks the style and removes the signs of AI writing | [`../style/`](../style/README.md), a separate folder that knows nothing about CVs, to be reused in other projects |
 
@@ -44,7 +44,7 @@ A file is created when its first rule appears. It ends with a section "Open ques
 - Sources: 0T8q3B82PRw-en.md (section "…", 02:15), R3abknwWX7k-en.md (section "…")
 - Agreement: 2 of 4 authors, no conflicts
 - Weight: 0.9
-- Needs: profile block `…`; vacancy field `…`
+- Needs: profile block `…` (`../profile-data.md` P-…); vacancy field `…` (`../vacancy-data.md` V-…)
 - Check: how to verify the result follows the rule
 - Limits: where the rule stops, for example "never invent a metric that is not in the CV"
 ```
