@@ -22,4 +22,4 @@ A file is created when its first rule appears. Each rule file ends with a sectio
 
 ## Rule card
 
-The same card as in `../rules/README.md`, with the id prefix `STYLE-` for `common.md` and the style name for a style (for example `PLAIN-01`). Fields that refer to a CV (Needs: CV block, vacancy field) are left out. Weight is how much the rule counts in the style score of the text.
+The same card as in `../rules/README.md`, with the id prefix `STYLE-` for `common.md` and the style name for a style (for example `PLAIN-01`). Fields that refer to a CV (Needs: profile block, vacancy field) are left out. Weight is how much the rule counts in the style score of the text.

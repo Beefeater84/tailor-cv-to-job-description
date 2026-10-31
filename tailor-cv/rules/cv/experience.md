@@ -9,7 +9,7 @@ The jobs of the candidate: company, title, dates, and what the candidate did and
 - Sources: 0T8q3B82PRw-en.md (section "Detailing Work Experience", 02:51)
 - Agreement: 1 of 4 authors, no conflicts
 - Weight: 0.7
-- Needs: CV block with jobs: company, title, dates
+- Needs: profile block with jobs: company, title, dates
 - Check: jobs sorted by date, newest first; each has company, title and dates
 - Limits: older jobs matter too; what to say about them is not decided yet
 
@@ -31,7 +31,7 @@ The jobs of the candidate: company, title, dates, and what the candidate did and
 - Sources: 0T8q3B82PRw-en.md (section "Highlighting Skills and Experience", 05:55)
 - Agreement: 1 of 4 authors, no conflicts
 - Weight: 0.6
-- Needs: CV block with jobs: role description, duties, achievements
+- Needs: profile block with jobs: role description, duties, achievements
 - Check: each job has a paragraph of at most two lines and bullets
 - Limits: the paragraph describes the role from the profile; it is not a second summary
 
