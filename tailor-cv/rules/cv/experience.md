@@ -9,7 +9,7 @@ The jobs of the candidate: company, title, dates, and what the candidate did and
 - Sources: 0T8q3B82PRw-en.md (section "Detailing Work Experience", 02:51)
 - Agreement: 1 of 4 authors, no conflicts
 - Weight: 0.7
-- Needs: profile: jobs with company, title, dates (`../profile-data.md` P-06)
+- Needs: profile: jobs with company, title, dates (`../../profile-data.md` P-06)
 - Check: jobs sorted by date, newest first; each has company, title and dates
 - Limits: older jobs matter too; what to say about them is not decided yet
 
@@ -20,7 +20,7 @@ The jobs of the candidate: company, title, dates, and what the candidate did and
 - Sources: 0T8q3B82PRw-en.md (section "Detailing Work Experience", 02:51); N1Fm4JYae1I-en.md (section "Rule 4: Quantify Your Impact", 08:38): CVs that quantified impact got 75% more interviews than CVs that listed duties; relevant bullets first: our addition, from the epic rule "what the vacancy asks for comes first"
 - Agreement: 2 of 4 authors, no conflicts
 - Weight: 0.9
-- Needs: profile: duties of the jobs and achievements with numbers (`../profile-data.md` P-06, P-05); requirements of the vacancy or the job family
+- Needs: profile: duties of the jobs and achievements with numbers (`../../profile-data.md` P-06, P-05); requirements of the vacancy or the job family
 - Check: no phrase from `../lists/duty-phrases.md`; the "name-off" test (LLM check): with the name removed, does the bullet read like a job description or like this person's impact?
 - Limits: numbers and results only from the profile, never invented. A duty with no result in the profile stays a duty, worded concretely. When a result is missing, the agent asks the candidate (GEN-03).
 
@@ -31,7 +31,7 @@ The jobs of the candidate: company, title, dates, and what the candidate did and
 - Sources: 0T8q3B82PRw-en.md (section "Highlighting Skills and Experience", 05:55)
 - Agreement: 1 of 4 authors, no conflicts
 - Weight: 0.6
-- Needs: profile: jobs with role description and duties, achievements of their projects (`../profile-data.md` P-06, P-05)
+- Needs: profile: jobs with role description and duties, achievements of their projects (`../../profile-data.md` P-06, P-05)
 - Check: each job has a paragraph of at most two lines and bullets
 - Limits: the paragraph describes the role from the profile; it is not a second summary
 
@@ -42,7 +42,7 @@ The jobs of the candidate: company, title, dates, and what the candidate did and
 - Sources: MxBZjnayQUM-en.md (section "Telltale Signs of AI in Resumes", 02:00); refines EXP-02 from 0T8q3B82PRw-en.md and N1Fm4JYae1I-en.md
 - Agreement: 3 of 4 authors (EXP-02 asks for numbers, this source asks for their context), no conflicts
 - Weight: 0.7
-- Needs: profile: achievements with numbers and their context (`../profile-data.md` P-05)
+- Needs: profile: achievements with numbers and their context (`../../profile-data.md` P-05)
 - Check: every number is in the profile or confirmed by the candidate; for every number without context, the candidate was asked
 - Limits: the agent never adds a number to a bullet to make it look measurable
 
@@ -53,7 +53,7 @@ The jobs of the candidate: company, title, dates, and what the candidate did and
 - Sources: N1Fm4JYae1I-en.md (section "Rule 5: Demonstrate Your AI Skills", 10:36); only when the vacancy is about AI or automation: owner
 - Agreement: 1 of 4 authors, no conflicts. The source puts an AI bullet first in every job; owner limited it to vacancies about AI or automation, so it agrees with EXP-02 (what the vacancy asks for comes first).
 - Weight: 0.5, the rule is narrow and depends on the role
-- Needs: profile: AI work in jobs and projects, achievements with their AI flag (`../profile-data.md` P-05, P-06, P-07); requirements and responsibilities of the vacancy or the group, to tell whether it is about AI or automation
+- Needs: profile: AI work in jobs and projects, achievements with their AI flag (`../../profile-data.md` P-05, P-06, P-07); requirements and responsibilities of the vacancy or the group, to tell whether it is about AI or automation
 - Check: for a vacancy about AI or automation, the first bullet of each job with AI work in the profile is an AI achievement; every AI tool in the skills has a bullet behind it
 - Limits: only AI work from the profile. When there is none, the agent asks the candidate (GEN-03); with no work example, a project can show it (PROJ-01).
 
@@ -64,7 +64,7 @@ The jobs of the candidate: company, title, dates, and what the candidate did and
 - Sources: N1Fm4JYae1I-en.md (section "Rule 4: Quantify Your Impact", 08:38); any order: our addition
 - Agreement: 1 of 4 authors, no conflicts
 - Weight: 0.5, it is a shape, not content: EXP-02 and EXP-04 say what the bullet holds
-- Needs: profile: achievements with their measure and the way they were reached (`../profile-data.md` P-05)
+- Needs: profile: achievements with their measure and the way they were reached (`../../profile-data.md` P-05)
 - Check: a bullet with a result names what was achieved and how; the measure is there when the profile has one
 - Limits: with no measure in the profile, the bullet goes without one (EXP-04), never with an invented number. Not every bullet in one template: the style rule on varied list items applies (`../../style/common.md`, STYLE-03).
 

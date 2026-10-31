@@ -9,7 +9,7 @@ Projects outside the candidate's jobs (own, open source, study, a small project 
 - Sources: N1Fm4JYae1I-en.md (section "Rule 5: Demonstrate Your AI Skills", 10:36): with no workplace example, do a small project related to the job and list it in a separate section; extended from AI skills to any requirement: owner
 - Agreement: 1 of 4 authors, no conflicts
 - Weight: 0.5
-- Needs: profile: projects outside jobs (`../profile-data.md` P-07); requirements of the vacancy or the group; the jobs, to find what they do not show (`../profile-data.md` P-06)
+- Needs: profile: projects outside jobs (`../../profile-data.md` P-07); requirements of the vacancy or the group; the jobs, to find what they do not show (`../../profile-data.md` P-06)
 - Check: every project answers a requirement of the vacancy or the group; every project is in the profile
 - Limits: only projects from the profile. A project the agent suggested (GEN-03) goes in only after the candidate has done it and it is added to the profile.
 

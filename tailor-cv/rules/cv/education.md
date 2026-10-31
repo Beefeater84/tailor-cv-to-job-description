@@ -9,7 +9,7 @@ Degrees, qualifications and professional certifications.
 - Sources: 0T8q3B82PRw-en.md (section "Addressing Job Gaps and Education", 07:19)
 - Agreement: 1 of 4 authors, no conflicts
 - Weight: 0.5
-- Needs: profile: education and certifications (`../profile-data.md` P-09); requirements of the vacancy or the job family (required degree, certifications)
+- Needs: profile: education and certifications (`../../profile-data.md` P-09); requirements of the vacancy or the job family (required degree, certifications)
 - Check: the highest qualification is present; every certification listed is relevant to the vacancy or the job family
 - Limits: only qualifications from the profile
 
@@ -20,7 +20,7 @@ Degrees, qualifications and professional certifications.
 - Sources: 0T8q3B82PRw-en.md (section "Addressing Job Gaps and Education", 07:19)
 - Agreement: 1 of 4 authors, no conflicts
 - Weight: 0.4
-- Needs: profile: education (`../profile-data.md` P-09)
+- Needs: profile: education (`../../profile-data.md` P-09)
 - Check: one line per entry
 - Limits: none
 

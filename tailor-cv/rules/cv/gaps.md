@@ -9,7 +9,7 @@ Periods between jobs: redundancy, burnout, caring for someone, travel, study, vi
 - Sources: 0T8q3B82PRw-en.md (section "Addressing Job Gaps and Education", 07:19): give every gap one line with its reason; no explanation by default, the question about a project, the reason only on the candidate's wish: owner
 - Agreement: 1 of 4 authors on the subject; owner decided against it: the source explains every gap with its reason, the rule explains none by default and fills the period with a project
 - Weight: 0.5
-- Needs: dates of the jobs (`../profile-data.md` P-06), to find the gaps; projects outside jobs with their dates and the optional context note the candidate gave (`../profile-data.md` P-07)
+- Needs: dates of the jobs (`../../profile-data.md` P-06), to find the gaps; projects outside jobs with their dates and the optional context note the candidate gave (`../../profile-data.md` P-07)
 - Check: for every gap longer than the threshold, the candidate was asked whether there was a project; every project or reason shown for a gap is in the profile; no reason the candidate did not give
 - Limits: the agent never invents a project or a reason to fill a gap, and never asks the reason. A gap with no project and no note stays as it is.
 

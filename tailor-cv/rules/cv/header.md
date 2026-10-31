@@ -9,7 +9,7 @@ The top of the CV: name, job title, location, contacts.
 - Sources: 0T8q3B82PRw-en.md (section "Key Elements Recruiters Look For", 00:50); 4Qh7C5AA34o-en.md (section "Contact Information", 02:15), which also gives the time zone: even for remote work the hiring manager wants the area, because of time zones
 - Agreement: 2 of 4 authors, no conflicts
 - Weight: 0.8
-- Needs: profile: the current city and time zone, where and in which work format the candidate applies (`../profile-data.md` P-02)
+- Needs: profile: the current city and time zone, where and in which work format the candidate applies (`../../profile-data.md` P-02)
 - Check: the header has a city and a time zone, and no street address
 - Limits: see the open question "Target city instead of the current one"
 
@@ -20,7 +20,7 @@ The top of the CV: name, job title, location, contacts.
 - Sources: 0T8q3B82PRw-en.md (section "Key Elements Recruiters Look For", 00:50); 4Qh7C5AA34o-en.md (section "Contact Information", 02:15); GitHub: owner
 - Agreement: 2 of 4 authors, no conflicts
 - Weight: 0.6
-- Needs: profile: contacts (`../profile-data.md` P-03); whether the role is technical (vacancy analysis, `../vacancy-data.md` V-11)
+- Needs: profile: contacts (`../../profile-data.md` P-03); whether the role is technical (vacancy analysis, `../../vacancy-data.md` V-11)
 - Check: the header has a phone and an email; LinkedIn and GitHub are present when they are in the profile
 - Limits: only the contacts from the profile
 
@@ -31,7 +31,7 @@ The top of the CV: name, job title, location, contacts.
 - Sources: 0T8q3B82PRw-en.md (section "Key Elements Recruiters Look For", 00:50); wording close to the vacancy: our addition
 - Agreement: 1 of 4 authors, no conflicts
 - Weight: 0.9
-- Needs: profile: the current job title with its level and the titles of the jobs (`../profile-data.md` P-01, P-06); vacancy field `title` and the seniority (vacancy analysis, `../vacancy-data.md` V-02)
+- Needs: profile: the current job title with its level and the titles of the jobs (`../../profile-data.md` P-01, P-06); vacancy field `title` and the seniority (vacancy analysis, `../../vacancy-data.md` V-02)
 - Check: one line under the name; the title and the level are supported by the candidate's experience
 - Limits: never a title or a level the candidate's experience does not support. How far the wording may move from the real title is an open question.
 
