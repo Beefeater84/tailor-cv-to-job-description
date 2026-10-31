@@ -1,0 +1,807 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/Beefeater84/tailor-cv-to-job-description/tailor-cv/contract/profile.schema.json",
+  "title": "Candidate profile contract",
+  "description": "The candidate profile: the only source of facts about the candidate for the CV writer and the validator. Blocks follow tailor-cv/profile-data.md (P-01 to P-11). Every key of the version is present; null means no value, never an empty list or string. Links between objects are ids: the schema checks their shape, code checks that they are unique and that every reference exists.",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "description": "Contract version, \"<major>.<minor>\". A consumer checks the major version only."
+    },
+    "meta": {
+      "$ref": "#/definitions/meta",
+      "description": "Where the facts come from and when the profile last changed."
+    },
+    "person": {
+      "$ref": "#/definitions/person",
+      "description": "P-01: the name and the current or last job title with its level."
+    },
+    "search": {
+      "$ref": "#/definitions/search",
+      "description": "P-02: the roles the candidate looks for, where and how they want to work, and where they are now."
+    },
+    "contacts": {
+      "$ref": "#/definitions/contacts",
+      "description": "P-03: the contacts printed in the CV header."
+    },
+    "skills": {
+      "type": ["array", "null"],
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/skill" },
+      "description": "P-04: skills, each with the jobs and projects that back it; null when none is known yet."
+    },
+    "achievements": {
+      "type": ["array", "null"],
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/achievement" },
+      "description": "P-05: achievements, each linked to exactly one project inside a job or outside jobs; null when none is known yet."
+    },
+    "jobs": {
+      "type": ["array", "null"],
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/job" },
+      "description": "P-06: jobs, each with its roles and the projects inside it; null when none is known yet."
+    },
+    "projects": {
+      "type": ["array", "null"],
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/side_project" },
+      "description": "P-07: projects outside jobs (own, open source, study, made for a vacancy); null when there are none."
+    },
+    "period_notes": {
+      "type": ["array", "null"],
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/period_note" },
+      "description": "P-07: context notes for periods between jobs that the candidate chose to give (for example parental leave); null when there are none. Never asked, never a reason invented by the agent."
+    },
+    "languages": {
+      "type": ["array", "null"],
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/language" },
+      "description": "P-08: languages with the candidate's level; null when none is known yet."
+    },
+    "education": {
+      "$ref": "#/definitions/education",
+      "description": "P-09: qualifications and professional certifications."
+    },
+    "hobbies": {
+      "type": ["array", "null"],
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/hobby" },
+      "description": "P-10: hobbies and outside activities; null when there are none. Not asked."
+    },
+    "decisions": {
+      "type": ["array", "null"],
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/decision" },
+      "description": "P-11: records of the candidate's confirmations and overrides of rules; null when there are none. Not printed."
+    }
+  },
+  "required": [
+    "schema_version",
+    "meta",
+    "person",
+    "search",
+    "contacts",
+    "skills",
+    "achievements",
+    "jobs",
+    "projects",
+    "period_notes",
+    "languages",
+    "education",
+    "hobbies",
+    "decisions"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Plain text, not empty."
+    },
+    "nullable_text": {
+      "type": ["string", "null"],
+      "minLength": 1,
+      "description": "Plain text, not empty; null when there is no value."
+    },
+    "text_list": {
+      "type": ["array", "null"],
+      "minItems": 1,
+      "items": { "$ref": "#/definitions/text" },
+      "description": "A list of plain text items; null when there are none, never an empty list."
+    },
+    "month": {
+      "type": "string",
+      "pattern": "^[0-9]{4}(-(0[1-9]|1[0-2]))?$",
+      "description": "A date as precise as the candidate knows it: \"YYYY\" or \"YYYY-MM\"."
+    },
+    "month_or_present": {
+      "type": "string",
+      "pattern": "^([0-9]{4}(-(0[1-9]|1[0-2]))?|present)$",
+      "description": "An end date, \"YYYY\" or \"YYYY-MM\", or \"present\" for something still going on."
+    },
+    "year": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9]{4}$",
+      "description": "A year, \"YYYY\"; null when not known."
+    },
+    "period": {
+      "type": "object",
+      "description": "A period of time. The agent never estimates dates: a period it does not know is asked.",
+      "properties": {
+        "start": {
+          "$ref": "#/definitions/month",
+          "description": "First month or year of the period."
+        },
+        "end": {
+          "$ref": "#/definitions/month_or_present",
+          "description": "Last month or year of the period, or \"present\"."
+        }
+      },
+      "required": ["start", "end"],
+      "additionalProperties": false
+    },
+    "nullable_period": {
+      "anyOf": [{ "$ref": "#/definitions/period" }, { "type": "null" }],
+      "description": "A period, or null when the dates are not known."
+    },
+    "source_id": {
+      "type": "string",
+      "pattern": "^src-[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Id of a source in meta.sources, prefix \"src-\"."
+    },
+    "job_id": {
+      "type": "string",
+      "pattern": "^job-[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Id of a job, prefix \"job-\"."
+    },
+    "project_id": {
+      "type": "string",
+      "pattern": "^prj-[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Id of a project inside a job or outside jobs, prefix \"prj-\"."
+    },
+    "achievement_id": {
+      "type": "string",
+      "pattern": "^ach-[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Id of an achievement, prefix \"ach-\"."
+    },
+    "skill_id": {
+      "type": "string",
+      "pattern": "^skill-[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Id of a skill, prefix \"skill-\"."
+    },
+    "note_id": {
+      "type": "string",
+      "pattern": "^note-[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Id of a period note, prefix \"note-\"."
+    },
+    "decision_id": {
+      "type": "string",
+      "pattern": "^dec-[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Id of a decision record, prefix \"dec-\"."
+    },
+    "unit_id": {
+      "type": "string",
+      "pattern": "^(job|prj|ach|skill|note)-[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Id of a job, project, achievement, skill or period note."
+    },
+    "origin": {
+      "type": "object",
+      "description": "Where a unit's facts come from. A fact without an origin is not used. source_cv: quoted from a source, with source and quote, date null. candidate: an answer of the candidate in the chat, with the date, source and quote null. agent_confirmed: a proposal of the agent that the candidate confirmed or corrected, with the date, source and quote null.",
+      "properties": {
+        "kind": {
+          "enum": ["source_cv", "candidate", "agent_confirmed"],
+          "description": "The kind of origin."
+        },
+        "source": {
+          "anyOf": [{ "$ref": "#/definitions/source_id" }, { "type": "null" }],
+          "description": "For source_cv: the id of the source in meta.sources; otherwise null."
+        },
+        "quote": {
+          "$ref": "#/definitions/nullable_text",
+          "description": "For source_cv: the quote of the place in the source the facts come from; otherwise null."
+        },
+        "date": {
+          "type": ["string", "null"],
+          "format": "date",
+          "description": "For candidate and agent_confirmed: the day of the answer or confirmation, \"YYYY-MM-DD\"; otherwise null."
+        }
+      },
+      "required": ["kind", "source", "quote", "date"],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": { "kind": { "const": "source_cv" } },
+            "required": ["kind"]
+          },
+          "then": {
+            "properties": {
+              "source": { "type": "string" },
+              "quote": { "type": "string" },
+              "date": { "type": "null" }
+            }
+          },
+          "else": {
+            "properties": {
+              "source": { "type": "null" },
+              "quote": { "type": "null" },
+              "date": { "type": "string" }
+            }
+          }
+        }
+      ]
+    },
+    "nullable_origin": {
+      "anyOf": [{ "$ref": "#/definitions/origin" }, { "type": "null" }],
+      "description": "The origin of a single block, or null when every field of the block is null."
+    },
+    "source": {
+      "type": "object",
+      "description": "A document or conversation the profile was read from.",
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/source_id",
+          "description": "Id the origins refer to, prefix \"src-\"."
+        },
+        "kind": {
+          "enum": ["index_cv", "file", "chat"],
+          "description": "index_cv: a source CV read by the CV reader; file: another document of the candidate; chat: a conversation with the candidate."
+        },
+        "location": {
+          "$ref": "#/definitions/nullable_text",
+          "description": "URL or file path of the source; null for a chat or when unknown."
+        },
+        "read_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the source was read, ISO 8601 date-time."
+        }
+      },
+      "required": ["id", "kind", "location", "read_at"],
+      "additionalProperties": false
+    },
+    "meta": {
+      "type": "object",
+      "description": "Service data of the profile.",
+      "properties": {
+        "sources": {
+          "type": ["array", "null"],
+          "minItems": 1,
+          "items": { "$ref": "#/definitions/source" },
+          "description": "The sources the source_cv origins refer to; null when nothing was read from a document."
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the profile was last changed, ISO 8601 date-time."
+        }
+      },
+      "required": ["sources", "updated_at"],
+      "additionalProperties": false
+    },
+    "person": {
+      "type": "object",
+      "description": "P-01: who the candidate is (GEN-05, HEADER-03, SUM-01).",
+      "properties": {
+        "name": {
+          "$ref": "#/definitions/nullable_text",
+          "description": "The name the candidate uses on a CV."
+        },
+        "title": {
+          "$ref": "#/definitions/nullable_text",
+          "description": "The current or last job title, without the level."
+        },
+        "level": {
+          "$ref": "#/definitions/nullable_text",
+          "description": "The level of the title, for example \"Senior\" or \"Lead\"; never one the jobs do not support."
+        },
+        "origin": {
+          "$ref": "#/definitions/nullable_origin",
+          "description": "Where the name, title and level come from."
+        }
+      },
+      "required": ["name", "title", "level", "origin"],
+      "additionalProperties": false
+    },
+    "search": {
+      "type": "object",
+      "description": "P-02: the candidate's search goals and location. These are the candidate's plans, never guessed from a vacancy.",
+      "properties": {
+        "target_roles": {
+          "$ref": "#/definitions/text_list",
+          "description": "The roles the candidate looks for."
+        },
+        "apply_locations": {
+          "$ref": "#/definitions/text_list",
+          "description": "Countries and cities where the candidate applies."
+        },
+        "relocation": {
+          "$ref": "#/definitions/nullable_text",
+          "description": "The candidate's relocation plans, plain text."
+        },
+        "region": {
+          "$ref": "#/definitions/nullable_text",
+          "description": "The region of the search for GEN-09, for example \"EU\"."
+        },
+        "work_formats": {
+          "type": ["array", "null"],
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["on_site", "hybrid", "remote"] },
+          "description": "The work formats the candidate accepts."
+        },
+        "current_city": {
+          "$ref": "#/definitions/nullable_text",
+          "description": "The city the candidate lives in now, with the country when useful."
+        },
+        "time_zone": {
+          "$ref": "#/definitions/nullable_text",
+          "description": "The candidate's time zone, IANA name (for example \"Europe/Berlin\") or a UTC offset."
+        },
+        "origin": {
+          "$ref": "#/definitions/nullable_origin",
+          "description": "Where the search goals and location come from."
+        }
+      },
+      "required": [
+        "target_roles",
+        "apply_locations",
+        "relocation",
+        "region",
+        "work_formats",
+        "current_city",
+        "time_zone",
+        "origin"
+      ],
+      "additionalProperties": false
+    },
+    "contacts": {
+      "type": "object",
+      "description": "P-03: contacts for the CV header (HEADER-02); each only when the candidate has it.",
+      "properties": {
+        "phone": {
+          "$ref": "#/definitions/nullable_text",
+          "description": "Phone number as the candidate writes it, with the country code."
+        },
+        "email": {
+          "type": ["string", "null"],
+          "format": "email",
+          "description": "Email address."
+        },
+        "linkedin": {
+          "type": ["string", "null"],
+          "format": "uri",
+          "description": "LinkedIn profile URL."
+        },
+        "github": {
+          "type": ["string", "null"],
+          "format": "uri",
+          "description": "GitHub profile URL."
+        },
+        "origin": {
+          "$ref": "#/definitions/nullable_origin",
+          "description": "Where the contacts come from."
+        }
+      },
+      "required": ["phone", "email", "linkedin", "github", "origin"],
+      "additionalProperties": false
+    },
+    "skill": {
+      "type": "object",
+      "description": "P-04: a skill (GEN-12, SKILL-01). Its evidence ids back it for the validator and are not printed.",
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/skill_id",
+          "description": "Id of the skill."
+        },
+        "name": {
+          "$ref": "#/definitions/text",
+          "description": "The skill as the CV writes it, for example \"TypeScript\"."
+        },
+        "kind": {
+          "enum": ["software", "tool", "method", "technology", null],
+          "description": "What the skill is; null when not stated."
+        },
+        "evidence": {
+          "type": ["array", "null"],
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^(job|prj)-[a-z0-9]+(-[a-z0-9]+)*$"
+          },
+          "description": "Ids of the jobs and projects where the skill was used; null when there is none, then the skill needs a recorded confirmation (P-11)."
+        },
+        "origin": {
+          "$ref": "#/definitions/origin",
+          "description": "Where the skill comes from."
+        }
+      },
+      "required": ["id", "name", "kind", "evidence", "origin"],
+      "additionalProperties": false
+    },
+    "achievement": {
+      "type": "object",
+      "description": "P-05: one achievement (EXP-02, EXP-04, EXP-05, GEN-13), linked to exactly one project.",
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/achievement_id",
+          "description": "Id of the achievement."
+        },
+        "project": {
+          "$ref": "#/definitions/project_id",
+          "description": "Id of the project the achievement belongs to, inside a job or outside jobs."
+        },
+        "result": {
+          "$ref": "#/definitions/text",
+          "description": "What was achieved, plain text."
+        },
+        "number": {
+          "$ref": "#/definitions/nullable_text",
+          "description": "The number of the result as the candidate gives it, for example \"35%\" or \"2x\"; null when there is none. The agent never makes one up."
+        },
+        "number_context": {
+          "$ref": "#/definitions/nullable_text",
+          "description": "The context of the number: baseline or period, scale such as team, budget or users (EXP-04)."
+        },
+        "measure": {
+          "$ref": "#/definitions/nullable_text",
+          "description": "What the result is measured by, for example \"page load time\"."
+        },
+        "contribution": {
+          "enum": ["own", "team", null],
+          "description": "own: the candidate's own result; team: a team result the candidate took part in; null when not known yet."
+        },
+        "own_part": {
+          "$ref": "#/definitions/nullable_text",
+          "description": "What the candidate did in a team result."
+        },
+        "how": {
+          "$ref": "#/definitions/nullable_text",
+          "description": "How the result was achieved."
+        },
+        "ai_involved": {
+          "type": ["boolean", "null"],
+          "description": "Whether the work involved AI (EXP-05); null when not stated, then it is read from the achievement or asked."
+        },
+        "origin": {
+          "$ref": "#/definitions/origin",
+          "description": "Where the achievement comes from."
+        }
+      },
+      "required": [
+        "id",
+        "project",
+        "result",
+        "number",
+        "number_context",
+        "measure",
+        "contribution",
+        "own_part",
+        "how",
+        "ai_involved",
+        "origin"
+      ],
+      "additionalProperties": false
+    },
+    "role": {
+      "type": "object",
+      "description": "P-06: a title the candidate held at a job for a period. A job with a promotion has one role per title.",
+      "properties": {
+        "title": {
+          "$ref": "#/definitions/text",
+          "description": "The job title of the role, with its level as the employer wrote it."
+        },
+        "period": {
+          "$ref": "#/definitions/period",
+          "description": "When the candidate held the role."
+        },
+        "description": {
+          "type": ["string", "null"],
+          "minLength": 1,
+          "description": "A short description of the role, Markdown; null until proposed from the duties and confirmed."
+        },
+        "duties": {
+          "$ref": "#/definitions/text_list",
+          "description": "The duties of the role."
+        }
+      },
+      "required": ["title", "period", "description", "duties"],
+      "additionalProperties": false
+    },
+    "job_project": {
+      "type": "object",
+      "description": "P-06: a project inside a job. A job with no named projects has one implicit project, so its achievements still have a link.",
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/project_id",
+          "description": "Id of the project."
+        },
+        "name": {
+          "$ref": "#/definitions/text",
+          "description": "Name of the project or product."
+        },
+        "context": {
+          "type": ["string", "null"],
+          "minLength": 1,
+          "description": "The context of the project, Markdown: the product, the team, what it was for."
+        },
+        "role": {
+          "$ref": "#/definitions/nullable_text",
+          "description": "The candidate's role in the project."
+        },
+        "period": {
+          "$ref": "#/definitions/nullable_period",
+          "description": "When the candidate worked on the project; null when it is the whole job or not known."
+        },
+        "origin": {
+          "$ref": "#/definitions/origin",
+          "description": "Where the project comes from."
+        }
+      },
+      "required": ["id", "name", "context", "role", "period", "origin"],
+      "additionalProperties": false
+    },
+    "job": {
+      "type": "object",
+      "description": "P-06: a job at one employer (EXP-01, EXP-03, SUM-01, SUM-02, GAP-01).",
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/job_id",
+          "description": "Id of the job."
+        },
+        "company": {
+          "$ref": "#/definitions/text",
+          "description": "The employer's name."
+        },
+        "industry": {
+          "$ref": "#/definitions/nullable_text",
+          "description": "The industry of the employer; proposed by the agent and confirmed when the source does not say."
+        },
+        "market_types": {
+          "type": ["array", "null"],
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["B2B", "B2C"] },
+          "description": "The market types of the employer."
+        },
+        "roles": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/definitions/role" },
+          "description": "The roles the candidate held at the job, most recent first. Their periods give the dates of the job."
+        },
+        "projects": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/definitions/job_project" },
+          "description": "The projects inside the job; at least one, implicit when the job names none."
+        },
+        "origin": {
+          "$ref": "#/definitions/origin",
+          "description": "Where the job comes from."
+        }
+      },
+      "required": ["id", "company", "industry", "market_types", "roles", "projects", "origin"],
+      "additionalProperties": false
+    },
+    "side_project": {
+      "type": "object",
+      "description": "P-07: a project outside jobs (PROJ-01). Projects with dates fill the periods between jobs. Only a project the candidate has done.",
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/project_id",
+          "description": "Id of the project."
+        },
+        "name": {
+          "$ref": "#/definitions/text",
+          "description": "Name of the project."
+        },
+        "kind": {
+          "enum": ["own", "open_source", "study", "vacancy_task"],
+          "description": "own: the candidate's own project; open_source: a contribution to open source; study: made while studying; vacancy_task: made for a vacancy."
+        },
+        "context": {
+          "type": ["string", "null"],
+          "minLength": 1,
+          "description": "What the project is and the candidate's part in it, Markdown."
+        },
+        "period": {
+          "$ref": "#/definitions/nullable_period",
+          "description": "When the project was done; null when the candidate gives no dates."
+        },
+        "result": {
+          "$ref": "#/definitions/nullable_text",
+          "description": "The outcome of the project, plain text; measured results are achievements (P-05)."
+        },
+        "link": {
+          "type": ["string", "null"],
+          "format": "uri",
+          "description": "URL of the project; null when there is none."
+        },
+        "origin": {
+          "$ref": "#/definitions/origin",
+          "description": "Where the project comes from."
+        }
+      },
+      "required": ["id", "name", "kind", "context", "period", "result", "link", "origin"],
+      "additionalProperties": false
+    },
+    "period_note": {
+      "type": "object",
+      "description": "P-07: a context note for a period between jobs, only when the candidate gives it (GEN-10).",
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/note_id",
+          "description": "Id of the note."
+        },
+        "period": {
+          "$ref": "#/definitions/period",
+          "description": "The period the note covers."
+        },
+        "note": {
+          "$ref": "#/definitions/text",
+          "description": "The note in the candidate's words, for example \"Parental leave\"."
+        },
+        "origin": {
+          "$ref": "#/definitions/origin",
+          "description": "Where the note comes from."
+        }
+      },
+      "required": ["id", "period", "note", "origin"],
+      "additionalProperties": false
+    },
+    "language": {
+      "type": "object",
+      "description": "P-08: a language the candidate speaks (SKILL-03). A level is never raised.",
+      "properties": {
+        "name": {
+          "$ref": "#/definitions/text",
+          "description": "The language, in English, for example \"German\"."
+        },
+        "level": {
+          "enum": ["A1", "A2", "B1", "B2", "C1", "C2", "native"],
+          "description": "The CEFR level, or \"native\"."
+        },
+        "origin": {
+          "$ref": "#/definitions/origin",
+          "description": "Where the language and level come from."
+        }
+      },
+      "required": ["name", "level", "origin"],
+      "additionalProperties": false
+    },
+    "qualification": {
+      "type": "object",
+      "description": "P-09: a degree or an equivalent qualification (EDU-01).",
+      "properties": {
+        "title": {
+          "$ref": "#/definitions/text",
+          "description": "The qualification, for example \"MSc in Computer Science\"."
+        },
+        "institution": {
+          "$ref": "#/definitions/nullable_text",
+          "description": "The institution that awarded it."
+        },
+        "year": {
+          "$ref": "#/definitions/year",
+          "description": "The year it was awarded, \"YYYY\"."
+        },
+        "origin": {
+          "$ref": "#/definitions/origin",
+          "description": "Where the qualification comes from."
+        }
+      },
+      "required": ["title", "institution", "year", "origin"],
+      "additionalProperties": false
+    },
+    "certification": {
+      "type": "object",
+      "description": "P-09: a professional certification (EDU-02).",
+      "properties": {
+        "name": {
+          "$ref": "#/definitions/text",
+          "description": "The certification."
+        },
+        "issuer": {
+          "$ref": "#/definitions/nullable_text",
+          "description": "The organisation that issued it."
+        },
+        "year": {
+          "$ref": "#/definitions/year",
+          "description": "The year it was issued, \"YYYY\"."
+        },
+        "origin": {
+          "$ref": "#/definitions/origin",
+          "description": "Where the certification comes from."
+        }
+      },
+      "required": ["name", "issuer", "year", "origin"],
+      "additionalProperties": false
+    },
+    "education": {
+      "type": "object",
+      "description": "P-09: education and certifications (EDU-01, EDU-02).",
+      "properties": {
+        "qualifications": {
+          "type": ["array", "null"],
+          "minItems": 1,
+          "items": { "$ref": "#/definitions/qualification" },
+          "description": "Degrees and equivalent qualifications, highest first; null when there are none."
+        },
+        "certifications": {
+          "type": ["array", "null"],
+          "minItems": 1,
+          "items": { "$ref": "#/definitions/certification" },
+          "description": "Professional certifications; null when there are none."
+        }
+      },
+      "required": ["qualifications", "certifications"],
+      "additionalProperties": false
+    },
+    "hobby": {
+      "type": "object",
+      "description": "P-10: a hobby or an outside activity (GEN-07).",
+      "properties": {
+        "name": {
+          "$ref": "#/definitions/text",
+          "description": "The hobby or activity."
+        },
+        "relevance": {
+          "$ref": "#/definitions/nullable_text",
+          "description": "What makes it relevant or impressive, when the candidate states it."
+        },
+        "origin": {
+          "$ref": "#/definitions/origin",
+          "description": "Where the hobby comes from."
+        }
+      },
+      "required": ["name", "relevance", "origin"],
+      "additionalProperties": false
+    },
+    "decision": {
+      "type": "object",
+      "description": "P-11: a record of the candidate's decision (GEN-10, GEN-11, GEN-12). The validator treats an override or an unbacked term with no record as a failure of the rule.",
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/decision_id",
+          "description": "Id of the decision."
+        },
+        "date": {
+          "type": "string",
+          "format": "date",
+          "description": "The day of the decision, \"YYYY-MM-DD\"."
+        },
+        "kind": {
+          "enum": ["confirmation", "override"],
+          "description": "confirmation: a confirmation a rule asks to record (GEN-11, GEN-12); override: the candidate kept something against a rule's advice (GEN-10)."
+        },
+        "rule": {
+          "type": "string",
+          "pattern": "^[A-Z]+-[0-9]{2}$",
+          "description": "The id of the rule the decision is about, for example \"GEN-12\"."
+        },
+        "subject": {
+          "$ref": "#/definitions/text",
+          "description": "What the decision covers, plain text."
+        },
+        "warning": {
+          "$ref": "#/definitions/nullable_text",
+          "description": "For an override: the warning the agent gave; otherwise null."
+        },
+        "refs": {
+          "type": ["array", "null"],
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/definitions/unit_id" },
+          "description": "Ids of the units the decision covers; null when it covers none."
+        }
+      },
+      "required": ["id", "date", "kind", "rule", "subject", "warning", "refs"],
+      "additionalProperties": false
+    }
+  }
+}
