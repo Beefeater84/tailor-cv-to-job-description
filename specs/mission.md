@@ -54,6 +54,7 @@ Rules for the content:
 - Language: English for all content and documentation.
 - Stack: TypeScript on Node 24, npm, Playwright; one module per pipeline stage — see `decisions/6-typescript-node-stack.md`.
 - The vacancy reader gives the writer a versioned JSON contract, `vacancy.json`, with common rules for all writer input contracts — see `decisions/8-vacancy-output-contract.md`.
+- The vacancy contract holds what the page says; the vacancy analysis of the writer derives the requirements, keywords, industry and the problems of the role. The agent's own knowledge is a proposal the candidate confirms — see `decisions/42-vacancy-analysis-input.md`.
 - Vacancy reader is one module, `vacancy-reader/`. Its examples (URL, expected text, HTML snapshot) are stored in `vacancy-reader/examples/` with one `index.yaml` — see `decisions/6-vacancy-reader-module.md`.
 
 ## Scope
