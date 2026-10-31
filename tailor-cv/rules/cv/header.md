@@ -9,7 +9,7 @@ The top of the CV: name, job title, location, contacts.
 - Sources: 0T8q3B82PRw-en.md (section "Key Elements Recruiters Look For", 00:50); 4Qh7C5AA34o-en.md (section "Contact Information", 02:15), which also gives the time zone: even for remote work the hiring manager wants the area, because of time zones
 - Agreement: 2 of 4 authors, no conflicts
 - Weight: 0.8
-- Needs: profile block with the candidate's location and time zone; vacancy field `location` and work format (#39)
+- Needs: profile block with the candidate's location and time zone, and where and in which work format the candidate applies (#41)
 - Check: the header has a city and a time zone, and no street address
 - Limits: see the open question "Target city instead of the current one"
 
@@ -20,7 +20,7 @@ The top of the CV: name, job title, location, contacts.
 - Sources: 0T8q3B82PRw-en.md (section "Key Elements Recruiters Look For", 00:50); 4Qh7C5AA34o-en.md (section "Contact Information", 02:15); GitHub: owner
 - Agreement: 2 of 4 authors, no conflicts
 - Weight: 0.6
-- Needs: profile block with contacts; vacancy field that tells a technical role
+- Needs: profile block with contacts; whether the role is technical (vacancy analysis, `../vacancy-data.md` V-11)
 - Check: the header has a phone and an email; LinkedIn and GitHub are present when they are in the profile
 - Limits: only the contacts from the profile
 
@@ -31,7 +31,7 @@ The top of the CV: name, job title, location, contacts.
 - Sources: 0T8q3B82PRw-en.md (section "Key Elements Recruiters Look For", 00:50); wording close to the vacancy: our addition
 - Agreement: 1 of 4 authors, no conflicts
 - Weight: 0.9
-- Needs: job titles from the candidate's experience; vacancy fields `title` and seniority (#39)
+- Needs: job titles from the candidate's experience; vacancy field `title` and the seniority (vacancy analysis, `../vacancy-data.md` V-02)
 - Check: one line under the name; the title and the level are supported by the candidate's experience
 - Limits: never a title or a level the candidate's experience does not support. How far the wording may move from the real title is an open question.
 

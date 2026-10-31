@@ -47,15 +47,15 @@ The file is `JSON.stringify(contract, null, 2)` with a final newline. `fetched_a
 
 ## Rules for the consumer
 
-These rules are for the CV and cover letter writer (#4). A value that is missing from the contract is never invented, and a model never derives it silently.
+These rules are for the CV and cover letter writer (#4). A value that is missing from the contract is never invented, and a model never derives it silently: what the model proposes from its own knowledge is shown to the user and used only after the user confirms it (`specs/decisions/42-vacancy-analysis-input.md`).
 
 - `title` is `null`: ask the user.
 - `company` is `null`: ask the user. If the user skips the question, write without naming the company.
 - `hiring_manager` is `null`: use a neutral greeting. Do not ask.
-- `company_description` is `null`: write without a company paragraph. Do not use the model's own knowledge of the company.
+- `company_description` is `null`: write without a company paragraph. The model may propose what it knows about the company, and the user confirms it; or the user is asked what the company does.
 - `tags` is `null`: write without them. Take the skills from `description`.
 - `extracted_by` is `llm`: accept the contract, but before writing show the user what was extracted (title, company, the start of the description) once, and ask them to confirm or correct it. The result is unverified. With `rule` there is no question.
 
-## Planned
+## Not in the contract
 
-- Splitting the vacancy text into responsibilities and requirements, as optional fields in a minor version. This waits for the research of CV and cover letter best practices (#29).
+Splitting the vacancy text into responsibilities and requirements, keywords, the industry and other readings of the text are done by the vacancy analysis of the writer, not by the contract: see `tailor-cv/vacancy-data.md`.
