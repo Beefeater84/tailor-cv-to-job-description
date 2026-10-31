@@ -64,7 +64,7 @@ Rules for the whole CV and the whole cover letter.
 
 ### GEN-06 — Section order
 - Applies to: CV
-- Rule: the sections go in this order: header (name, job title, location, contacts), summary, competencies, skills, experience (with career gaps in their place), projects (only when PROJ-01 calls for it), education.
+- Rule: the sections go in this order: header (name, job title, location, contacts), summary, competencies, skills, experience (gaps between jobs as GAP-01 sets), projects (only when PROJ-01 calls for it), education.
 - Why: the recruiter reads top down and stops early. The order puts who the candidate is and what they can do first, and the proof right after.
 - Sources: 0T8q3B82PRw-en.md (sections "Structuring Your CV Effectively", 04:26, "Highlighting Skills and Experience", 05:55, "Final Tips for a Strong CV", 08:15); 4Qh7C5AA34o-en.md (competencies under the profile); skills before experience: also owner; projects as a separate section: N1Fm4JYae1I-en.md (section "Rule 5: Demonstrate Your AI Skills", 10:36), its place after experience: owner
 - Agreement: 3 of 4 authors, each for a part of the order, no conflicts
@@ -157,7 +157,7 @@ Rules for the whole CV and the whole cover letter.
 
 ### GEN-14 — The CV stands alone; the cover letter only adds
 - Applies to: CV, cover letter
-- Rule: everything needed to decide on the candidate is in the CV: the fit with the vacancy, the requirements, the industry and market type, the location and work format, the reasons for gaps. The cover letter adds only the personal part for one vacancy: the company name and why this company (GEN-02). No fact about the candidate lives only in the letter. The cover letter is optional: written when the candidate asks for it, for a vacancy that matters to them.
+- Rule: everything needed to decide on the candidate is in the CV: the fit with the vacancy, the requirements, the industry and market type, the location and work format, and what the candidate chose to show about gaps (GAP-01). The cover letter adds only the personal part for one vacancy: the company name and why this company (GEN-02). No fact about the candidate lives only in the letter. The cover letter is optional: written when the candidate asks for it, for a vacancy that matters to them.
 - Why: cover letters are almost never read; the field for one is often there only because the ATS asks for it by default. A fact that is only in the letter is not seen, and the CV loses without it.
 - Sources: 6N6H_KQxPWE-ru.md (section "Сопроводительные письма и личные сообщения", 35:06): about 99% of cover letters are not read, write one only for a company you really want; everything that matters goes into the CV: owner
 - Agreement: 1 of 4 authors, no conflicts
