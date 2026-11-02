@@ -6,7 +6,7 @@ Each choice below is recorded as an ADR in `specs/decisions/` when it is made, a
 
 - Language: TypeScript. Runtime: Node 24. Package manager: npm (ADR `6-typescript-node-stack`).
 - Browser automation: Playwright, headless Chromium.
-- Each pipeline stage is its own top-level module with its own `package.json`. The vacancy reader is `vacancy-reader/` (ADR `6-vacancy-reader-module`).
+- Each pipeline stage is its own top-level module with its own `package.json`. The vacancy reader is `vacancy-reader/` (ADR `6-vacancy-reader-module`). The writer is `tailor-cv/`.
 - Open: agent SDK or framework, and the form of the agent (standalone app, Claude Code skill, hosted service).
 
 ## Infrastructure & Deployment
@@ -21,6 +21,7 @@ The agent runs locally on the user's machine (ADR `3-local-agent-playwright-user
 - **Vacancy pages**: job description pages on the internet, opened with **Playwright** using the user's browser session (ADR `3-local-agent-playwright-user-session`). Text is extracted with per-site parsing rules (ADR `3-site-parsing-rules-from-examples`): one declarative TypeScript rule per site in `vacancy-reader/rules/<site>.ts`, run on the saved HTML with a static parser (ADR `10-site-parsing-rule-format`). A site without a rule goes to an LLM fallback (ADR `12-llm-fallback-extraction`).
 - **Test data (vacancy examples)**: `vacancy-reader/examples/index.yaml` and `vacancy-reader/examples/<site>/<company>-<role>/{expected.md,page.html}`. Layout in `decisions/6-vacancy-reader-module.md`. `expected.md` is the human-reviewed reference extracted vacancy document (Markdown with YAML front matter) that the site rule must reproduce from `page.html` (ADR `10-site-parsing-rule-format`).
 - **Contract validation, vacancy reader**: `ajv` and `ajv-formats` check `vacancy.json` against `vacancy-reader/contract/vacancy.schema.json` (ADR `8-vacancy-output-contract`).
+- **Contract validation, candidate profile**: `ajv` and `ajv-formats` check the profile against `tailor-cv/contract/profile.schema.json`, then code checks the references between objects (ADR `30-candidate-profile-contract`).
 - **PDF rendering**: not chosen yet.
 
 ## Database Schema
@@ -49,6 +50,15 @@ Run in order, from the repository root. Tests are added where logic is non-trivi
 
 ```bash
 cd vacancy-reader && npm ci
+npm run typecheck
+npm run lint
+npm test
+```
+
+The writer module `tailor-cv/` has the same checks. `npm test` validates the profile example and the reference checks of the profile contract.
+
+```bash
+cd tailor-cv && npm ci
 npm run typecheck
 npm run lint
 npm test

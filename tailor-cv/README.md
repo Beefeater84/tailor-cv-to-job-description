@@ -6,6 +6,7 @@ The writer stage of the pipeline (epic "Tailored CV and cover letter writer" (#4
 - **Writing rules** (in progress): how the agent tailors the CV and the cover letter to a vacancy, built from the sources and grouped by section of the tailored CV. Every rule names the sources it comes from. See [`rules/README.md`](rules/README.md).
 - **Vacancy data** (available now): what the writing rules need from the vacancy and what the vacancy analysis derives. See [`vacancy-data.md`](vacancy-data.md).
 - **Profile data** (available now): what the writing rules need from the candidate profile, block by block, and what is computed from it. See [`profile-data.md`](profile-data.md).
+- **Profile contract** (available now): the candidate profile as one versioned JSON file, with its schema, an invented example and the validator (`validateProfile`). See [`contract/README.md`](contract/README.md).
 - **Style** (in progress): rules for how a text sounds, used by the humanizer to remove the signs of AI writing. Independent of the CV, to be moved out and reused in other projects. See [`style/README.md`](style/README.md). Research: "best practices for a tailored CV and cover letter, and the data they need" (#29).
 
-The module has no code yet. The module name `tailor-cv/` answers the module name question of the writer design (#34).
+The module has TypeScript code for the profile contract in `src/contract/`; its checks are listed in `specs/tech-stack.md`. The module name `tailor-cv/` answers the module name question of the writer design (#34).
