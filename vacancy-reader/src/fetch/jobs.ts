@@ -30,9 +30,15 @@ export interface FetchOptions {
   timeoutMs: number;
 }
 
-/** Result of extracting the vacancy document from a succeeded job's page.html. */
+/**
+ * State of the extraction. `running` is stored while the step works; `crashed` is never stored, it is computed
+ * at read time for a `running` extraction whose process is gone.
+ */
+export type ExtractionState = "running" | "succeeded" | "no_rule" | "failed" | "crashed";
+
+/** Result of extracting the vacancy document from a succeeded job's page.html (in progress while `running`). */
 export interface ExtractionResult {
-  status: "succeeded" | "no_rule" | "failed";
+  status: ExtractionState;
   site: string | null;
   /** Absolute path of the rule file used, or null. */
   rule: string | null;
@@ -43,7 +49,27 @@ export interface ExtractionResult {
   method: ExtractionMethod | null;
   /** Whether the site has a rule. */
   has_rule: boolean;
-  finishedAt: string;
+  startedAt: string;
+  /** Process doing the extraction; used for the crash check while running. */
+  pid: number | null;
+  /** Null while the extraction is running. */
+  finishedAt: string | null;
+}
+
+/** The extraction block of a step that has just started, written before the work begins. */
+export function runningExtraction(pid: number = process.pid): ExtractionResult {
+  return {
+    status: "running",
+    site: null,
+    rule: null,
+    file: null,
+    error: null,
+    method: null,
+    has_rule: false,
+    startedAt: new Date().toISOString(),
+    pid,
+    finishedAt: null,
+  };
 }
 
 export interface JobStatus {
@@ -171,9 +197,17 @@ function isPidAlive(pid: number): boolean {
   }
 }
 
+/** Reports a running extraction whose process is gone as crashed; the fetch status is not touched. */
+function withExtractionCrashCheck(status: JobStatus): JobStatus {
+  const extraction = status.extraction;
+  if (!extraction || extraction.status !== "running") return status;
+  if (extraction.pid === null || isPidAlive(extraction.pid)) return status;
+  return { ...status, extraction: { ...extraction, status: "crashed" } };
+}
+
 /** Reports a job as crashed when it is stored as queued or running but its worker is gone. */
 function withCrashCheck(status: JobStatus, now = Date.now()): JobStatus {
-  if (status.status !== "queued" && status.status !== "running") return status;
+  if (status.status !== "queued" && status.status !== "running") return withExtractionCrashCheck(status);
   const gone =
     status.pid !== null
       ? !isPidAlive(status.pid)

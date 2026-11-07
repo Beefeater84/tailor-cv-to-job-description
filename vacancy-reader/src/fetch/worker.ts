@@ -2,16 +2,10 @@
 // Started by start.ts as: node --import tsx src/fetch/worker.ts <job-id>
 import { writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import { stripVTControlCharacters } from "node:util";
-import { extractJob } from "../extract.ts";
 import { loadEnv } from "../fallback/index.ts";
-import { jobDir, readStatus, writeStatus, type JobStatus } from "./jobs.ts";
+import { runExtractionStep, errorMessage } from "./extraction-step.ts";
+import { jobDir, readStatus, runningExtraction, writeStatus, type JobStatus } from "./jobs.ts";
 import { fetchPage, PageTimeoutError } from "./page.ts";
-
-/** Error text without the terminal colour codes Playwright adds to its call logs. */
-function errorMessage(error: unknown): string {
-  return stripVTControlCharacters(error instanceof Error ? error.message : String(error)).trim();
-}
 
 async function saveHtml(id: string, html: string | null): Promise<void> {
   if (html !== null) await writeFile(join(jobDir(id), "page.html"), html, "utf8");
@@ -56,19 +50,17 @@ async function run(id: string): Promise<void> {
     }
   }
   status = { ...status, finishedAt: new Date().toISOString() };
+  // One write: a succeeded fetch never shows without its extraction state.
+  if (status.status === "succeeded") status = { ...status, extraction: runningExtraction() };
   await writeStatus(status);
   console.log(`[${status.finishedAt}] ${status.status}${status.error ? `: ${status.error}` : ""}`);
 
   if (status.status === "succeeded") {
     // Extraction never changes the fetch status; its outcome is recorded in `extraction`.
-    try {
-      const extraction = await extractJob(id);
-      console.log(
-        `[${extraction.finishedAt}] extraction ${extraction.status}${extraction.error ? `: ${extraction.error}` : ""}`,
-      );
-    } catch (error) {
-      console.log(`[${new Date().toISOString()}] extraction error: ${errorMessage(error)}`);
-    }
+    const extraction = await runExtractionStep(id);
+    console.log(
+      `[${extraction.finishedAt}] extraction ${extraction.status}${extraction.error ? `: ${extraction.error}` : ""}`,
+    );
   }
 }
 
