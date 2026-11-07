@@ -120,9 +120,9 @@ test("rule selector with no match: extraction.unresolved and the front matter li
   await makeJob("unres", url, "<html><body><main>" + html + "</main></body></html>");
   const result = await extractJob("unres", runsDir, { model: null });
   assert.equal(result.status, "succeeded");
-  assert.deepEqual(result.unresolved, ["title"]);
-  assert.deepEqual((await getJob("unres", runsDir))?.extraction?.unresolved, ["title"]);
-  assert.match(await readFile(vacancyPath("unres"), "utf8"), /\nunresolved: \[title\]\n---\n/);
+  assert.deepEqual(result.unresolved, ["title", "company"]);
+  assert.deepEqual((await getJob("unres", runsDir))?.extraction?.unresolved, ["title", "company"]);
+  assert.match(await readFile(vacancyPath("unres"), "utf8"), /\nunresolved: \[title, company\]\n---\n/);
   const contract = JSON.parse(await readFile(contractPath("unres"), "utf8")) as Record<string, unknown>;
   assert.equal("unresolved" in contract, false);
   assert.equal(contract.schema_version, "1.0");

@@ -1,9 +1,13 @@
 schema: 1
 sites:
   careers-page.com:
-    count: 1
+    count: 2
     examples:
       - url: https://www.careers-page.com/idelsoft/job/3W3V95WV
         path: careers-page.com/idelsoft-senior-frontend-performance-engineer
         saved_at: 2026-10-23
         notes: Public page, server-rendered, snapshot fetched without login
+      - url: https://www.careers-page.com/manatal/job/L3X639RW
+        path: careers-page.com/manatal-senior-platform-engineer
+        saved_at: 2026-10-24
+        notes: Public page, server-rendered, snapshot fetched without login; the title has no "Get Hired" template, the company comes from the URL slug
