@@ -5,7 +5,7 @@ import { join } from "node:path";
 import { buildContract, serializeContract, validateContract } from "./contract/index.ts";
 import { defaultModel, extractWithModel } from "./fallback/index.ts";
 import type { VacancyModel } from "./fallback/index.ts";
-import { getJob, jobDir, RUNS_DIR, writeStatus } from "./fetch/jobs.ts";
+import { getJob, jobDir, runningExtraction, RUNS_DIR, writeStatus } from "./fetch/jobs.ts";
 import type { ExtractionResult } from "./fetch/jobs.ts";
 import { extractFields, loadRule, noRuleMessage, renderDocument, rulePath } from "./rules/index.ts";
 import type { ExtractedFields, ExtractionMethod } from "./rules/types.ts";
@@ -33,6 +33,7 @@ export interface ExtractOptions {
  * second extraction of the same fetch writes the same bytes. An invalid contract fails the extraction.
  * A site with a rule is extracted only by its rule, also when the rule fails. A site without a rule is
  * extracted by the model (`method: llm`) when there is one; without a model the result is no_rule.
+ * Writes `extraction.status: running` first, so the progress is visible; the final block keeps its `startedAt`.
  * Throws if the job does not exist or is not succeeded (nothing is written then).
  */
 export async function extractJob(
@@ -45,6 +46,10 @@ export async function extractJob(
   if (job.status !== "succeeded") {
     throw new Error(`Job ${id} is ${job.status}, only succeeded jobs can be extracted`);
   }
+
+  // Progress is visible from here on; a crashed or running earlier extraction does not block a new one.
+  const running = runningExtraction();
+  await writeStatus({ ...job, extraction: running }, runsDir);
 
   const target = join(jobDir(id, runsDir), VACANCY_FILE);
   const contractTarget = join(jobDir(id, runsDir), CONTRACT_FILE);
@@ -65,8 +70,10 @@ export async function extractJob(
     await writeFile(target, document, "utf8");
     await writeFile(contractTarget, serializeContract(contract), "utf8");
   };
-  const finish = (partial: Omit<ExtractionResult, "finishedAt">): ExtractionResult => ({
+  const finish = (partial: Omit<ExtractionResult, "startedAt" | "pid" | "finishedAt">): ExtractionResult => ({
     ...partial,
+    startedAt: running.startedAt,
+    pid: running.pid,
     finishedAt: new Date().toISOString(),
   });
 

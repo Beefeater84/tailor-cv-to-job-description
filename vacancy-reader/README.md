@@ -25,7 +25,7 @@ Examples and tests: `examples/` holds saved pages (`page.html`) with their refer
 - the fetch worker, right after a fetch has ended as `succeeded`;
 - the CLI, `npm run extract -- <job-id>`, to run the step again on demand (for example after a rule was fixed). The new result replaces the previous one.
 
-The extraction never changes the fetch `status`. Its outcome is in the `extraction` field of `status.json`, and an extraction error never turns a succeeded fetch into `failed`. Only `succeeded` jobs are extracted. Jobs that ended as `http_error` or `timeout` have a `page.html` too, but they are not extracted.
+The extraction never changes the fetch `status`. Its state is in the `extraction` field of `status.json`: `running` from the moment the fetch succeeds until the step ends, then `succeeded`, `no_rule` or `failed`. An extraction error never turns a succeeded fetch into `failed`. Only `succeeded` jobs are extracted. Jobs that ended as `http_error` or `timeout` have a `page.html` too, but they are not extracted.
 
 Available now: steps 1–2 (fetching), steps 3–5 on a fetched job (automatic after the fetch, and `extract`), the lookup for a URL (`match`) and step 4 on stored examples (rules, tests, `rules:check`). Planned:
 
@@ -85,7 +85,7 @@ Each job uses its own fresh browser, with no profile and no stored cookies, so s
 
 ### `npm run status -- <job-id>`
 
-Prints the job's `status.json`, including `extraction` once the step has run. If the stored status is `queued` or `running` but the worker process is gone, it reports `crashed` instead. Exits with code 1 if the job does not exist.
+Prints the job's `status.json`. A `succeeded` job always has `extraction`: `running` while the step works, then its final result. If the stored status is `queued` or `running` but the worker process is gone, it reports `crashed` instead. In the same way, a stored extraction `running` whose process is gone is reported as extraction `crashed`; the fetch `status` stays `succeeded`. Exits with code 1 if the job does not exist.
 
 ### `npm run jobs`
 
@@ -112,7 +112,7 @@ npm run match -- https://example.com/job/1
 
 ### `npm run extract -- <job-id>`
 
-Runs steps 3–4 on a fetched job: finds the rule of the job's site, runs it on `runs/<job-id>/page.html` (or, for a site without a rule, the LLM fallback) and writes `runs/<job-id>/vacancy.md`. The result is recorded in the `extraction` field of `status.json`. The worker does this by itself after a successful fetch; use the command to run it again. Running it again overwrites the previous result. Only `succeeded` jobs are extracted: for any other job nothing is written and `status.json` stays as it is.
+Runs steps 3–4 on a fetched job: finds the rule of the job's site, runs it on `runs/<job-id>/page.html` (or, for a site without a rule, the LLM fallback) and writes `runs/<job-id>/vacancy.md`. The command writes `extraction.status: running` when it starts, and the result when it ends (both in the `extraction` field of `status.json`). A `running` or `crashed` extraction left by an earlier run does not block it. The worker does this by itself after a successful fetch; use the command to run it again. Running it again overwrites the previous result. Only `succeeded` jobs are extracted: for any other job nothing is written and `status.json` stays as it is.
 
 ```bash
 npm run extract -- 20261024-153012-careers-page.com-a3f9
@@ -163,7 +163,7 @@ Runs the rule tests with `node:test`: one test per example in `examples/index.ya
 | `http_error` | The server answered 4xx or 5xx. `page.html` is still saved. |
 | `timeout` | Navigation or `--wait-for` timed out. `page.html` holds whatever had loaded, if anything. |
 | `failed` | Navigation or browser error (for example, DNS failure). The message is in `error`. |
-| `crashed` | Reported by `status` and `jobs` only: the job is stored as `queued` or `running`, but its worker is gone (or never started within 60 seconds). |
+| `crashed` | Reported by `status` and `jobs` only: the job is stored as `queued` or `running`, but its worker is gone (or never started within 60 seconds). The same word is used for a dead extraction, see `extraction.status` below; it is never stored. |
 
 ## `runs/` layout
 
@@ -193,20 +193,23 @@ The job id is local time + site + a random suffix, for example `20261024-153012-
 | `createdAt`, `startedAt`, `finishedAt` | ISO timestamps; `null` until reached. |
 | `pid` | Worker process id, set when the worker starts. |
 | `options` | Options used: `waitFor`, `headed`, `timeoutMs`. |
-| `extraction` | Result of the last extraction. Absent until the step has run (it is written shortly after a fetch becomes `succeeded`) and always absent for jobs that are not `succeeded`. See below. |
+| `extraction` | State and result of the last extraction. Absent only for a fetch that did not succeed. The worker writes `status: succeeded` and `extraction.status: running` in one write, so a `succeeded` job always has it. See below. |
 
 The `extraction` object:
 
 | Field | Meaning |
 | --- | --- |
-| `status` | `succeeded` (`vacancy.md` written), `no_rule` (the site has no rule file and no API key is set) or `failed` (the rule, the LLM or the page could not be processed, including an error thrown in `postprocess`). |
+| `status` | `running` (the step works), `succeeded` (`vacancy.md` written), `no_rule` (the site has no rule file and no API key is set) or `failed` (the rule, the LLM or the page could not be processed, including an error thrown in `postprocess`, or an error that stopped the step in the worker). Stored values are `running`, `succeeded`, `no_rule` and `failed`. `crashed` is only reported when reading: a stored `running` whose `pid` is gone, while the fetch is final. A `running` block with `pid` `null` is never reported as `crashed`. |
 | `site` | Site key taken from `url`. |
 | `rule` | Absolute path of the rule file used, or `null` when there is none (also for the LLM fallback). |
 | `method` | `rule` or `llm`: how the vacancy was extracted. `null` when no extraction was tried (`no_rule`, or a failure before the rule lookup). |
 | `has_rule` | `true` when the site has a rule file, otherwise `false`. |
 | `file` | `vacancy.md` on success, otherwise `null`. |
 | `error` | Error message (`no rule for <site>` for `no_rule`), or `null` on success. |
-| `finishedAt` | ISO timestamp of the extraction. |
+| `startedAt` | ISO timestamp of the start. The worker writes it with the fetch result; `extractJob` writes `running` again at its start with its own `startedAt`, and the final block keeps that one. |
+| `pid` | Process doing the extraction; used for the crash check while `running`. |
+| `finishedAt` | ISO timestamp of the end of the extraction, `null` while `running`. |
+
 ## Examples (evals)
 
 `examples/` holds saved vacancy pages (`page.html`) with their reference extracted vacancy documents (`expected.md`, reviewed by a human; see [`rules/README.md`](rules/README.md)). These are the evals for the site parsing rules, run by `npm test` and `npm run rules:check`. `examples/index.yaml` is the only metadata source. Layout and snapshot rules: `specs/decisions/6-vacancy-reader-module.md`. Files under `examples/` are kept byte for byte and are ignored by lint and typecheck.

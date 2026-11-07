@@ -9,9 +9,12 @@
 // - page without the description -> failed, error recorded, stale files removed, model not used
 // - contract that fails validation (bad fetched_at), rule and llm -> failed with the contract error, no files left
 // - succeeded job without finishedAt -> failed with a clear error, no files
+// - extraction in progress -> extraction running with startedAt, pid and finishedAt null; the final block keeps startedAt
+// - running extraction with a dead pid -> read as crashed, fetch status still succeeded, never stored; extract runs again
 // - job that is not succeeded -> refused, status unchanged
 import assert from "node:assert/strict";
 import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { spawnSync } from "node:child_process";
 import { existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -19,7 +22,7 @@ import { after, test } from "node:test";
 import { validateContract } from "./contract/index.ts";
 import { extractJob } from "./extract.ts";
 import type { VacancyModel } from "./fallback/index.ts";
-import { getJob, jobDir, writeStatus } from "./fetch/jobs.ts";
+import { getJob, jobDir, readStatus, runningExtraction, writeStatus } from "./fetch/jobs.ts";
 import type { JobState, JobStatus } from "./fetch/jobs.ts";
 import { formatDiff, lineDiff, readExamples } from "./rules/index.ts";
 
@@ -266,4 +269,38 @@ test("job that is not succeeded is refused and left unchanged", async () => {
 
 test("unknown job is refused", async () => {
   await assert.rejects(extractJob("missing", runsDir), /Job not found/);
+});
+
+test("extraction in progress: running with startedAt and pid, final block keeps startedAt", async () => {
+  await makeJob("progress", "https://no-rule.example/job/6", NO_RULE_PAGE);
+  let during: JobStatus | null = null;
+  const model = fakeModel({ description: "Build pipelines." });
+  const extract = model.extract.bind(model);
+  model.extract = async (...args: Parameters<typeof extract>) => {
+    during = await getJob("progress", runsDir);
+    return extract(...args);
+  };
+  const result = await extractJob("progress", runsDir, { model });
+  assert.equal(during!.status, "succeeded");
+  assert.equal(during!.extraction?.status, "running");
+  assert.equal(during!.extraction?.pid, process.pid);
+  assert.equal(during!.extraction?.finishedAt, null);
+  assert.equal(result.status, "succeeded");
+  assert.equal(result.startedAt, during!.extraction?.startedAt);
+  assert.ok(result.finishedAt);
+  assert.deepEqual((await getJob("progress", runsDir))?.extraction, result);
+});
+
+test("running extraction with a dead pid: read as crashed, not stored, extract runs again", async () => {
+  const dead = spawnSync(process.execPath, ["-e", ""]).pid;
+  await makeJob("dead", "https://no-rule.example/job/7", NO_RULE_PAGE);
+  const block = { ...runningExtraction(), pid: dead };
+  await writeStatus({ ...(await getJob("dead", runsDir))!, extraction: block }, runsDir);
+  const job = await getJob("dead", runsDir);
+  assert.equal(job?.status, "succeeded");
+  assert.equal(job?.extraction?.status, "crashed");
+  assert.equal((await readStatus("dead", runsDir))?.extraction?.status, "running");
+  const result = await extractJob("dead", runsDir, { model: null });
+  assert.equal(result.status, "no_rule");
+  assert.equal((await getJob("dead", runsDir))?.extraction?.status, "no_rule");
 });
