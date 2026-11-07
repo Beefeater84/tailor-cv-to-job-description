@@ -1,6 +1,7 @@
 import { parseHTML } from "linkedom";
 import { elementsToMarkdown } from "./markdown.ts";
-import type { ExtractedFields, SiteRule } from "./types.ts";
+import { UNRESOLVABLE_FIELDS } from "./types.ts";
+import type { ExtractedFields, SiteRule, UnresolvableField } from "./types.ts";
 
 /** Elements that never carry vacancy text; dropped from every page before the rule's own `remove`. */
 export const ALWAYS_REMOVED = "script, style, noscript, template";
@@ -65,20 +66,28 @@ export function extractFields(rule: SiteRule, html: string, sourceUrl: string): 
     throw new ExtractionError(`No description text found by "${rule.description}"`);
   }
   let fields: ExtractedFields = { description };
+  // A selector that matches nothing is unresolved: the rule tried and could not extract the field.
+  const unresolved: UnresolvableField[] = [];
   const title = shortField(document, rule.title);
   if (title !== undefined) fields.title = title;
+  else if (rule.title !== undefined) unresolved.push("title");
   const company = shortField(document, rule.company);
   if (company !== undefined) fields.company = company;
+  else if (rule.company !== undefined) unresolved.push("company");
   const hiringManager = shortField(document, rule.hiring_manager);
   if (hiringManager !== undefined) fields.hiring_manager = hiringManager;
+  else if (rule.hiring_manager !== undefined) unresolved.push("hiring_manager");
   if (rule.tags !== undefined) {
     const tags = selectAll(document, rule.tags)
       .map((element) => collapse(element.textContent))
       .filter(Boolean);
     if (tags.length > 0) fields.tags = tags;
+    else unresolved.push("tags");
   }
   const companyDescription = longField(document, rule.company_description, sourceUrl);
   if (companyDescription !== undefined) fields.company_description = companyDescription;
+  else if (rule.company_description !== undefined) unresolved.push("company_description");
+  if (unresolved.length > 0) fields.unresolved = unresolved;
 
   if (rule.postprocess) {
     fields = rule.postprocess(fields, { document, sourceUrl });
@@ -86,5 +95,14 @@ export function extractFields(rule: SiteRule, html: string, sourceUrl: string): 
       throw new ExtractionError("postprocess returned no description");
     }
   }
-  return fields;
+  return withUnresolved(fields);
+}
+
+/** Final `unresolved`: canonical order, no duplicates, no field that has a value; unknown names are an error. */
+function withUnresolved({ unresolved, ...fields }: ExtractedFields): ExtractedFields {
+  const marked: string[] = unresolved ?? [];
+  const unknown = marked.find((name) => !(UNRESOLVABLE_FIELDS as readonly string[]).includes(name));
+  if (unknown !== undefined) throw new ExtractionError(`Unknown unresolved field "${unknown}"`);
+  const list = UNRESOLVABLE_FIELDS.filter((name) => marked.includes(name) && fields[name] === undefined);
+  return list.length > 0 ? { ...fields, unresolved: list } : fields;
 }

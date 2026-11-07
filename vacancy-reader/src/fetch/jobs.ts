@@ -49,6 +49,8 @@ export interface ExtractionResult {
   method: ExtractionMethod | null;
   /** Whether the site has a rule. */
   has_rule: boolean;
+  /** Fields a rule tried to extract but could not confirm, or null when there are none (or no rule ran). */
+  unresolved: string[] | null;
   startedAt: string;
   /** Process doing the extraction; used for the crash check while running. */
   pid: number | null;
@@ -66,6 +68,7 @@ export function runningExtraction(pid: number = process.pid): ExtractionResult {
     error: null,
     method: null,
     has_rule: false,
+    unresolved: null,
     startedAt: new Date().toISOString(),
     pid,
     finishedAt: null,

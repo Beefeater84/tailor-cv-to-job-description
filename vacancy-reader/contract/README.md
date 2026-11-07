@@ -35,7 +35,7 @@ The file is `JSON.stringify(contract, null, 2)` with a final newline. `fetched_a
 ## Absent values
 
 - Every key of the version is always present.
-- `null` means that the rule or the model got no value. Example: the company is not on the page as a field, and the rule does not take it from the page title (see taking the company from the page title (#22)).
+- `null` means that the rule or the model got no value. Example: the company is not on the page as a field, and the rule found no confirmed value in the page title (the company then is in `unresolved` of `vacancy.md`, see unresolved fields in rules (#22)). `unresolved` is not a key of the contract.
 - A missing key means that the field is not in this version.
 - `vacancy.md` still leaves empty fields out, because it is not the contract.
 

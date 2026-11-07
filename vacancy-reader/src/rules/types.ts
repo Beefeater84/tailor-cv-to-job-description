@@ -1,6 +1,12 @@
 /** How an extracted vacancy document was made: by a site rule or by an LLM. */
 export type ExtractionMethod = "rule" | "llm";
 
+/** Optional fields a rule can mark as unresolved, in the canonical order of the document. */
+export const UNRESOLVABLE_FIELDS = ["title", "company", "hiring_manager", "tags", "company_description"] as const;
+
+/** Name of an optional field that can be unresolved. */
+export type UnresolvableField = (typeof UNRESOLVABLE_FIELDS)[number];
+
 /** Values extracted from a page by a site rule. Optional fields are absent when the site does not show them. */
 export interface ExtractedFields {
   title?: string;
@@ -11,6 +17,12 @@ export interface ExtractedFields {
   company_description?: string;
   /** Markdown. */
   description: string;
+  /**
+   * Fields the rule tried to extract but could not confirm. Not the same as absent: an absent field that is not
+   * listed is one the site does not show. Set by `extractFields` for a selector that matched nothing, and by
+   * `postprocess` for a value it could not confirm. A field that has a value is never listed.
+   */
+  unresolved?: UnresolvableField[];
 }
 
 /** What `postprocess` gets besides the extracted values. */

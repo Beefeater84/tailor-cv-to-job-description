@@ -45,7 +45,7 @@ Every field except `postprocess` and `remove` is one CSS selector (a string). Se
 - **Long fields** (`description`, `company_description`): **every** matched element is converted from HTML to Markdown, in document order, joined with a blank line. Markdown style: ATX headings (`###`), `-` bullets, `1.` numbered lists, `**bold**`, `_italic_`, links. `<br>` becomes a line break, and `&nbsp;` becomes a normal space.
 - **Heading shift**: inside a long field, headings are shifted so that the highest one becomes `###`. The other headings keep their distance from it, up to `######`. On careers-page.com the description's `<h1>` becomes `###` and its `<h2>`s become `####`.
 - **Links** are made absolute against the vacancy URL. Links to a fragment (`#...`) are kept as they are.
-- A field whose selector matches nothing, or only empty text, is left out of the output.
+- A field whose selector matches nothing, or only empty text, is left out of the output and listed as unresolved (see "Unresolved fields").
 - **No description is an error**: if `description` matches no text, or `postprocess` returns no description, the example fails with an error instead of producing a document.
 - An invalid selector is an error too.
 - **For a fetched job** such an error does not stop anything else: `extraction.status` in the job's `status.json` becomes `failed` with the message in `extraction.error` (an error thrown in `postprocess` too), no `vacancy.md` is written, and a `vacancy.md` from an earlier run is removed. The fetch `status` stays `succeeded`. A site without a rule gives `extraction.status` `no_rule`.
@@ -58,11 +58,22 @@ postprocess?: (fields: ExtractedFields, context: { document: Document; sourceUrl
 
 It gets the extracted values (`title`, `company`, `hiring_manager`, `tags`, `company_description`, `description`) and returns them, changed. `document` is the parsed page after `remove`, and `sourceUrl` is the vacancy URL. Use it only for what a selector cannot express, for example splitting "Title at Company" into two fields. Do not use it to invent values.
 
+### Unresolved fields
+
+`unresolved` tells "not extracted" from "not shown". It lists the optional fields the rule tried to extract but could not confirm. A field the rule does not try (no selector, not handled in `postprocess`) is never listed: it means the site does not show it.
+
+- **Automatic:** the rule has a selector for `title`, `company`, `hiring_manager`, `tags` or `company_description`, and it matched nothing (or only empty text).
+- **`postprocess`:** it adds the field name to `unresolved` of the returned fields when it tried the field and could not confirm the value, for example `return { ...fields, unresolved: ["company"] }`.
+- A field that ends up with a value is never listed. The list is in the order `title`, `company`, `hiring_manager`, `tags`, `company_description`, without duplicates. Another name is an error.
+- It appears as `unresolved: [company]` in the front matter right after `tags` (left out when empty), and as `extraction.unresolved` in `status.json` (`null` when empty). It is not in the vacancy contract `vacancy.json`, which stays `1.0`. The LLM fallback has no `unresolved`.
+
+Decision: `specs/decisions/22-unresolved-fields-in-rules.md`.
+
 ### Do not guess
 
 Extract only what the site's markup clearly states. If the markup does not mark a field, leave the field out of the rule, and it is left out of the output too. Rules never use an LLM and never guess. The LLM fallback (`extracted_by: llm`) runs only for a site without a rule, and its result is unverified.
 
-A field may come from `postprocess` when the site's platform template states it and a second source on the same page confirms it. This is decided per site, and it is not a general rule. Example: on careers-page.com (Manatal) no element states the employer. The page `<title>` follows the template "`<role>` - `<Company>` - Get Hired …", and the vacancy URL has the company slug as its first path segment (`/idelsoft/job/3W3V95WV`). The rule's `postprocess` takes the company from the `<title>` only when it equals the slug, case-insensitively, and keeps the spelling from the `<title>` (`iDelsoft`). If the template is not found or the slug differs, the rule outputs no `company`. `og:site_name` is "Manatal", the hiring platform, not the employer, so it is never used.
+A field may come from `postprocess` when the site's platform states it and a second source on the same page confirms it. This is decided per site, and it is not a general rule. Example: on careers-page.com (Manatal) no element states the employer, and the `<title>` has no fixed template (`Senior Platform Engineer - Manatal Co LTD | Career Page`, `... - iDelsoft - Get Hired ...`). The vacancy URL has the company slug as its first path segment (`/manatal/job/L3X639RW`). The rule's `postprocess` looks for the slug in the `<title>` as a whole word, case-insensitively (hyphens in the slug match a space or a hyphen), and takes the company as the `<title>` spells it (`Manatal`, not `Manatal Co LTD`; `iDelsoft`). If the slug is not in the `<title>`, the rule outputs no `company` and marks it unresolved (see "Unresolved fields"). `og:site_name` is "Manatal", the hiring platform, not the employer, so it is never used.
 
 ## Matching a URL to a rule
 
@@ -90,6 +101,7 @@ title: <title>
 company: <company>
 hiring_manager: <name>
 tags: [<tag>, <tag>]
+unresolved: [<field>, <field>]
 ---
 
 ## Company
@@ -101,7 +113,7 @@ tags: [<tag>, <tag>]
 <description as Markdown>
 ```
 
-- Front matter keys come in this order. `source_url`, `site` and `extracted_by` are always present, and a missing optional field is left out. Values that need quoting are quoted (`title: "Dev: Senior"`), and `tags` is a one-line flow list.
+- Front matter keys come in this order. `source_url`, `site` and `extracted_by` are always present, and a missing optional field is left out. Values that need quoting are quoted (`title: "Dev: Senior"`), and `tags` and `unresolved` are one-line flow lists. `unresolved` comes right after `tags` and is left out when empty, see "Unresolved fields".
 - `extracted_by` tells how the document was made: `rule` (a site rule) or `llm` (the fallback for a site without a rule, using `fields.md` as its instruction). A document with `extracted_by: llm` is unverified.
 - The `## Company` section appears only when there is a `company_description`.
 - Line endings are LF. Lines have no trailing whitespace. The file ends with one newline.

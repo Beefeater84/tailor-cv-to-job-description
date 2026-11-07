@@ -70,7 +70,10 @@ export async function extractJob(
     await writeFile(target, document, "utf8");
     await writeFile(contractTarget, serializeContract(contract), "utf8");
   };
-  const finish = (partial: Omit<ExtractionResult, "startedAt" | "pid" | "finishedAt">): ExtractionResult => ({
+  const finish = (
+    partial: Omit<ExtractionResult, "startedAt" | "pid" | "finishedAt" | "unresolved"> & { unresolved?: string[] | null },
+  ): ExtractionResult => ({
+    unresolved: null,
     ...partial,
     startedAt: running.startedAt,
     pid: running.pid,
@@ -127,6 +130,7 @@ export async function extractJob(
         error: null,
         method: "rule",
         has_rule: true,
+        unresolved: fields.unresolved ?? null,
       });
     }
   } catch (error) {
