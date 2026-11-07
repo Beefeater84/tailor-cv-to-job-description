@@ -2,6 +2,7 @@
 // (never the real API, never a key from the developer's environment). Cases:
 // - succeeded job with the stored careers-page.com example -> vacancy.md equals expected.md, model not used,
 //   vacancy.json is a valid contract with fetched_at from the fetch's finishedAt
+// - rule whose selector matches nothing -> extraction.unresolved lists the field, vacancy.md and the contract differ only by it
 // - second extract of the same fetch -> the same bytes of vacancy.md and vacancy.json
 // - site without a rule and no model -> no_rule, no vacancy.md or vacancy.json
 // - site without a rule and a model -> succeeded, method llm, vacancy.md and vacancy.json with extracted_by: llm
@@ -103,6 +104,7 @@ test("succeeded job with a rule: vacancy.md equals expected.md", async () => {
   assert.equal(job?.extraction?.status, "succeeded");
   assert.equal(job?.extraction?.method, "rule");
   assert.equal(job?.extraction?.has_rule, true);
+  assert.equal(job?.extraction?.unresolved, null);
 
   const contract = validateContract(JSON.parse(await readFile(contractPath("ok"), "utf8")));
   assert.equal(contract.source_url, example.url);
@@ -110,6 +112,20 @@ test("succeeded job with a rule: vacancy.md equals expected.md", async () => {
   assert.equal(contract.extracted_by, "rule");
   assert.equal(contract.fetched_at, "2026-10-24T10:00:02.000Z");
   assert.ok(contract.description.length > 0);
+});
+
+test("rule selector with no match: extraction.unresolved and the front matter list the field", async () => {
+  const html = "<html><body><div class='mt-5'><div class='redactor-styles'><p>Build things.</p></div></div></body></html>";
+  const url = "https://www.careers-page.com/acme/job/ABC123";
+  await makeJob("unres", url, "<html><body><main>" + html + "</main></body></html>");
+  const result = await extractJob("unres", runsDir, { model: null });
+  assert.equal(result.status, "succeeded");
+  assert.deepEqual(result.unresolved, ["title"]);
+  assert.deepEqual((await getJob("unres", runsDir))?.extraction?.unresolved, ["title"]);
+  assert.match(await readFile(vacancyPath("unres"), "utf8"), /\nunresolved: \[title\]\n---\n/);
+  const contract = JSON.parse(await readFile(contractPath("unres"), "utf8")) as Record<string, unknown>;
+  assert.equal("unresolved" in contract, false);
+  assert.equal(contract.schema_version, "1.0");
 });
 
 test("second extract of the same fetch writes the same bytes", async () => {

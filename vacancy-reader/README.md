@@ -204,6 +204,7 @@ The `extraction` object:
 | `rule` | Absolute path of the rule file used, or `null` when there is none (also for the LLM fallback). |
 | `method` | `rule` or `llm`: how the vacancy was extracted. `null` when no extraction was tried (`no_rule`, or a failure before the rule lookup). |
 | `has_rule` | `true` when the site has a rule file, otherwise `false`. |
+| `unresolved` | List of optional fields the rule tried to extract but could not confirm (for example `["company"]`), the same as `unresolved` in the front matter of `vacancy.md`. `null` when there are none, and for the LLM fallback or a failed extraction. A field the rule does not try is not listed (the site does not show it). See [`rules/README.md`](rules/README.md). |
 | `file` | `vacancy.md` on success, otherwise `null`. |
 | `error` | Error message (`no rule for <site>` for `no_rule`), or `null` on success. |
 | `startedAt` | ISO timestamp of the start. The worker writes it with the fetch result; `extractJob` writes `running` again at its start with its own `startedAt`, and the final block keeps that one. |

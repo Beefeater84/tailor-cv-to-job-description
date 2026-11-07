@@ -23,10 +23,13 @@ function frontMatter(fields: ExtractedFields, source: DocumentSource): string {
   if (fields.company) data.company = fields.company;
   if (fields.hiring_manager) data.hiring_manager = fields.hiring_manager;
   if (fields.tags && fields.tags.length > 0) data.tags = fields.tags;
+  if (fields.unresolved && fields.unresolved.length > 0) data.unresolved = fields.unresolved;
 
   const doc = new YamlDocument(data);
-  const tags = doc.get("tags", true);
-  if (isSeq(tags)) tags.flow = true;
+  for (const key of ["tags", "unresolved"]) {
+    const list = doc.get(key, true);
+    if (isSeq(list)) list.flow = true;
+  }
   return doc.toString({ lineWidth: 0, flowCollectionPadding: false });
 }
 
