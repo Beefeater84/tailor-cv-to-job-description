@@ -1,0 +1,40 @@
+{
+  "name": "vacancy-reader",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Reads vacancy pages and turns them into structured vacancy data.",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "setup": "playwright install chromium",
+    "fetch": "tsx src/cli.ts fetch",
+    "status": "tsx src/cli.ts status",
+    "jobs": "tsx src/cli.ts jobs",
+    "match": "tsx src/cli.ts match",
+    "extract": "tsx src/cli.ts extract",
+    "rules:check": "tsx src/cli.ts rules:check",
+    "test": "tsx --test \"src/**/*.test.ts\"",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "1.3.0",
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1",
+    "linkedom": "0.18.14",
+    "playwright": "1.64.1",
+    "turndown": "7.2.4",
+    "yaml": "2.9.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "24.19.2",
+    "@types/turndown": "5.0.6",
+    "eslint": "10.13.0",
+    "tsx": "4.23.15",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.0"
+  }
+}

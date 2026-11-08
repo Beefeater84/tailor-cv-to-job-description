@@ -1,0 +1,216 @@
+# vacancy-reader
+
+The vacancy reader stage of the pipeline: it takes a vacancy URL and turns it into structured vacancy data for the next stages. The module holds the whole vacancy reader epic:
+
+- **Fetching** (available now): open a vacancy page in headless Chromium and save the rendered HTML.
+- **Parsing** (available now): site rules that extract the vacancy from a fetched or saved page into the extracted vacancy document, and an LLM fallback for a site without a rule. See [`rules/README.md`](rules/README.md).
+- **Output contract** (available now): `vacancy.json`, the versioned data format the next stages read. See [`contract/README.md`](contract/README.md).
+
+The stack is TypeScript on Node 24 with npm and Playwright (`specs/decisions/6-typescript-node-stack.md`). The module layout is described in `specs/decisions/6-vacancy-reader-module.md`.
+
+## How the module works
+
+A vacancy URL becomes an extracted vacancy document in these steps:
+
+1. **URL → fetch job.** `npm run fetch -- <url>` creates a job folder `runs/<job-id>/` and starts a background worker. Reads: the URL. Writes: `runs/<job-id>/status.json`.
+2. **Fetch job → `page.html`.** The worker opens the URL in headless Chromium, waits until the page has rendered and saves the rendered HTML. Writes: `runs/<job-id>/page.html`, the final `status.json` and `worker.log`. `npm run status -- <job-id>` shows when the job has reached a final status.
+3. **`page.html` → site rule.** The site key is the URL host without `www.` (`careers-page.com`). The rule of the site is the file `rules/<site>.ts`: CSS selectors for the vacancy fields. A site without a rule file has no rule: step 4 then uses the LLM fallback (below). The site comes from the job's requested URL (`url`). `npm run match -- <url>` does this lookup for a URL alone (host only, see [`rules/README.md`](rules/README.md)).
+4. **Site rule → extracted vacancy document.** For a site with a rule, the rule runs on the saved HTML with a static HTML parser, with no browser and no network. Short fields (title, company) become plain text, and long fields (description, company description) become Markdown. The result is Markdown with YAML front matter (`source_url`, `site`, `title`, …) and the sections `## Company` (only when the page has a company description) and `## Job description`. Reads: `page.html`, `rules/<site>.ts`. Writes: `runs/<job-id>/vacancy.md` (only on success) and the `extraction` field of `status.json`. **A site without a rule** goes to the LLM fallback when `ANTHROPIC_API_KEY` is set: the cleaned page is sent to Claude Haiku 5.5 (`claude-haiku-5-5`) with `rules/fields.md` as the instruction, and the answer is written in the same document format with `extracted_by: llm`. Without a key the extraction ends as `no_rule`. A site with a rule never calls the model, and rule extraction never uses an LLM. Steps 3–4 run on a fetched job automatically (see below). Format: [`rules/README.md`](rules/README.md) and `specs/decisions/10-site-parsing-rule-format.md`.
+5. **Extracted fields → vacancy contract.** In the same extraction step, the extracted fields become the vacancy contract. It is validated against `contract/vacancy.schema.json`, and only then are `vacancy.md` and `runs/<job-id>/vacancy.json` written. An invalid contract makes the extraction `failed`, and neither file is left. `fetched_at` is the fetch's `finishedAt`, so a second `extract` of the same fetch writes the same bytes. Format and the rules for the writer: [`contract/README.md`](contract/README.md).
+
+Examples and tests: `examples/` holds saved pages (`page.html`) with their reference documents (`expected.md`). `npm test` runs step 4 on every example and compares the result with `expected.md`, and `npm run rules:check -- <site>` does the same for one site, with a diff. This is how rules are written and kept working, offline.
+
+**Who runs the steps.** The steps are plain functions that call each other directly, with no events. Each step is an idempotent function over the run folder (`runs/<job-id>/`): it reads the files of the previous step and writes its own, and `status.json` is the pipeline state. Steps 3–4 (`extractJob`) are called by:
+
+- the fetch worker, right after a fetch has ended as `succeeded`;
+- the CLI, `npm run extract -- <job-id>`, to run the step again on demand (for example after a rule was fixed). The new result replaces the previous one.
+
+The extraction never changes the fetch `status`. Its state is in the `extraction` field of `status.json`: `running` from the moment the fetch succeeds until the step ends, then `succeeded`, `no_rule` or `failed`. An extraction error never turns a succeeded fetch into `failed`. Only `succeeded` jobs are extracted. Jobs that ended as `http_error` or `timeout` have a `page.html` too, but they are not extracted.
+
+Available now: steps 1–2 (fetching), steps 3–5 on a fetched job (automatic after the fetch, and `extract`), the lookup for a URL (`match`) and step 4 on stored examples (rules, tests, `rules:check`). Planned:
+
+- Tool for adding vacancy examples (#14): saving a page as a new example with a draft `expected.md`.
+- Fetcher: use the user's browser session (#16): fetching pages that need a login.
+
+### LLM fallback for a site without a rule
+
+Setting up the key: put `ANTHROPIC_API_KEY=<key>` in the environment or in `vacancy-reader/.env` (copy `.env.example`; `.env` is gitignored). The environment wins over `.env`. An unreadable `.env` is logged and only turns the fallback off. Without a key, a site without a rule ends as `no_rule`, as before.
+
+How it works: the page is cleaned (scripts, styles, navigation, hidden elements and forms are dropped), the `JobPosting` JSON-LD (up to 20000 characters) and the body as Markdown are sent as one input of at most 60000 characters (a cut is marked). The model answers with structured output (a JSON schema, no tools, 120 s timeout), and the answer is checked and rendered to `vacancy.md` with `extracted_by: llm`. A model error or an answer without a description gives `extraction.status` `failed` (`method: llm`).
+
+An LLM result is unverified: tell it by `extracted_by: llm` in the front matter and `extraction.method: llm` in `status.json`. Security: the page content is wrapped in `<untrusted_page>` (the tag inside the content is escaped), the instruction says it is data only, and the model has no tools, so instructions on a page cannot do anything but change the text of one result.
+
+## Setup
+
+Run from `vacancy-reader/`:
+
+```bash
+npm ci          # install dependencies
+npm run setup   # download Playwright's Chromium (once per machine)
+```
+
+Checks:
+
+```bash
+npm run typecheck
+npm run lint
+npm test        # run the site rules on all examples
+```
+
+## Commands
+
+Commands are run with `tsx` straight from the TypeScript sources; there is no build step.
+
+### `npm run fetch -- <url> [flags]`
+
+Starts a fetch job in the background and returns at once. It prints the job id and the job folder, then exits with code 0. A detached worker process renders the page and writes the results to the job folder.
+
+```bash
+npm run fetch -- https://www.careers-page.com/idelsoft/job/3W3V95WV
+# 20261024-153012-careers-page.com-a3f9
+# C:\...\vacancy-reader\runs\20261024-153012-careers-page.com-a3f9
+```
+
+| Flag | Default | Meaning |
+| --- | --- | --- |
+| `--wait-for <selector>` | none | After the page has loaded, also wait for this CSS selector to become visible. |
+| `--headed` | off | Show the browser window instead of running headless. |
+| `--timeout <seconds>` | `60` | Timeout for navigation (and for `--wait-for`). |
+
+A URL that is not `http` or `https` fails at once with a non-zero exit code, and no job is created.
+
+The page counts as rendered after the `load` event and then network idle. The wait for network idle is capped at 10 seconds. If the cap runs out, that is not a failure: the page is kept as it is.
+
+Each job uses its own fresh browser, with no profile and no stored cookies, so several `fetch` calls (also from different sessions) do not interfere. Using the user's browser session is deferred to "Fetcher: use the user's browser session (#16)".
+
+### `npm run status -- <job-id>`
+
+Prints the job's `status.json`. A `succeeded` job always has `extraction`: `running` while the step works, then its final result. If the stored status is `queued` or `running` but the worker process is gone, it reports `crashed` instead. In the same way, a stored extraction `running` whose process is gone is reported as extraction `crashed`; the fetch `status` stays `succeeded`. Exits with code 1 if the job does not exist.
+
+### `npm run jobs`
+
+Lists all jobs, newest first, one line each: `<id>  <status>  <url>`.
+
+### `npm run match -- <url>`
+
+Tells which site a vacancy URL belongs to and which rule file applies. It looks at the host only (lower case, `www.` stripped), does not open the page and does not run the rule.
+
+```bash
+npm run match -- https://www.careers-page.com/idelsoft/job/63674V5R
+# site: careers-page.com
+# rule: C:\...\vacancy-reader\rules\careers-page.com.ts
+
+npm run match -- https://example.com/job/1
+# no rule for example.com
+```
+
+| Exit code | Meaning |
+| --- | --- |
+| `0` | The site has a rule. It prints `site: <site>` and `rule: <absolute path>`. |
+| `1` | No rule for the site ("no rule for `<site>`"), or the URL is invalid (not `http` or `https`). |
+| `2` | No URL given. |
+
+### `npm run extract -- <job-id>`
+
+Runs steps 3–4 on a fetched job: finds the rule of the job's site, runs it on `runs/<job-id>/page.html` (or, for a site without a rule, the LLM fallback) and writes `runs/<job-id>/vacancy.md`. The command writes `extraction.status: running` when it starts, and the result when it ends (both in the `extraction` field of `status.json`). A `running` or `crashed` extraction left by an earlier run does not block it. The worker does this by itself after a successful fetch; use the command to run it again. Running it again overwrites the previous result. Only `succeeded` jobs are extracted: for any other job nothing is written and `status.json` stays as it is.
+
+```bash
+npm run extract -- 20261024-153012-careers-page.com-a3f9
+# site: careers-page.com
+# has rule: yes
+# method: rule
+# rule: C:\...\vacancy-reader\rules\careers-page.com.ts
+# file: C:\...\vacancy-reader\runs\20261024-153012-careers-page.com-a3f9\vacancy.md
+```
+
+For a site without a rule (with the key set) it prints `has rule: no`, `method: llm` and `rule: -`.
+
+| Exit code | Meaning |
+| --- | --- |
+| `0` | `vacancy.md` was written, by the rule or by the LLM fallback. It prints `site:`, `has rule:` (`yes`/`no`), `method:` (`rule`/`llm`), `rule:` (absolute path, `-` for the LLM) and `file:` (absolute path). |
+| `1` | The job does not exist, the job is not `succeeded`, the site has no rule and no `ANTHROPIC_API_KEY` is set ("no rule for `<site>`", with a hint on how to enable the fallback), or the extraction failed (a rule error, or an LLM error or invalid answer for a site without a rule) (`Extraction failed: <error>`). |
+| `2` | No job id given. |
+
+It also writes `runs/<job-id>/vacancy.json`, the validated vacancy contract (see [`contract/README.md`](contract/README.md)). If the site has no rule and there is no key, or the extraction fails, a `vacancy.md` and a `vacancy.json` left by an earlier run are removed, so the files are always the result of the last successful run.
+
+### `npm run rules:check -- <site>`
+
+Runs the rule `rules/<site>.ts` on every example of the site from `examples/index.yaml`. For each example it prints the extracted document, then either `--- matches expected.md` or a line diff against `expected.md` (`-` expected, `+` actual, with line numbers of `expected.md`). The last line is `<n> of <m> examples pass`.
+
+```bash
+npm run rules:check -- careers-page.com
+```
+
+| Exit code | Meaning |
+| --- | --- |
+| `0` | All examples of the site match `expected.md`. |
+| `1` | A mismatch or an extraction error, no rule for the site ("no rule for `<site>`"), or no examples of the site in `examples/index.yaml`. |
+| `2` | No site given. |
+
+This is the command an agent uses to write and fix a rule. See [`rules/README.md`](rules/README.md).
+
+### `npm test`
+
+Runs the rule tests with `node:test`: one test per example in `examples/index.yaml`. The test runs the site's rule on `page.html` and compares the result with `expected.md` after normalising line endings, trailing whitespace and the final newline. An example whose site has no rule is reported as `todo`, not as a failure.
+
+## Job statuses
+
+| Status | Meaning |
+| --- | --- |
+| `queued` | Job created; the worker has not started yet. |
+| `running` | The worker is rendering the page. |
+| `succeeded` | The page was rendered with a success response; `page.html` is saved. |
+| `http_error` | The server answered 4xx or 5xx. `page.html` is still saved. |
+| `timeout` | Navigation or `--wait-for` timed out. `page.html` holds whatever had loaded, if anything. |
+| `failed` | Navigation or browser error (for example, DNS failure). The message is in `error`. |
+| `crashed` | Reported by `status` and `jobs` only: the job is stored as `queued` or `running`, but its worker is gone (or never started within 60 seconds). The same word is used for a dead extraction, see `extraction.status` below; it is never stored. |
+
+## `runs/` layout
+
+Jobs live in `vacancy-reader/runs/`, always relative to the module, whatever the current directory. `runs/` is gitignored and never committed.
+
+```
+runs/<job-id>/
+  status.json   job state, see below
+  page.html     rendered HTML (when the page could be read)
+  vacancy.md    extracted vacancy document (only when the extraction succeeded; `extracted_by` in its front matter says `rule` or `llm`)
+  vacancy.json  vacancy contract for the next stages (only when the extraction succeeded), see contract/README.md
+  worker.log    worker output, for debugging
+```
+
+The job id is local time + site + a random suffix, for example `20261024-153012-careers-page.com-a3f9`.
+
+`status.json` is written atomically (a temp file, then rename), so a reader never sees partial JSON. Fields:
+
+| Field | Meaning |
+| --- | --- |
+| `id` | Job id (also the folder name). |
+| `url` | Requested URL. |
+| `finalUrl` | URL after redirects, or `null`. |
+| `httpStatus` | HTTP status of the main document, or `null`. |
+| `status` | One of the job statuses above (stored values never include `crashed`). |
+| `error` | Error message, or `null`. |
+| `createdAt`, `startedAt`, `finishedAt` | ISO timestamps; `null` until reached. |
+| `pid` | Worker process id, set when the worker starts. |
+| `options` | Options used: `waitFor`, `headed`, `timeoutMs`. |
+| `extraction` | State and result of the last extraction. Absent only for a fetch that did not succeed. The worker writes `status: succeeded` and `extraction.status: running` in one write, so a `succeeded` job always has it. See below. |
+
+The `extraction` object:
+
+| Field | Meaning |
+| --- | --- |
+| `status` | `running` (the step works), `succeeded` (`vacancy.md` written), `no_rule` (the site has no rule file and no API key is set) or `failed` (the rule, the LLM or the page could not be processed, including an error thrown in `postprocess`, or an error that stopped the step in the worker). Stored values are `running`, `succeeded`, `no_rule` and `failed`. `crashed` is only reported when reading: a stored `running` whose `pid` is gone, while the fetch is final. A `running` block with `pid` `null` is never reported as `crashed`. |
+| `site` | Site key taken from `url`. |
+| `rule` | Absolute path of the rule file used, or `null` when there is none (also for the LLM fallback). |
+| `method` | `rule` or `llm`: how the vacancy was extracted. `null` when no extraction was tried (`no_rule`, or a failure before the rule lookup). |
+| `has_rule` | `true` when the site has a rule file, otherwise `false`. |
+| `unresolved` | List of optional fields the rule tried to extract but could not confirm (for example `["company"]`), the same as `unresolved` in the front matter of `vacancy.md`. `null` when there are none, and for the LLM fallback or a failed extraction. A field the rule does not try is not listed (the site does not show it). See [`rules/README.md`](rules/README.md). |
+| `file` | `vacancy.md` on success, otherwise `null`. |
+| `error` | Error message (`no rule for <site>` for `no_rule`), or `null` on success. |
+| `startedAt` | ISO timestamp of the start. The worker writes it with the fetch result; `extractJob` writes `running` again at its start with its own `startedAt`, and the final block keeps that one. |
+| `pid` | Process doing the extraction; used for the crash check while `running`. |
+| `finishedAt` | ISO timestamp of the end of the extraction, `null` while `running`. |
+
+## Examples (evals)
+
+`examples/` holds saved vacancy pages (`page.html`) with their reference extracted vacancy documents (`expected.md`, reviewed by a human; see [`rules/README.md`](rules/README.md)). These are the evals for the site parsing rules, run by `npm test` and `npm run rules:check`. `examples/index.yaml` is the only metadata source. Layout and snapshot rules: `specs/decisions/6-vacancy-reader-module.md`. Files under `examples/` are kept byte for byte and are ignored by lint and typecheck.

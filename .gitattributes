@@ -1,0 +1,2 @@
+# Example snapshots are compared as text; keep stored bytes unchanged.
+vacancy-reader/examples/** -text
